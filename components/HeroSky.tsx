@@ -56,7 +56,6 @@ function Raindrops() {
   useFrame(() => {
     if (!ref.current) return;
     const pos = ref.current.geometry.attributes.position.array as Float32Array;
-
     for (let i = 0; i < COUNT; i++) {
       pos[i * 3 + 1] -= velocities[i];
       if (pos[i * 3 + 1] < -2) {
@@ -71,9 +70,21 @@ function Raindrops() {
   return (
     <points ref={ref}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={COUNT} array={positions} itemSize={3} />
+        <bufferAttribute
+          attach="attributes-position"
+          array={positions}
+          count={COUNT}
+          itemSize={3}
+          args={[positions, 3]} // Fix required by R3F v9+
+        />
       </bufferGeometry>
-      <pointsMaterial color="#B8D4E8" size={0.04} opacity={0.35} transparent depthWrite={false} />
+      <pointsMaterial
+        color="#B8D4E8"
+        size={0.04}
+        opacity={0.35}
+        transparent
+        depthWrite={false}
+      />
     </points>
   );
 }
@@ -82,7 +93,7 @@ function Raindrops() {
 function Cloud({ position }: { position: [number, number, number] }) {
   const groupRef = useRef<THREE.Group>(null!);
   const cloudParts = useMemo(() => {
-    const parts = [];
+    const parts: { position: [number, number, number]; scale: [number, number, number] }[] = [];
     for (let i = 0; i < 25; i++) {
       const angle = (i / 25) * Math.PI * 2;
       const radius = 1.2 + Math.random() * 1.4;
@@ -92,12 +103,12 @@ function Cloud({ position }: { position: [number, number, number] }) {
           Math.cos(angle) * radius + (Math.random() - 0.5) * 0.8,
           height + (Math.random() - 0.3) * 0.5,
           Math.sin(angle) * radius * 0.6 + (Math.random() - 0.5) * 0.6,
-        ] as [number, number, number],
+        ],
         scale: [
           0.5 + Math.random() * 0.7,
           0.4 + Math.random() * 0.6,
           0.5 + Math.random() * 0.7,
-        ] as [number, number, number],
+        ],
       });
     }
     return parts;
@@ -137,7 +148,14 @@ function RealisticClouds() {
   );
 }
 
-/* --- Balloon (fixed hooks issue) --- */
+/* --- Balloon --- */
+interface BalloonType {
+  offsetPos: [number, number, number];
+  color: string;
+  label: string;
+  size: number;
+}
+
 function Balloon({
   balloon,
   i,
@@ -145,7 +163,14 @@ function Balloon({
   setHovered,
   clicked,
   setClicked,
-}: any) {
+}: {
+  balloon: BalloonType;
+  i: number;
+  hovered: number | null;
+  setHovered: React.Dispatch<React.SetStateAction<number | null>>;
+  clicked: number | null;
+  setClicked: React.Dispatch<React.SetStateAction<number | null>>;
+}) {
   const balloonRef = useRef<THREE.Group>(null!);
 
   useFrame((state) => {
@@ -169,7 +194,6 @@ function Balloon({
       balloon.offsetPos[2]
     );
     const end = new THREE.Vector3(0, -2.5, 0);
-
     const midPoint1 = new THREE.Vector3(
       balloon.offsetPos[0] * 0.7,
       balloon.offsetPos[1] - balloon.size * 0.9 - 0.6,
@@ -180,10 +204,9 @@ function Balloon({
       -1.5,
       balloon.offsetPos[2] * 0.3
     );
-
     const curve = new THREE.CatmullRomCurve3([start, midPoint1, midPoint2, end]);
     return curve.getPoints(40);
-  }, [balloon.offsetPos, balloon.size]);
+  }, [balloon]);
 
   const stringGeometry = useMemo(
     () => new THREE.BufferGeometry().setFromPoints(stringPoints),
@@ -196,15 +219,10 @@ function Balloon({
         object={
           new THREE.Line(
             stringGeometry,
-            new THREE.LineBasicMaterial({
-              color: "#8B7355",
-              transparent: true,
-              opacity: 0.8,
-            })
+            new THREE.LineBasicMaterial({ color: "#8B7355", transparent: true, opacity: 0.8 })
           )
         }
       />
-
       <group
         ref={balloonRef}
         position={balloon.offsetPos}
@@ -217,16 +235,9 @@ function Balloon({
       >
         <mesh scale={[balloon.size, balloon.size * 1.2, balloon.size]}>
           <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            color={balloon.color}
-            emissive={balloon.color}
-            emissiveIntensity={0.2}
-          />
+          <meshStandardMaterial color={balloon.color} emissive={balloon.color} emissiveIntensity={0.2} />
         </mesh>
-        <mesh
-          position={[0, -balloon.size * 0.9, 0]}
-          scale={[0.15, 0.25, 0.15]}
-        >
+        <mesh position={[0, -balloon.size * 0.9, 0]} scale={[0.15, 0.25, 0.15]}>
           <sphereGeometry args={[balloon.size * 0.3, 8, 8]} />
           <meshStandardMaterial color={balloon.color} />
         </mesh>
@@ -259,7 +270,7 @@ function BalloonBundle() {
     bundleRef.current.rotation.z = Math.sin(t * 0.25) * 0.03;
   });
 
-  const balloons = useMemo(
+  const balloons = useMemo<BalloonType[]>(
     () => [
       { offsetPos: [-1.2, 0.3, 0], color: "#FF6B9D", label: "Hope", size: 0.5 },
       { offsetPos: [-0.6, 0, 0.3], color: "#4ECDC4", label: "Healing", size: 0.48 },
@@ -276,11 +287,10 @@ function BalloonBundle() {
         <sphereGeometry args={[0.08, 8, 8]} />
         <meshStandardMaterial color="#8B7355" />
       </mesh>
-
-      {balloons.map((balloon, i) => (
+      {balloons.map((b, i) => (
         <Balloon
           key={i}
-          balloon={balloon}
+          balloon={b}
           i={i}
           hovered={hovered}
           setHovered={setHovered}
@@ -292,7 +302,7 @@ function BalloonBundle() {
   );
 }
 
-/* --- Realistic Sky --- */
+/* --- Sky --- */
 function RealisticSky() {
   const skyGradient = useMemo(() => {
     const canvas = document.createElement("canvas");
@@ -306,8 +316,7 @@ function RealisticSky() {
     gradient.addColorStop(1, "#A8CCE5");
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 2, 512);
-    const texture = new THREE.CanvasTexture(canvas);
-    return texture;
+    return new THREE.CanvasTexture(canvas);
   }, []);
 
   return (
@@ -318,7 +327,7 @@ function RealisticSky() {
   );
 }
 
-/* --- Guard --- */
+/* --- WebGL Guard --- */
 function WebGLContextGuard() {
   const { gl } = useThree();
   useEffect(() => {
@@ -349,7 +358,8 @@ export default function HeroSky() {
         <PerspectiveCamera makeDefault position={[0, 0.5, 8]} />
         <ambientLight intensity={0.6} color="#B8D4E8" />
         <directionalLight position={[8, 15, 10]} intensity={0.8} />
-        <hemisphereLight skyColor="#7FA8C9" groundColor="#5B8DBE" intensity={0.5} />
+        {/* hemisphereLight uses 'args' instead of skyColor/groundColor */}
+        <hemisphereLight args={["#7FA8C9", "#5B8DBE", 0.5]} />
 
         <RealisticSky />
         <RealisticClouds />
