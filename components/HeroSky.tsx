@@ -136,17 +136,18 @@ function Cloud({ position }: { position: [number, number, number] }) {
 function RealisticClouds() {
   return (
     <>
-      <Cloud position={[5, 4, -12]} />
-      <Cloud position={[7, 11, -14]} />
-      <Cloud position={[-4, 4.5, -10]} />
-      <Cloud position={[9, 3.5, -13]} />
-      <Cloud position={[1, 4, -15]} />
-      <Cloud position={[-8, 3, -9]} />
-      <Cloud position={[-6, 9, -16]} />
-      <Cloud position={[3, 8, -11]} />
+      <Cloud position={[5, 6, -12]} />    {/* moved up by +2 */}
+      <Cloud position={[7, 13, -14]} />   {/* moved up by +2 */}
+      <Cloud position={[-4, 6.5, -10]} /> {/* moved up by +2 */}
+      <Cloud position={[9, 5.5, -13]} />   {/* moved up by +2 */}
+      <Cloud position={[1, 6, -15]} />     {/* moved up by +2 */}
+      <Cloud position={[-8, 5, -9]} />     {/* moved up by +2 */}
+      <Cloud position={[-6, 11, -16]} />   {/* moved up by +2 */}
+      <Cloud position={[3, 10, -11]} />    {/* moved up by +2 */}
     </>
   );
 }
+
 
 /* --- Balloon --- */
 interface BalloonType {
@@ -265,24 +266,24 @@ function BalloonBundle() {
   useFrame((state) => {
     if (!bundleRef.current) return;
     const t = state.clock.getElapsedTime();
-    bundleRef.current.position.y = -0.5 + Math.sin(t * 0.3) * 0.05;
+    bundleRef.current.position.y = -1 + Math.sin(t * 0.3) * 0.05; // below clouds
     bundleRef.current.position.x = Math.cos(t * 0.2) * 0.08;
     bundleRef.current.rotation.z = Math.sin(t * 0.25) * 0.03;
   });
 
   const balloons = useMemo<BalloonType[]>(
     () => [
-      { offsetPos: [-1.2, 0.3, 0], color: "#FF6B9D", label: "Hope", size: 0.5 },
-      { offsetPos: [-0.6, 0, 0.3], color: "#4ECDC4", label: "Healing", size: 0.48 },
-      { offsetPos: [0, 0.5, 0], color: "#FFD93D", label: "Growth", size: 0.55 },
-      { offsetPos: [0.6, 0.1, 0.2], color: "#A8E6CF", label: "Support", size: 0.5 },
-      { offsetPos: [1.2, 0.4, -0.1], color: "#B19CD9", label: "Recovery", size: 0.52 },
+      { offsetPos: [-2.5, 1, 0], color: "#FF6B9D", label: "Hope", size: 1.2 },
+      { offsetPos: [-1.2, 0.7, 0.6], color: "#4ECDC4", label: "Healing", size: 1.1 },
+      { offsetPos: [0, 1.2, 0], color: "#FFD93D", label: "Growth", size: 1.3 },
+      { offsetPos: [1.2, 0.8, 0.6], color: "#A8E6CF", label: "Support", size: 1.15 },
+      { offsetPos: [2.5, 1, 0], color: "#B19CD9", label: "Recovery", size: 1.2 },
     ],
     []
   );
 
   return (
-    <group ref={bundleRef} position={[0, -0.2, -12]} scale={[0.25, 0.25, 0.25]}>
+    <group ref={bundleRef} position={[0, -1, -12]} scale={[2, 2, 2]}> {/* extra large */}
       <mesh position={[0, -2.5, 0]}>
         <sphereGeometry args={[0.08, 8, 8]} />
         <meshStandardMaterial color="#8B7355" />
@@ -301,6 +302,7 @@ function BalloonBundle() {
     </group>
   );
 }
+
 
 /* --- Sky --- */
 function RealisticSky() {

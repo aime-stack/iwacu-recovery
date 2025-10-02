@@ -148,7 +148,6 @@ useEffect(() => {
         </div>
 
         <div className="mt-6 grid gap-10 md:grid-cols-2">
-          {/* Left column */}
 {/* Left column */}
 <div
   className={`text-slate-800 text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
@@ -170,9 +169,14 @@ useEffect(() => {
               whoVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
             }`}
           >
-            <h3 className="text-lg md:text-xl font-semibold text-slate-900">
-              What We Do
-            </h3>
+        <h2
+        className={`text-2xl md:text-3xl font-bold tracking-tight text-slate-900 transition-all duration-900 ease-out ${
+          whoVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+        }`}
+        style={{ transitionDelay: whoVisible ? "200ms" : "0ms" }}
+      >
+        What We Do
+      </h2>
             <ul className="mt-4 grid gap-3 text-slate-800 text-sm md:text-base">
               {[
                 "Individual counseling sessions.",
