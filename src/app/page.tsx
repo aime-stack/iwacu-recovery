@@ -40,24 +40,41 @@ useEffect(() => {
       {/* Hero content */}
       <div className="pointer-events-none absolute inset-0 flex flex-col">
         <header className="pointer-events-auto mx-auto mt-6 w-full max-w-6xl px-6">
-          <nav className="relative flex items-center justify-between rounded-xl shadow-sm ring-1 ring-white/20 backdrop-blur overflow-hidden">
+          <nav className="relative flex items-center justify-between rounded-xl shadow-lg ring-1 ring-white/30 backdrop-blur-md overflow-hidden">
             
-            {/* Gradient background with balloon colors */}
+            {/* Glass morphism background */}
+            <div className="absolute inset-0 bg-white/20 backdrop-blur-md" />
+            
+            {/* Subtle gradient overlay */}
             <div 
               className="absolute inset-0"
               style={{
-                background: 'linear-gradient(90deg, #FF6B9D 0%, #4ECDC4 25%, #FFD93D 50%, #A8E6CF 75%, #B19CD9 100%)',
-                opacity: 0.85
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%)',
               }}
             />
-            
-            {/* White overlay for softer look */}
-            <div className="absolute inset-0 bg-white/40 backdrop-blur-sm" />
 
             {/* Left: Logo and Brand Name */}
             <div className="relative z-10 flex items-center gap-3 p-3">
-              <div className="h-8 w-8 rounded-full bg-white shadow-md" />
-              <span className="font-semibold tracking-tight text-slate-800">I wacu Recovery Centre</span>
+              <div className="h-10 w-10 rounded-full bg-white shadow-md overflow-hidden flex items-center justify-center flex-shrink-0">
+                <img 
+                  src="/logo.png" 
+                  alt="Iwacu Recovery Centre Logo" 
+                  className="h-full w-full object-cover rounded-full"
+                  onError={(e) => {
+                    // Fallback to placeholder if image fails to load
+                    e.currentTarget.style.display = 'none';
+                    const parent = e.currentTarget.parentElement;
+                    if (parent) {
+                      parent.innerHTML = '<span class="text-blue-600 font-bold text-lg">I</span>';
+                    }
+                  }}
+                />
+              </div>
+              <span className="font-semibold tracking-tight">
+                <span style={{ color: '#000000' }}>Iwacu </span>
+                <span style={{ color: '#D61A78' }}>Recovery </span>
+                <span style={{ color: '#3695D7' }}>Centre</span>
+              </span>
             </div>
 
             {/* Center: Animated Slogan */}
@@ -66,7 +83,7 @@ useEffect(() => {
                 {sloganWords.map((word, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <span
-                      className="inline-block text-slate-800 transition-all duration-500 ease-out"
+                      className="inline-block text-slate-900 transition-all duration-500 ease-out"
                       style={{
                         opacity: visibleWords.includes(index) ? 1 : 0,
                         transform: visibleWords.includes(index) 
@@ -92,10 +109,10 @@ useEffect(() => {
             </div>
 
             {/* Right: Menu Links */}
-            <ul className="relative z-10 flex gap-6 p-3 text-sm font-medium text-slate-700">
+            <ul className="relative z-10 flex gap-6 p-3 text-sm font-medium text-slate-800">
               <li>
                 <a 
-                  className="relative px-3 py-2 rounded-lg transition-all duration-300 hover:text-slate-900 hover:bg-white/50 hover:shadow-md hover:scale-105 inline-block" 
+                  className="relative px-3 py-2 rounded-lg transition-all duration-300 hover:text-slate-900 hover:bg-white/60 hover:shadow-md hover:scale-105 inline-block" 
                   href="#home"
                 >
                   Home
@@ -103,7 +120,7 @@ useEffect(() => {
               </li>
               <li>
                 <a 
-                  className="relative px-3 py-2 rounded-lg transition-all duration-300 hover:text-slate-900 hover:bg-white/50 hover:shadow-md hover:scale-105 inline-block" 
+                  className="relative px-3 py-2 rounded-lg transition-all duration-300 hover:text-slate-900 hover:bg-white/60 hover:shadow-md hover:scale-105 inline-block" 
                   href="#about"
                 >
                   About
@@ -111,7 +128,7 @@ useEffect(() => {
               </li>
               <li>
                 <a 
-                  className="relative px-3 py-2 rounded-lg transition-all duration-300 hover:text-slate-900 hover:bg-white/50 hover:shadow-md hover:scale-105 inline-block" 
+                  className="relative px-3 py-2 rounded-lg transition-all duration-300 hover:text-slate-900 hover:bg-white/60 hover:shadow-md hover:scale-105 inline-block" 
                   href="#contact"
                 >
                   Contact Us
@@ -136,25 +153,17 @@ useEffect(() => {
       className="w-full rounded-none md:rounded-3xl bg-gradient-to-br from-white/65 to-slate-100/60 ring-1 ring-white/40 backdrop-blur shadow-lg"
     >
       <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
-        <div className="flex items-center justify-between gap-4">
-        <h2
-        className={`text-2xl md:text-3xl font-bold tracking-tight text-slate-900 transition-all duration-900 ease-out ${
-          whoVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-        }`}
-        style={{ transitionDelay: whoVisible ? "200ms" : "0ms" }}
-      >
-        Who We Are
-      </h2>
-        </div>
-
-        <div className="mt-6 grid gap-10 md:grid-cols-2">
+        <div className="mt-6 flex flex-col md:flex-row gap-10 md:gap-8">
 {/* Left column */}
 <div
-  className={`text-slate-800 text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
+  className={`flex-1 text-slate-800 text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
     whoVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
   }`}
   style={{ transitionDelay: whoVisible ? "350ms" : "0ms" }}
 >
+  <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-4">
+    Who We Are
+  </h2>
   <p>
     The Iwacu Recovery Centre is a counseling and treatment center focusing on alcohol and drugs abuse of people with addiction and related mental, psychological, and health problems. Furthermore, IRC helps young and adult people who are directly from rehabilitation centers and lead them on the way to recovery. At Iwacu Recovery Centre, whether someone seeks out the company of other recovering addicts or finds support in personal networks, it is imperative that you share your struggles with other people.
   </p>
@@ -163,21 +172,37 @@ useEffect(() => {
   </p>
 </div>
 
+          {/* Decorative separator */}
+          <div className="hidden md:flex items-stretch justify-center flex-shrink-0">
+            <div 
+              className={`w-[2px] relative transition-all duration-900 ease-out ${
+                whoVisible ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"
+              }`}
+              style={{ 
+                background: 'linear-gradient(to bottom, #D61A78 0%, #3695D7 50%, #000000 100%)',
+                transitionDelay: whoVisible ? "400ms" : "0ms"
+              }}
+            >
+              {/* Decorative circles along the line */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: '#D61A78' }} />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full shadow-md" style={{ backgroundColor: '#3695D7' }} />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black shadow-sm" />
+            </div>
+          </div>
+
           {/* Right column */}
           <div
-            className={`transition-all duration-700 delay-200 ${
+            className={`flex-1 text-slate-800 text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
               whoVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
             }`}
+            style={{ transitionDelay: whoVisible ? "500ms" : "0ms" }}
           >
-        <h2
-        className={`text-2xl md:text-3xl font-bold tracking-tight text-slate-900 transition-all duration-900 ease-out ${
-          whoVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-        }`}
-        style={{ transitionDelay: whoVisible ? "200ms" : "0ms" }}
+        <h3
+        className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-4"
       >
         What We Do
-      </h2>
-            <ul className="mt-4 grid gap-3 text-slate-800 text-sm md:text-base">
+      </h3>
+            <ul className="grid gap-3">
               {[
                 "Individual counseling sessions.",
                 "Group counseling sessions.",
@@ -192,10 +217,10 @@ useEffect(() => {
                   style={{
                     opacity: whoVisible ? 1 : 0,
                     transform: whoVisible ? "translateY(0px)" : "translateY(8px)",
-                    transitionDelay: `${250 + idx * 80}ms`,
+                    transitionDelay: `${550 + idx * 80}ms`,
                   }}
                 >
-                  <span className="text-blue-600 mt-1">•</span>
+                  <span className="mt-1" style={{ color: '#3695D7' }}>•</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -220,7 +245,7 @@ useEffect(() => {
       {/* General Counseling */}
       <div className="group rounded-2xl border border-white/40 bg-white/50 shadow-md backdrop-blur hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
         <div className="p-6">
-          <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white grid place-items-center shadow-sm">
+          <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-slate-700 to-black text-white grid place-items-center shadow-sm">
             <span className="text-xl">🧠</span>
           </div>
           <h3 className="mt-4 text-lg font-semibold text-slate-900">General Counseling</h3>
@@ -234,7 +259,7 @@ useEffect(() => {
       {/* Emergency Help */}
       <div className="group rounded-2xl border border-white/40 bg-white/50 shadow-md backdrop-blur hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
         <div className="p-6">
-          <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-red-400 to-rose-600 text-white grid place-items-center shadow-sm">
+          <div className="h-12 w-12 rounded-xl text-white grid place-items-center shadow-sm" style={{ background: 'linear-gradient(to bottom right, #D61A78, #A01560)' }}>
             <span className="text-xl">🚑</span>
           </div>
           <h3 className="mt-4 text-lg font-semibold text-slate-900">Emergency Help</h3>
@@ -250,7 +275,7 @@ useEffect(() => {
       {/* Alcohol & Drugs Addiction Treatment */}
       <div className="group rounded-2xl border border-white/40 bg-white/50 shadow-md backdrop-blur hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
         <div className="p-6">
-          <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white grid place-items-center shadow-sm">
+          <div className="h-12 w-12 rounded-xl text-white grid place-items-center shadow-sm" style={{ background: 'linear-gradient(to bottom right, #3695D7, #2570A8)' }}>
             <span className="text-xl">🧩</span>
           </div>
           <h3 className="mt-4 text-lg font-semibold text-slate-900">Alcohol & Drugs Addiction Treatment</h3>
@@ -264,7 +289,7 @@ useEffect(() => {
       {/* Mentorship */}
       <div className="group rounded-2xl border border-white/40 bg-white/50 shadow-md backdrop-blur hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
         <div className="p-6">
-          <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-white grid place-items-center shadow-sm">
+          <div className="h-12 w-12 rounded-xl text-white grid place-items-center shadow-sm" style={{ background: 'linear-gradient(to bottom right, #D61A78, #3695D7)' }}>
             <span className="text-xl">🎓</span>
           </div>
           <h3 className="mt-4 text-lg font-semibold text-slate-900">Mentorship</h3>
