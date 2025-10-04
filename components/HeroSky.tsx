@@ -2,154 +2,52 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, Text } from "@react-three/drei";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
-/* --- Camera Rig --- */
 function CameraRig() {
   const { camera } = useThree();
-  const target = useMemo(() => ({ x: 0, y: 0 }), []);
+  const [isMobile, setIsMobile] = useState(false);
+  const target = useMemo(() => ({ x: -1.5, y: 0 }), []); // Changed to negative to look left
 
   useEffect(() => {
-    camera.position.set(0, 0.5, 8);
-  }, [camera]);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      camera.position.set(-0.5, 0.5, 10); // Negative x for left side
+    } else {
+      camera.position.set(-1.5, 0.5, 10); // Negative x for left side
+    }
+  }, [camera, isMobile]);
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
       const nx = (e.clientX / window.innerWidth) * 2 - 1;
       const ny = (e.clientY / window.innerHeight) * 2 - 1;
-      target.x = nx * 0.3;
-      target.y = -ny * 0.2;
+      const movementFactor = isMobile ? 0.15 : 0.25;
+      target.x = (isMobile ? -0.5 : -1.5) + nx * movementFactor; // Negative for left
+      target.y = -ny * 0.15;
     };
     window.addEventListener("pointermove", onMove);
     return () => window.removeEventListener("pointermove", onMove);
-  }, [target]);
+  }, [target, isMobile]);
 
   useFrame((_, dt) => {
     camera.position.x += (target.x - camera.position.x) * Math.min(1, dt * 1.5);
     camera.position.y += (target.y - camera.position.y) * Math.min(1, dt * 1.5);
-    camera.lookAt(0, 0, 0);
+    camera.lookAt(-3, 0, 0); // Look towards left side where balloons are now
   });
 
   return null;
 }
 
-/* --- Raindrops --- */
-function Raindrops() {
-  const ref = useRef<THREE.Points>(null!);
-  const COUNT = 800;
-
-  const { positions, velocities } = useMemo(() => {
-    const p = new Float32Array(COUNT * 3);
-    const v = new Float32Array(COUNT);
-
-    for (let i = 0; i < COUNT; i++) {
-      p[i * 3] = (Math.random() - 0.5) * 30;
-      p[i * 3 + 1] = Math.random() * 20;
-      p[i * 3 + 2] = (Math.random() - 0.5) * 30;
-      v[i] = 0.02 + Math.random() * 0.03;
-    }
-    return { positions: p, velocities: v };
-  }, []);
-
-  useFrame(() => {
-    if (!ref.current) return;
-    const pos = ref.current.geometry.attributes.position.array as Float32Array;
-    for (let i = 0; i < COUNT; i++) {
-      pos[i * 3 + 1] -= velocities[i];
-      if (pos[i * 3 + 1] < -2) {
-        pos[i * 3 + 1] = 20;
-        pos[i * 3] = (Math.random() - 0.5) * 30;
-        pos[i * 3 + 2] = (Math.random() - 0.5) * 30;
-      }
-    }
-    ref.current.geometry.attributes.position.needsUpdate = true;
-  });
-
-  return (
-    <points ref={ref}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          array={positions}
-          count={COUNT}
-          itemSize={3}
-          args={[positions, 3]} // Fix required by R3F v9+
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        color="#B8D4E8"
-        size={0.04}
-        opacity={0.35}
-        transparent
-        depthWrite={false}
-      />
-    </points>
-  );
-}
-
-/* --- Cloud --- */
-function Cloud({ position }: { position: [number, number, number] }) {
-  const groupRef = useRef<THREE.Group>(null!);
-  const cloudParts = useMemo(() => {
-    const parts: { position: [number, number, number]; scale: [number, number, number] }[] = [];
-    for (let i = 0; i < 25; i++) {
-      const angle = (i / 25) * Math.PI * 2;
-      const radius = 1.2 + Math.random() * 1.4;
-      const height = (Math.random() - 0.5) * 0.4;
-      parts.push({
-        position: [
-          Math.cos(angle) * radius + (Math.random() - 0.5) * 0.8,
-          height + (Math.random() - 0.3) * 0.5,
-          Math.sin(angle) * radius * 0.6 + (Math.random() - 0.5) * 0.6,
-        ],
-        scale: [
-          0.5 + Math.random() * 0.7,
-          0.4 + Math.random() * 0.6,
-          0.5 + Math.random() * 0.7,
-        ],
-      });
-    }
-    return parts;
-  }, []);
-
-  useFrame((state) => {
-    if (!groupRef.current) return;
-    const t = state.clock.getElapsedTime();
-    groupRef.current.position.x = position[0] + Math.sin(t * 0.04 + position[0]) * 0.25;
-    groupRef.current.position.y = position[1] + Math.sin(t * 0.08 + position[1]) * 0.15;
-  });
-
-  return (
-    <group ref={groupRef} position={position}>
-      {cloudParts.map((part, i) => (
-        <mesh key={i} position={part.position} scale={part.scale}>
-          <sphereGeometry args={[0.8, 12, 12]} />
-          <meshStandardMaterial color="#E8F0F5" transparent opacity={0.92} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-function RealisticClouds() {
-  return (
-    <>
-      <Cloud position={[5, 6, -12]} />    {/* moved up by +2 */}
-      <Cloud position={[7, 13, -14]} />   {/* moved up by +2 */}
-      <Cloud position={[-4, 6.5, -10]} /> {/* moved up by +2 */}
-      <Cloud position={[9, 5.5, -13]} />   {/* moved up by +2 */}
-      <Cloud position={[1, 6, -15]} />     {/* moved up by +2 */}
-      <Cloud position={[-8, 5, -9]} />     {/* moved up by +2 */}
-      <Cloud position={[-6, 11, -16]} />   {/* moved up by +2 */}
-      <Cloud position={[3, 10, -11]} />    {/* moved up by +2 */}
-    </>
-  );
-}
-
-
-/* --- Balloon --- */
 interface BalloonType {
   offsetPos: [number, number, number];
   color: string;
@@ -177,11 +75,13 @@ function Balloon({
   useFrame((state) => {
     if (!balloonRef.current) return;
     const t = state.clock.getElapsedTime();
+    
     const individualFloat = Math.sin(t * 0.5 + i * 0.7) * 0.15;
     balloonRef.current.position.y = balloon.offsetPos[1] + individualFloat;
+    
     balloonRef.current.rotation.y = Math.sin(t * 0.4 + i) * 0.1;
 
-    const targetScale = clicked === i ? 1.3 : hovered === i ? 1.2 : 1;
+    const targetScale = clicked === i ? 1.3 : hovered === i ? 1.15 : 1;
     balloonRef.current.scale.lerp(
       new THREE.Vector3(targetScale, targetScale, targetScale),
       0.1
@@ -220,10 +120,15 @@ function Balloon({
         object={
           new THREE.Line(
             stringGeometry,
-            new THREE.LineBasicMaterial({ color: "#8B7355", transparent: true, opacity: 0.8 })
+            new THREE.LineBasicMaterial({ 
+              color: "#8B7355", 
+              transparent: true, 
+              opacity: 0.8
+            })
           )
         }
       />
+      
       <group
         ref={balloonRef}
         position={balloon.offsetPos}
@@ -236,12 +141,20 @@ function Balloon({
       >
         <mesh scale={[balloon.size, balloon.size * 1.2, balloon.size]}>
           <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial color={balloon.color} emissive={balloon.color} emissiveIntensity={0.2} />
+          <meshStandardMaterial 
+            color={balloon.color} 
+            emissive={balloon.color} 
+            emissiveIntensity={0.2}
+            roughness={0.3}
+            metalness={0.1}
+          />
         </mesh>
+        
         <mesh position={[0, -balloon.size * 0.9, 0]} scale={[0.15, 0.25, 0.15]}>
           <sphereGeometry args={[balloon.size * 0.3, 8, 8]} />
           <meshStandardMaterial color={balloon.color} />
         </mesh>
+        
         <Text
           position={[0, 0, balloon.size + 0.1]}
           fontSize={0.12}
@@ -262,32 +175,76 @@ function BalloonBundle() {
   const bundleRef = useRef<THREE.Group>(null!);
   const [hovered, setHovered] = useState<number | null>(null);
   const [clicked, setClicked] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useFrame((state) => {
     if (!bundleRef.current) return;
     const t = state.clock.getElapsedTime();
-    bundleRef.current.position.y = -1 + Math.sin(t * 0.3) * 0.05; // below clouds
+    
+    bundleRef.current.position.y = -1 + Math.sin(t * 0.3) * 0.05;
     bundleRef.current.position.x = Math.cos(t * 0.2) * 0.08;
     bundleRef.current.rotation.z = Math.sin(t * 0.25) * 0.03;
   });
 
   const balloons = useMemo<BalloonType[]>(
-    () => [
-      { offsetPos: [-2.5, 1, 0], color: "#FF6B9D", label: "Hope", size: 1.2 },
-      { offsetPos: [-1.2, 0.7, 0.6], color: "#4ECDC4", label: "Healing", size: 1.1 },
-      { offsetPos: [0, 1.2, 0], color: "#FFD93D", label: "Growth", size: 1.3 },
-      { offsetPos: [1.2, 0.8, 0.6], color: "#A8E6CF", label: "Support", size: 1.15 },
-      { offsetPos: [2.5, 1, 0], color: "#B19CD9", label: "Recovery", size: 1.2 },
-    ],
-    []
+    () => {
+      const sizeFactor = isMobile ? 0.8 : 1;
+      const spreadFactor = isMobile ? 0.6 : 1;
+      
+      return [
+        { 
+          offsetPos: [-0.4 * spreadFactor, 0.9, 0.3], 
+          color: "#FF6B9D", 
+          label: "", 
+          size: 1.1 * sizeFactor 
+        },
+        { 
+          offsetPos: [-0.15 * spreadFactor, 0.7, 0.5], 
+          color: "#4ECDC4", 
+          label: "", 
+          size: 1.0 * sizeFactor 
+        },
+        { 
+          offsetPos: [0.15 * spreadFactor, 0.8, 0.5], 
+          color: "#FFD93D", 
+          label: "", 
+          size: 1.05 * sizeFactor 
+        },
+        { 
+          offsetPos: [0.4 * spreadFactor, 0.6, 0.3], 
+          color: "#B19CD9", 
+          label: "", 
+          size: 1.0 * sizeFactor 
+        },
+      ];
+    },
+    [isMobile]
   );
 
+  const bundleScale = isMobile ? 1.2 : 1.6;
+  const bundlePositionX = isMobile ? 0 : 1.5;
+  const bundlePositionZ = isMobile ? -8 : -8;
+
   return (
-    <group ref={bundleRef} position={[0, -1, -12]} scale={[2, 2, 2]}> {/* extra large */}
+    <group 
+      ref={bundleRef} 
+      position={[bundlePositionX, -1, bundlePositionZ]} 
+      scale={[bundleScale, bundleScale, bundleScale]}
+    >
       <mesh position={[0, -2.5, 0]}>
         <sphereGeometry args={[0.08, 8, 8]} />
         <meshStandardMaterial color="#8B7355" />
       </mesh>
+      
       {balloons.map((b, i) => (
         <Balloon
           key={i}
@@ -303,8 +260,6 @@ function BalloonBundle() {
   );
 }
 
-
-/* --- Sky --- */
 function RealisticSky() {
   const skyGradient = useMemo(() => {
     const canvas = document.createElement("canvas");
@@ -312,10 +267,12 @@ function RealisticSky() {
     canvas.height = 512;
     const ctx = canvas.getContext("2d")!;
     const gradient = ctx.createLinearGradient(0, 0, 0, 512);
+    
     gradient.addColorStop(0, "#5B8DBE");
     gradient.addColorStop(0.3, "#6FA3D1");
     gradient.addColorStop(0.6, "#84B5DB");
     gradient.addColorStop(1, "#A8CCE5");
+    
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 2, 512);
     return new THREE.CanvasTexture(canvas);
@@ -329,51 +286,46 @@ function RealisticSky() {
   );
 }
 
-/* --- WebGL Guard --- */
-function WebGLContextGuard() {
-  const { gl } = useThree();
-  useEffect(() => {
-    const canvas = gl.getContext().canvas as HTMLCanvasElement;
-    const onLost = (e: Event) => e.preventDefault();
-    const onRestored = () => gl.resetState();
-    canvas.addEventListener("webglcontextlost", onLost, false);
-    canvas.addEventListener("webglcontextrestored", onRestored, false);
-    return () => {
-      canvas.removeEventListener("webglcontextlost", onLost);
-      canvas.removeEventListener("webglcontextrestored", onRestored);
-    };
-  }, [gl]);
-  return null;
+function Scene() {
+  return (
+    <>
+      <color attach="background" args={["#5B8DBE"]} />
+      <fog attach="fog" args={["#84B5DB", 20, 70]} />
+      <PerspectiveCamera makeDefault position={[0, 0.5, 8]} />
+      
+      <ambientLight intensity={0.6} color="#B8D4E8" />
+      <directionalLight position={[8, 15, 10]} intensity={0.8} color="#FFFFFF" />
+      <hemisphereLight args={["#7FA8C9", "#5B8DBE", 0.5]} />
+      
+      <RealisticSky />
+      <BalloonBundle />
+      <CameraRig />
+    </>
+  );
 }
 
-/* --- Main Component --- */
 export default function HeroSky() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return (
+      <div className="absolute top-0 left-0 h-[100svh] w-full bg-gradient-to-b from-blue-600 via-blue-400 to-blue-300" style={{ position: 'fixed' }} />
+    );
+  }
+
   return (
-    <div className="absolute top-0 left-0 h-[100svh] w-full overflow-hidden z-0">
+    <div className="absolute top-0 left-0 h-[100svh] w-full" style={{ position: 'fixed' }}>
       <Canvas
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         dpr={[1, 2]}
         camera={{ fov: 55, near: 0.1, far: 200 }}
       >
-        <color attach="background" args={["#5B8DBE"]} />
-        <fog attach="fog" args={["#84B5DB", 20, 70]} />
-        <PerspectiveCamera makeDefault position={[0, 0.5, 8]} />
-        <ambientLight intensity={0.6} color="#B8D4E8" />
-        <directionalLight position={[8, 15, 10]} intensity={0.8} />
-        {/* hemisphereLight uses 'args' instead of skyColor/groundColor */}
-        <hemisphereLight args={["#7FA8C9", "#5B8DBE", 0.5]} />
-
-        <RealisticSky />
-        <RealisticClouds />
-        <Raindrops />
-        <BalloonBundle />
-
-        <EffectComposer>
-          <Bloom intensity={0.3} luminanceThreshold={0.7} />
-        </EffectComposer>
-
-        <CameraRig />
-        <WebGLContextGuard />
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
       </Canvas>
     </div>
   );
