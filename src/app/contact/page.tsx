@@ -30,7 +30,6 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitStatus("success");
@@ -42,53 +41,82 @@ export default function ContactPage() {
         message: "",
         service: ""
       });
+      
+      setTimeout(() => setSubmitStatus("idle"), 5000);
     }, 2000);
   };
 
   return (
     <main className="relative min-h-screen text-slate-800 overflow-hidden">
-      {/* Sky background that covers entire site */}
       <HeroSky />
       
       <Header />
       
-      {/* Hero Section */}
-      <div className="relative pt-24 pb-16">
+      <div className="relative pt-24 pb-16 z-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
-              Contact Us
+            <h1 
+              className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6" 
+              style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
+            >
+              Get in Touch
             </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-              We&apos;re here to help. Reach out to us for support, information, or to schedule an appointment. Your journey to recovery starts with a single step.
+            <p 
+              className="text-xl md:text-2xl text-white/95 max-w-3xl mx-auto font-medium" 
+              style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
+            >
+              We are here to help. Reach out for support, information, or to schedule an appointment.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 py-20">
+      <div className="relative z-10 py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-16 lg:grid-cols-2">
-            {/* Contact Information */}
+          
+          <div className="mb-12 bg-gradient-to-r from-red-900/80 to-orange-900/80 backdrop-blur-md rounded-3xl border border-red-400/30 p-8 shadow-2xl">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="text-6xl">🚨</div>
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+                  24/7 Emergency Support Available
+                </h3>
+                <p className="text-white/95 text-lg mb-4" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                  If you or someone you know is experiencing a mental health crisis or immediate danger, call our emergency line now.
+                </p>
+              </div>
+              <a 
+                href="tel:+250794580006" 
+                className="flex-shrink-0 bg-white text-red-600 py-4 px-8 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                +250 794 580 006
+              </a>
+            </div>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-2">
+            
             <div className="space-y-8">
-              <div className="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-8 shadow-xl">
-                <h2 className="text-3xl font-bold text-white mb-6" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-                  Get in Touch
+              <div className="bg-gradient-to-br from-blue-900/80 to-purple-900/80 backdrop-blur-md rounded-3xl border border-white/30 p-8 shadow-2xl">
+                <h2 className="text-3xl font-bold text-white mb-8" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+                  Contact Information
                 </h2>
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-brand-primary rounded-full p-3 flex-shrink-0">
-                      <span className="text-white text-xl">📍</span>
+                  
+                  <div className="flex items-start gap-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full p-3 flex-shrink-0">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                      </svg>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                        Address
+                      <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                        Our Location
                       </h3>
-                      <p className="text-white/90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                      <p className="text-white/95 leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                         Kigali, Rwanda<br />
                         Near Kigali Convention Centre<br />
-                        <span className="text-sm text-white/70">We provide directions upon appointment confirmation</span>
+                        <span></span>
                       </p>
                     </div>
                   </div>
