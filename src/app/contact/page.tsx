@@ -283,15 +283,11 @@ export default function ContactPage() {
                       className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
                     >
                       <option value="">Select a service</option>
-                      <option value="psychoeducation">Psychoeducation</option>
-                      <option value="counseling">Counseling & Psychotherapy</option>
-                      <option value="addiction">Addiction Treatment</option>
-                      <option value="psychosocial">Psychosocial Support</option>
-                      <option value="ergotherapy">Ergo/Occupation Therapy</option>
-                      <option value="relaxation">Relaxation Program</option>
-                      <option value="art-therapy">Art Therapy</option>
-                      <option value="emergency">Emergency Support</option>
-                      <option value="other">Other</option>
+                      <option value="psychoeducation">Counselling</option>
+                      <option value="counseling">Alcoholism</option>
+                      <option value="addiction">Narcotics</option>
+                      <option value="psychosocial">Other Addictions</option>
+
                     </select>
                   </div>
                 </div>
