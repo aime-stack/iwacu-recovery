@@ -48,9 +48,12 @@ export default function AboutSection() {
                 </h2>
                 <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                 At Iwacu Recovery Centre, we believe that no life is too broken to be restored and no story too painful to be rewritten. We are a counseling and treatment center devoted to helping individuals overcome alcohol and drug addiction, as well as emotional, psychological, and mental health struggles.
-                Our mission is to walk beside each person on their journey to healing; offering compassion, understanding, and practical support every step of the way. Whether you are beginning recovery or transitioning from rehabilitation, we provide a safe and welcoming environment where transformation begins.
+                Our mission is to walk beside each person on their journey to healing; offering compassion, understanding, and practical support every step of the way. 
+                <p>
+                Whether you are beginning recovery or transitioning from rehabilitation, we provide a safe and welcoming environment where transformation begins.
                 We understand that recovery is not just about quitting an addiction; it’s about rediscovering your purpose, rebuilding trust, and renewing your hope. Through counseling, community, and faith, we empower individuals to reclaim their dignity and find strength in connection; with themselves, with others, and with God.
                
+                </p>
 
                 </p>
                 <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
