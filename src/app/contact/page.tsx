@@ -51,7 +51,7 @@ export default function ContactPage() {
       <HeroSky />
       <Header />
       
-      <div className="relative pt-24 pb-16 z-10">
+      <div className="relative pt-32 md:pt-36 pb-16 z-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
@@ -78,7 +78,7 @@ export default function ContactPage() {
                   If you or someone you know is experiencing a mental health crisis, call our emergency line now.
                 </p>
               </div>
-              <a href="tel:+250794580006" className="flex-shrink-0 bg-white text-red-600 py-4 px-8 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <a href="tel:+250794580006" className="flex-shrink-0 bg-white text-red-600 py-4 px-8 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
                 +250 794 580 006
               </a>
             </div>
@@ -123,13 +123,13 @@ export default function ContactPage() {
                       </h3>
                       <div className="space-y-2">
                         <p className="text-white/95" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                          <a href="tel:+250794580006" className="hover:text-white transition-colors font-semibold">
+                          <a href="tel:+250794580006" className="hover:text-white transition-colors font-semibold cursor-pointer">
                             +250 794 580 006
                           </a>
                           <span className="block text-sm text-red-300">Emergency Line 24/7</span>
                         </p>
                         <p className="text-white/95" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                          <a href="tel:+250788772489" className="hover:text-white transition-colors font-semibold">
+                          <a href="tel:+250788772489" className="hover:text-white transition-colors font-semibold cursor-pointer">
                             +250 788 772 489
                           </a>
                           <span className="block text-sm text-white/80">General Inquiries</span>
@@ -149,7 +149,7 @@ export default function ContactPage() {
                         Email Address
                       </h3>
                       <p className="text-white/95" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                        <a href="mailto:irecoverycentre17@gmail.com" className="hover:text-white transition-colors font-semibold break-all">
+                        <a href="mailto:irecoverycentre17@gmail.com" className="hover:text-white transition-colors font-semibold break-all cursor-pointer">
                           irecoverycentre17@gmail.com
                         </a>
                       </p>
@@ -189,7 +189,7 @@ export default function ContactPage() {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <a href="https://wa.me/250794580006" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-green-900/80 to-emerald-900/80 backdrop-blur-md rounded-2xl border border-green-400/30 p-6 text-center shadow-xl hover:scale-105 transition-all duration-300">
+                <a href="https://wa.me/250794580006" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-green-900/80 to-emerald-900/80 backdrop-blur-md rounded-2xl border border-green-400/30 p-6 text-center shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
                   <div className="text-4xl mb-3">💬</div>
                   <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                     WhatsApp
@@ -199,7 +199,7 @@ export default function ContactPage() {
                   </p>
                 </a>
 
-                <a href="tel:+250794580006" className="bg-gradient-to-br from-purple-900/80 to-pink-900/80 backdrop-blur-md rounded-2xl border border-purple-400/30 p-6 text-center shadow-xl hover:scale-105 transition-all duration-300">
+                <a href="tel:+250794580006" className="bg-gradient-to-br from-purple-900/80 to-pink-900/80 backdrop-blur-md rounded-2xl border border-purple-400/30 p-6 text-center shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
                   <div className="text-4xl mb-3">📅</div>
                   <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                     Book Visit
@@ -235,7 +235,7 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
+                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium cursor-text"
                       placeholder="John Doe"
                     />
                   </div>
@@ -250,7 +250,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
+                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium cursor-text"
                       placeholder="john@example.com"
                     />
                   </div>
@@ -267,7 +267,7 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
+                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium cursor-text"
                       placeholder="+250 XXX XXX XXX"
                     />
                   </div>
@@ -280,7 +280,7 @@ export default function ContactPage() {
                       name="service"
                       value={formData.service}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
+                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium cursor-pointer"
                     >
                       <option value="">Select a service</option>
                       <option value="psychoeducation">Counselling</option>
@@ -303,7 +303,7 @@ export default function ContactPage() {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
+                    className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium cursor-text"
                     placeholder="How can we help you?"
                   />
                 </div>
@@ -319,7 +319,7 @@ export default function ContactPage() {
                     onChange={handleInputChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent resize-vertical font-medium"
+                    className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent resize-vertical font-medium cursor-text"
                     placeholder="Please share details about your inquiry..."
                   />
                 </div>
@@ -328,7 +328,7 @@ export default function ContactPage() {
                   type="button"
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white py-4 px-8 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white py-4 px-8 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 cursor-pointer"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </button>

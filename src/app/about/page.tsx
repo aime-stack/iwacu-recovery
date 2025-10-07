@@ -15,17 +15,20 @@ export default function AboutPage() {
     {
       date: "19, May 2025",
       title: "IWACU RECOVERY CENTRE, HIGH COMMISSION OF PAKISTAN SIGN PARTNERSHIP AGREEMENT",
-      description: "Kigali, May 19, 2025– IWACU RECOVERY CENTRE (IRC) and THE HIGH COMMISSION OF PAKISTAN have signed a partnership agreement aimed at fostering collaboration in areas such as trade, sports, culture, psychosocial support, public health education, and community recovery initiatives."
+      description: "Kigali, May 19, 2025– IWACU RECOVERY CENTRE (IRC) and THE HIGH COMMISSION OF PAKISTAN have signed a partnership agreement aimed at fostering collaboration in areas such as trade, sports, culture, psychosocial support, public health education, and community recovery initiatives.",
+      image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop"
     },
     {
       date: "10 May 2025",
       title: "Shoes donation to children",
-      description: "In a recent community outreach effort, IWACU RECOVERY CENTRE coordinated a successful shoe donation activity targeting vulnerable children from parents affected by drug addiction. Vulnerable children receive daily care from \"Hope for Recovery Christian School\", located in Nyamata Sector, Bugesera District, Eastern Rwanda."
+      description: "In a recent community outreach effort, IWACU RECOVERY CENTRE coordinated a successful shoe donation activity targeting vulnerable children from parents affected by drug addiction. Vulnerable children receive daily care from \"Hope for Recovery Christian School\", located in Nyamata Sector, Bugesera District, Eastern Rwanda.",
+      image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=600&fit=crop"
     },
     {
       date: "August, 2024",
       title: "Iwacu Recovery Centre Distributes School Kits to 287 Children in Bugesera District",
-      description: "Iwacu Recovery Centre has successfully distributed school tool kits to 287 children in Bugesera District, marking the conclusion of the youth camps held during the summer holidays of 2024."
+      description: "Iwacu Recovery Centre has successfully distributed school tool kits to 287 children in Bugesera District, marking the conclusion of the youth camps held during the summer holidays of 2024.",
+      image: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&h=600&fit=crop"
     }
   ];
 
@@ -67,7 +70,7 @@ export default function AboutPage() {
       <Header />
       
       {/* Hero Section */}
-      <div className="relative pt-24 pb-16 z-10">
+      <div className="relative pt-32 md:pt-36 pb-16 z-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
@@ -87,7 +90,8 @@ export default function AboutPage() {
           {/* Our Background & Description */}
           <section
             ref={setRef('background')}
-            className="w-full rounded-3xl bg-gradient-to-br from-blue-900/80 to-purple-900/80 backdrop-blur-md ring-1 ring-white/30 shadow-2xl"
+            className="w-full rounded-3xl shadow-2xl"
+            style={{ backgroundColor: '#7E4734' }}
           >
             <div className="px-6 py-12 md:py-16">
               <div className="flex flex-col md:flex-row gap-10 md:gap-8">
@@ -95,19 +99,22 @@ export default function AboutPage() {
                   className={`flex-1 text-white text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
                     isVisible['background'] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                   }`}
-                  style={{ transitionDelay: isVisible['background'] ? "350ms" : "0ms" }}
+                  style={{ 
+                    transitionDelay: isVisible['background'] ? "350ms" : "0ms",
+                    fontFamily: 'Tahoma, sans-serif'
+                  }}
                 >
                   <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                     Our Background
                   </h2>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    The devastating impact of alcohol and other drugs abuse has been widely documented. Globally, all types of alcohol and drugs abuse among children, youths and adults pose serious public health risks and increasing social problems that contribute to the destruction of individuals, families and communities.
+                  <p style={{ textAlign: 'justify', textRendering: 'geometricPrecision' }}>
+                    The devastating effects of alcohol and drug abuse are felt across the world; breaking lives, families, and communities. From children to adults, substance abuse continues to pose a major public health challenge and a growing social crisis that undermines the wellbeing of countless individuals.
                   </p>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    In Rwanda, alcohol and drug addiction in most cases affects the youth. The government of Rwanda has set up strategies to fight against drug abuse including inventing and supporting rehabilitation centers. These centers also offer vocational skills to former drug users, involving civil societies in the matter, as well as decentralizing mental health services.
+                  <p style={{ textAlign: 'justify', textRendering: 'geometricPrecision' }}>
+                    In Rwanda, addiction has become a pressing concern, particularly among the youth. Recognizing this, the Government of Rwanda has taken strong measures to combat the issue; establishing and supporting rehabilitation centers, promoting vocational training for former users, engaging civil society, and expanding access to mental health services across the country.
                   </p>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    After rehab, the best thing an individual can do to overcome alcohol addiction is to find support for ongoing recovery. As part of a community of individuals concerned about mental health and addiction-related issues, we are aware of the contrast between incidence of mental illness and inadequate provision of addiction recovery services.
+                  <p style={{ textAlign: 'justify', textRendering: 'geometricPrecision' }}>
+                    Yet, recovery does not end with rehabilitation. True healing begins after rehab, when individuals need continued guidance, understanding, and community support to rebuild their lives. At Iwacu Recovery Centre, we stand as a bridge between rehabilitation and lasting recovery; empowering individuals to rediscover purpose, restore dignity, and find hope again.
                   </p>
                 </div>
 
@@ -117,32 +124,35 @@ export default function AboutPage() {
                       isVisible['background'] ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"
                     }`}
                     style={{ 
-                      background: 'linear-gradient(to bottom, #D61A78 0%, #3695D7 50%, #000000 100%)',
+                      background: 'linear-gradient(to bottom, #D61A78 0%, #3695D7 50%, #FFFFFF 100%)',
                       transitionDelay: isVisible['background'] ? "400ms" : "0ms"
                     }}
                   >
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: '#D61A78' }} />
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full shadow-md" style={{ backgroundColor: '#3695D7' }} />
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black shadow-sm" />
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-white shadow-sm" />
                   </div>
                 </div>
                 <div
                   className={`flex-1 text-white text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
                     isVisible['background'] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                   }`}
-                  style={{ transitionDelay: isVisible['background'] ? "500ms" : "0ms" }}
+                  style={{ 
+                    transitionDelay: isVisible['background'] ? "500ms" : "0ms",
+                    fontFamily: 'Tahoma, sans-serif'
+                  }}
                 >
                   <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                     Our Description
                   </h3>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    The Iwacu Recovery Centre is a counseling and treatment center focusing on alcohol and drug abuse for people with addiction and related mental, psychological, and health problems. Furthermore, IRC helps young and adult people who are directly from rehabilitation centers and leads them on the way to recovery.
+                  <p style={{ textAlign: 'justify', textRendering: 'geometricPrecision' }}>
+                    The Iwacu Recovery Centre is a dedicated counseling and treatment facility committed to helping individuals overcome alcohol and drug addiction, as well as related mental, psychological, and health challenges.
                   </p>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    At Iwacu Recovery Centre, whether someone seeks out the company of other recovering addicts or finds support in personal networks, it is imperative that you share your struggles with other people.
+                  <p style={{ textAlign: 'justify', textRendering: 'geometricPrecision' }}>
+                    We walk alongside both young and adult clients; especially those transitioning from rehabilitation centers; guiding them step by step on their journey toward lasting recovery and renewed hope. At Iwacu Recovery Centre, we believe that healing thrives in connection. Whether through the shared strength of fellow recovering individuals or the encouragement of personal support networks, no one should face recovery alone.
                   </p>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    The establishment of IRC also originated from the fact that addiction is a family disease whereby an individual suffering from addiction puts family members under a great deal of stress, disrupting routines and causing unsettling or even frightening experiences.
+                  <p style={{ textAlign: 'justify', textRendering: 'geometricPrecision' }}>
+                    The founding of IRC stems from a deep understanding that addiction is not an individual battle; it is a family disease. When one person suffers, the entire family feels the weight, enduring stress, disrupted routines, and emotional pain. That is why we are devoted not only to restoring lives but also to rebuilding families and communities affected by addiction.
                   </p>
                 </div>
               </div>
@@ -234,76 +244,7 @@ export default function AboutPage() {
             </div>
           </section>
 
-          {/* Hope for Recovery Christian School */}
-          <section
-            ref={setRef('school')}
-            className="w-full rounded-3xl bg-gradient-to-br from-green-900/80 to-teal-900/80 backdrop-blur-md ring-1 ring-white/30 shadow-2xl"
-          >
-            <div className="px-6 py-12 md:py-16">
-              <div
-                className={`text-center mb-8 transition-all duration-900 ease-out ${
-                  isVisible['school'] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                }`}
-                style={{ transitionDelay: isVisible['school'] ? "200ms" : "0ms" }}
-              >
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-                  Hope for Recovery Christian School (HRCS)
-                </h2>
-              </div>
-
-              <div className="flex flex-col md:flex-row gap-10 md:gap-8">
-                <div
-                  className={`flex-1 text-white text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
-                    isVisible['school'] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                  }`}
-                  style={{ transitionDelay: isVisible['school'] ? "350ms" : "0ms" }}
-                >
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    Hope for Recovery Christian School was founded in response to the urgent need for educational access among children from vulnerable families. During the holiday season 2023-2024, we successfully supported 287 children, highlighting the demand for our services.
-                  </p>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    As we began the 2024-2025 school year, we took the necessary step to open an early childhood program, enrolling 50 vulnerable children in the school and another 70 children in the community.
-                  </p>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    However, our school faces significant challenges in maintaining its operations. Many of our students come from families that struggle financially, making it difficult for them to afford basic education. This places a considerable burden on us to ensure that we can provide quality education and nutritious meals to support the children&apos;s overall development.
-                  </p>
-                </div>
-
-                <div className="hidden md:flex items-stretch justify-center flex-shrink-0">
-                  <div 
-                    className={`w-[2px] relative transition-all duration-900 ease-out ${
-                      isVisible['school'] ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"
-                    }`}
-                    style={{ 
-                      background: 'linear-gradient(to bottom, #D61A78 0%, #3695D7 50%, #000000 100%)',
-                      transitionDelay: isVisible['school'] ? "400ms" : "0ms"
-                    }}
-                  >
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: '#D61A78' }} />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full shadow-md" style={{ backgroundColor: '#3695D7' }} />
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black shadow-sm" />
-                  </div>
-                </div>
-
-                <div
-                  className={`flex-1 text-white text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
-                    isVisible['school'] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                  }`}
-                  style={{ transitionDelay: isVisible['school'] ? "500ms" : "0ms" }}
-                >
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-                    Our Approach
-                  </h3>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    At our Recovery Centre, we have always focused on supporting parents with different issues related to alcohol or drugs through counseling and therapies aimed at fostering recovery. This time, however, we have also put our emphasis on prevention by providing crucial education for their children.
-                  </p>
-                  <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    Guided by our school motto, <span className="font-semibold">&quot;Rise, Succeed, and Transform&quot;</span>, we believe that educating young minds about the dangers of alcoholism and drug use will empower them to develop a positive mindset. By addressing these issues early on, we aim to cultivate resilience and awareness, paving the way for a brighter, healthier future for the next generation.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
+          
 
           {/* Support Our Mission */}
           <section
@@ -429,15 +370,23 @@ export default function AboutPage() {
                         key={idx}
                         className="w-full flex-shrink-0 px-2"
                       >
-                        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                          <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                            <div className="flex-shrink-0">
-                              <div className="bg-gradient-to-br from-pink-500 to-orange-500 text-white rounded-xl px-4 py-2 text-sm font-semibold inline-block" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                        <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20">
+                          <div className="flex flex-col md:flex-row gap-0">
+                            {/* Image Column */}
+                            <div className="md:w-1/2 relative h-64 md:h-auto md:min-h-[400px]">
+                              <img 
+                                src={activity.image} 
+                                alt={activity.title}
+                                className="absolute inset-0 w-full h-full object-cover"
+                              />
+                              <div className="absolute top-4 left-4 bg-gradient-to-br from-pink-500 to-orange-500 text-white rounded-xl px-4 py-2 text-sm font-semibold shadow-lg" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                                 {activity.date}
                               </div>
                             </div>
-                            <div className="flex-1">
-                              <h3 className="text-xl md:text-2xl font-bold text-white mb-3" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                            
+                            {/* Content Column */}
+                            <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+                              <h3 className="text-xl md:text-2xl font-bold text-white mb-4" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                                 {activity.title}
                               </h3>
                               <p className="text-white/90 leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>

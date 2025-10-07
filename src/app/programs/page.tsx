@@ -5,12 +5,15 @@ import Header from "@/components/Header";
 import HeroSky from "@/components/HeroSky";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ProgramsPage() {
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentProgramSlide, setCurrentProgramSlide] = useState(0);
+  const [isProgramHovered, setIsProgramHovered] = useState(false);
+  const [isNewsHovered, setIsNewsHovered] = useState(false);
 
   const programs = [
     {
@@ -42,7 +45,7 @@ export default function ProgramsPage() {
       bgColor: "bg-green-900/60"
     },
     {
-      title: "Ergo/Occupation Theory",
+      title: "Ergo/Occupation Therapy",
       description: "Ergotherapy also known as occupation therapy is a field of recovery pathway. It tries to achieve the highest possible quality of life for a person with physical or mental issues through meaningful activity.",
       icon: "🎯",
       gradient: "from-indigo-600 to-blue-600",
@@ -67,18 +70,21 @@ export default function ProgramsPage() {
   const news = [
     {
       date: "September, 2024",
-      title: "Iwacu Recovery Centre Opens Hope for Recovery Christian School in Bugesera, Offering a Bright Future to Vulnerable Children",
-      description: "Kayenzi Village, Nyamata Sector, Bugesera District – Iwacu Recovery Centre (IRC) has proudly opened the Hope for Recovery Christian School in response to the heartfelt requests of parents from Kayenzi village in Nyamata Sector, Bugesera District."
+      title: "Iwacu Recovery Centre Opens Hope for Recovery Christian School in Bugesera",
+      description: "Kayenzi Village, Nyamata Sector, Bugesera District – Iwacu Recovery Centre (IRC) has proudly opened the Hope for Recovery Christian School in response to the heartfelt requests of parents from Kayenzi village in Nyamata Sector, Bugesera District.",
+      image: "/news1.jpg"
     },
     {
       date: "September, 2024",
-      title: "Iwacu Recovery Centre Supports Anti-Drug Clubs and Youth Awareness Initiatives Across Rwanda",
-      description: "Kigali, Rwanda – Iwacu Recovery Centre (IRC) is extending its support to Anti-Drugs Clubs in schools across the country as part of its ongoing efforts to raise awareness and prevent drug abuse among young people. Through psychoeducation programs, IRC is equipping students nationwide with the knowledge and tools needed to resist the pressures of drug use and make informed, healthy choices."
+      title: "IRC Supports Anti-Drug Clubs and Youth Awareness Initiatives Across Rwanda",
+      description: "Kigali, Rwanda – Iwacu Recovery Centre (IRC) is extending its support to Anti-Drugs Clubs in schools across the country as part of its ongoing efforts to raise awareness and prevent drug abuse among young people.",
+      image: "/news2.jpg"
     },
     {
       date: "August, 2024",
       title: "Iwacu Recovery Centre Distributes School Kits to 287 Children in Bugesera District",
-      description: "Iwacu Recovery Centre has successfully distributed school tool kits to 287 children in Bugesera District, marking the conclusion of the youth camps held during the summer holidays of 2024."
+      description: "Iwacu Recovery Centre has successfully distributed school tool kits to 287 children in Bugesera District, marking the conclusion of the youth camps held during the summer holidays of 2024.",
+      image: "/news3.jpg"
     }
   ];
 
@@ -99,23 +105,27 @@ export default function ProgramsPage() {
     return () => Object.values(observers).forEach((obs) => obs.disconnect());
   }, []);
 
-  // Auto-slide carousel for programs
+  // Auto-slide carousel for programs with pause on hover
   useEffect(() => {
+    if (isProgramHovered) return;
+    
     const interval = setInterval(() => {
       setCurrentProgramSlide((prev) => (prev + 1) % programs.length);
-    }, 5000);
+    }, 10000); // 10 seconds delay
 
     return () => clearInterval(interval);
-  }, [programs.length]);
+  }, [programs.length, isProgramHovered]);
 
-  // Auto-slide carousel for news
+  // Auto-slide carousel for news with pause on hover
   useEffect(() => {
+    if (isNewsHovered) return;
+    
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % news.length);
-    }, 6000);
+    }, 8000); // 8 seconds delay
 
     return () => clearInterval(interval);
-  }, [news.length]);
+  }, [news.length, isNewsHovered]);
 
   const setRef = (key: string) => (el: HTMLDivElement | null) => {
     sectionRefs.current[key] = el;
@@ -129,7 +139,7 @@ export default function ProgramsPage() {
       <Header />
       
       {/* Hero Section with animations */}
-      <div className="relative pt-24 pb-16 z-10">
+      <div className="relative pt-32 md:pt-36 pb-16 z-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 
@@ -179,7 +189,11 @@ export default function ProgramsPage() {
               </div>
 
               {/* Carousel Container */}
-              <div className="relative">
+              <div 
+                className="relative"
+                onMouseEnter={() => setIsProgramHovered(true)}
+                onMouseLeave={() => setIsProgramHovered(false)}
+              >
                 <div className="overflow-hidden">
                   <div 
                     className="flex transition-transform duration-1000 ease-in-out"
@@ -267,7 +281,7 @@ export default function ProgramsPage() {
             </div>
           </section>
 
-          {/* Recent News - Carousel */}
+          {/* Recent News - Single Card with Image Carousel */}
           <section
             ref={setRef('news')}
             className="w-full rounded-3xl bg-gradient-to-br from-slate-900/80 to-gray-900/80 backdrop-blur-md ring-1 ring-white/30 shadow-2xl overflow-hidden"
@@ -287,33 +301,70 @@ export default function ProgramsPage() {
                 </p>
               </div>
 
-              {/* Carousel Container */}
-              <div className="relative">
-                <div className="overflow-hidden">
-                  <div 
-                    className="flex transition-transform duration-1000 ease-in-out"
-                    style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-                  >
-                    {news.map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="w-full flex-shrink-0 px-2 animate-slideIn"
+              {/* Single Card Container */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setIsNewsHovered(true)}
+                onMouseLeave={() => setIsNewsHovered(false)}
+              >
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 hover:border-white/40 transition-all duration-500 hover:shadow-2xl">
+                  <div className="grid md:grid-cols-2 gap-0">
+                    {/* Image Column - Carousel */}
+                    <div className="relative h-64 md:h-full min-h-[300px] bg-gradient-to-br from-blue-900/30 to-purple-900/30 overflow-hidden">
+                      <div 
+                        className="flex h-full transition-transform duration-1000 ease-in-out"
+                        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                       >
-                        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-white/40 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl">
-                          <div className="mb-4 animate-fadeIn">
+                        {news.map((item, idx) => (
+                          <div key={idx} className="relative w-full h-full flex-shrink-0">
+                            <Image
+                              src={item.image}
+                              alt={item.title}
+                              fill
+                              className="object-cover"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                                const parent = e.currentTarget.parentElement;
+                                if (parent) {
+                                  parent.style.display = 'flex';
+                                  parent.style.alignItems = 'center';
+                                  parent.style.justifyContent = 'center';
+                                  const placeholder = document.createElement('div');
+                                  placeholder.className = 'text-6xl';
+                                  placeholder.textContent = '📰';
+                                  parent.appendChild(placeholder);
+                                }
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Content Column - Static with Fade Transition */}
+                    <div className="p-6 md:p-8 flex flex-col justify-center relative">
+                      {news.map((item, idx) => (
+                        <div
+                          key={idx}
+                          className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-center transition-opacity duration-700 ${
+                            currentSlide === idx ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                          }`}
+                        >
+                          <div className="mb-4">
                             <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl px-4 py-2 text-sm font-semibold inline-block transform hover:scale-105 transition-transform duration-300" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                               {item.date}
                             </div>
                           </div>
-                          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 animate-fadeInUp transition-all duration-300 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-300 hover:to-purple-300" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                          <h3 className="text-xl md:text-2xl font-bold text-white mb-4 transition-all duration-300 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-300 hover:to-purple-300" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                             {item.title}
                           </h3>
-                          <p className="text-white/90 text-lg leading-relaxed animate-fadeInUp" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)', animationDelay: '0.1s' }}>
+                          <p className="text-white/90 text-base leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                             {item.description}
                           </p>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -336,7 +387,7 @@ export default function ProgramsPage() {
                 {/* Navigation Arrows */}
                 <button
                   onClick={() => setCurrentSlide((prev) => (prev - 1 + news.length) % news.length)}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95 z-10"
                   aria-label="Previous news"
                 >
                   <svg className="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -345,7 +396,7 @@ export default function ProgramsPage() {
                 </button>
                 <button
                   onClick={() => setCurrentSlide((prev) => (prev + 1) % news.length)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95 z-10"
                   aria-label="Next news"
                 >
                   <svg className="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -417,37 +468,6 @@ export default function ProgramsPage() {
           }
         }
 
-        @keyframes slideInUp {
-          from {
-            opacity: 0;
-            transform: translateY(50px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateX(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
         @keyframes pulse {
           0%, 100% {
             transform: scale(1);
@@ -459,14 +479,6 @@ export default function ProgramsPage() {
 
         .animate-fadeInUp {
           animation: fadeInUp 0.8s ease-out;
-        }
-
-        .animate-slideIn {
-          animation: slideIn 0.6s ease-out;
-        }
-
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out;
         }
       `}</style>
     </main>

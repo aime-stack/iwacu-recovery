@@ -59,7 +59,7 @@ export default function Footer() {
               Dedicated to helping individuals and families overcome addiction through compassionate counseling, 
               professional treatment, and comprehensive support services.
             </p>
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 mb-6">
               <a 
                 href="https://facebook.com/iwacurecovery" 
                 target="_blank" 
@@ -105,6 +105,27 @@ export default function Footer() {
                 </svg>
               </a>
             </div>
+
+            {/* Embedded Map */}
+            <div className="rounded-lg overflow-hidden shadow-lg border-2 border-slate-700 max-w-md">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.488356899784!2d30.060199!3d-1.956389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwNTcnMjMuMCJTIDMwwrAwMyczNi43IkU!5e0!3m2!1sen!2srw!4v1234567890"
+                width="100%"
+                height="180"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Iwacu Recovery Centre Location - KK 32 Avenue, Kigali"
+                className="grayscale hover:grayscale-0 transition-all duration-300"
+              />
+              <div className="bg-slate-700/50 px-3 py-2 text-xs text-slate-300">
+                <div className="flex items-center space-x-2">
+                  <span>📍</span>
+                  <span className="font-medium">KK 32 Avenue, Kigali, Rwanda</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -149,8 +170,9 @@ export default function Footer() {
                 </div>
                 <div>
                   <p className="text-slate-300 text-sm leading-relaxed">
+                    KK 32 Avenue<br />
                     Kigali, Rwanda<br />
-                    Near Kigali Convention Centre
+                    <span className="text-xs text-slate-400">Near Kigali Convention Centre</span>
                   </p>
                 </div>
               </div>

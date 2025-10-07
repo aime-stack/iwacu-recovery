@@ -1,10 +1,19 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+type Service = {
+  icon: string;
+  title: string;
+  description: string;
+  details: string[];
+  gradient: string;
+  phone?: string;
+};
 
 export default function ServicesSection() {
   const [isVisible, setIsVisible] = useState(false);
-  const servicesRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -12,191 +21,178 @@ export default function ServicesSection() {
       { threshold: 0.2 }
     );
 
-    if (servicesRef.current) {
-      observer.observe(servicesRef.current);
-    }
-
+    if (servicesRef.current) observer.observe(servicesRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const services = [
+  // Helper to produce a safe tel: href (removes spaces and non-digit chars but keeps a leading +)
+  const makeTel = (phone?: string) => {
+    if (!phone) return "#";
+    const cleaned = phone.replace(/[^\d+]/g, "");
+    return `tel:${cleaned}`;
+  };
+
+  const services: Service[] = [
     {
       icon: "🧠",
       title: "General Counseling",
-      description: "Our experienced clinicians and therapists provide comprehensive mental health support to help clients overcome and cope with trauma, depression, stress, anxiety, and other related mental illnesses. We offer evidence-based therapeutic approaches tailored to each individual's unique needs and circumstances.",
+      description:
+        "Our experienced clinicians and therapists provide comprehensive mental health support to help clients overcome and cope with trauma, depression, stress, anxiety, and other related mental illnesses.",
       details: [
         "Individual therapy sessions with licensed professionals",
         "Evidence-based treatment approaches (CBT, DBT, EMDR)",
         "Trauma-informed care and support",
         "Crisis intervention and stabilization",
         "Mental health assessment and diagnosis",
-        "Ongoing monitoring and treatment adjustment"
+        "Ongoing monitoring and treatment adjustment",
       ],
-      gradient: "from-slate-700 to-black"
-    },
-    {
-      icon: "🚑",
-      title: "Emergency Help",
-      description: "Our mobile crisis intervention team is available 24/7 to provide immediate support and assistance. When you're in crisis, we're here to help with professional, compassionate care at any time of day or night.",
-      details: [
-        "24/7 crisis hotline support",
-        "Mobile crisis intervention team",
-        "Emergency assessment and stabilization",
-        "Immediate safety planning",
-        "Coordination with emergency services",
-        "Follow-up care and support"
-      ],
-      gradient: "from-red-600 to-red-700",
-      phone: "+250 794 580 006"
+      gradient: "from-slate-700 to-black",
     },
     {
       icon: "🧩",
       title: "Alcohol & Drugs Addiction Treatment",
-      description: "Comprehensive addiction treatment services including individual therapy, group sessions, and family counseling. Our personalized approach combines evidence-based treatments with compassionate care to support your recovery journey.",
+      description:
+        "Comprehensive addiction treatment services including individual therapy, group sessions, and family counseling. Our personalized approach combines evidence-based treatments with compassionate care.",
       details: [
         "Individual therapy sessions with addiction specialists",
         "Group therapy and peer support programs",
         "Family counseling and education",
         "Medication-assisted treatment (when appropriate)",
         "Relapse prevention planning",
-        "Aftercare and ongoing support programs"
+        "Aftercare and ongoing support programs",
       ],
-      gradient: "from-brand-primary to-blue-600"
+      gradient: "from-brand-primary to-blue-600",
     },
     {
       icon: "🎓",
       title: "Mentorship & Career Development",
-      description: "Comprehensive career orientation and mentorship programs designed to support individuals during and after their recovery journey. We help rebuild lives through meaningful employment and personal development opportunities.",
+      description:
+        "Comprehensive career orientation and mentorship programs designed to support individuals during and after their recovery journey. We help rebuild lives through meaningful employment.",
       details: [
         "Career assessment and planning",
         "Skills development and training programs",
         "Job placement assistance",
         "Resume building and interview preparation",
         "Entrepreneurship support and guidance",
-        "Ongoing mentorship and career coaching"
+        "Ongoing mentorship and career coaching",
       ],
-      gradient: "from-brand-secondary to-pink-600"
+      gradient: "from-brand-secondary to-pink-600",
+    },
+    {
+      icon: "🚑",
+      title: "Emergency Help",
+      description:
+        "Our mobile crisis intervention team is available 24/7 to provide immediate support and assistance. When you're in crisis, we're here to help with professional, compassionate care.",
+      details: [
+        "24/7 crisis hotline support",
+        "Mobile crisis intervention team",
+        "Emergency assessment and stabilization",
+        "Immediate safety planning",
+        "Coordination with emergency services",
+        "Follow-up care and support",
+      ],
+      gradient: "from-blue-700 to-teal-600",
+      phone: "+250 788 772 489",
     },
   ];
 
   return (
     <section id="services" ref={servicesRef} className="relative z-10 py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className={`text-3xl md:text-4xl font-bold tracking-tight text-white mb-4 transition-all duration-1000 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`} style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+        {/* Header with reduced font sizes */}
+        <div className="text-center mb-12">
+          <h2
+            className={`text-2xl md:text-3xl font-bold tracking-tight text-white mb-3 transition-all duration-1000 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+            style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
+          >
             What Iwacu Recovery Centre Offers
           </h2>
-          <p className={`text-lg text-white/90 max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+          <p
+            className={`text-base md:text-lg text-white/90 max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
+          >
             Comprehensive, compassionate care tailored to your recovery journey. Professional treatment, support, and guidance every step of the way.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {/* Cards with reduced sizes */}
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => (
             <div
               key={index}
               className={`group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
-              style={{
-                transitionDelay: isVisible ? `${index * 100}ms` : '0ms'
-              }}
+              style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
             >
-              {/* Card Background with Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-90`}></div>
-              <div className="absolute inset-0 bg-black/20"></div>
-              
-              {/* Card Content */}
-              <div className="relative p-6 h-full flex flex-col">
-                {/* Icon and Title */}
-                <div className="text-center mb-4">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4 backdrop-blur-sm">
-                    <span className="text-3xl">{service.icon}</span>
+              <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-90`} />
+              <div className="absolute inset-0 bg-black/20" />
+
+              <div className="relative p-5 h-full flex flex-col">
+                <div className="text-center mb-3">
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mb-3 backdrop-blur-sm">
+                    <span className="text-2xl">{service.icon}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
+                  <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>
                     {service.title}
                   </h3>
                 </div>
 
-                {/* Description */}
-                <div className="flex-1 mb-4">
-                  <p className="text-white/95 text-sm leading-relaxed text-center" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>
+                <div className="flex-1 mb-3">
+                  <p className="text-white/95 text-xs leading-relaxed text-center" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>
                     {service.description}
                   </p>
                 </div>
 
-                {/* Emergency Button */}
+                {/* Emergency Phone Button (if present) */}
                 {service.phone && (
-                  <div className="mb-4">
-                    <a 
-                      href={`tel:${service.phone}`} 
-                      className="block w-full bg-red-600/90 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-semibold text-center transition-all duration-300 hover:shadow-lg backdrop-blur-sm"
+                  <div className="mb-3">
+                    <a
+                      href={makeTel(service.phone)}
+                      aria-label={`Call emergency ${service.phone}`}
+                      className="block w-full bg-blue-600/90 hover:bg-blue-700 text-white px-3 py-2 rounded-lg font-semibold text-center transition-all duration-300 hover:shadow-lg backdrop-blur-sm"
                     >
                       <span className="flex items-center justify-center gap-2">
-                        <span>📞</span>
-                        Emergency: {service.phone}
+                        <span className="text-xl">📞</span>
+                        <div className="text-left">
+                          <span className="block text-[9px] leading-none text-white/95">
+                            Emergency
+                          </span>
+                          <span className="block text-xs font-semibold text-white">
+                            {service.phone}
+                          </span>
+                        </div>
                       </span>
                     </a>
                   </div>
                 )}
 
-                {/* Key Features */}
                 <div className="space-y-2">
-                  <h4 className="text-sm font-semibold text-white text-center mb-3" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>
+                  <h4 className="text-xs font-semibold text-white text-center mb-2" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>
                     Key Features:
                   </h4>
                   <ul className="space-y-1">
                     {service.details.slice(0, 3).map((detail, detailIndex) => (
-                      <li key={detailIndex} className="flex items-start gap-2 text-white/90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
-                        <span className="text-green-400 mt-0.5 flex-shrink-0 text-xs">✓</span>
-                        <span className="text-xs leading-relaxed">{detail}</span>
+                      <li key={detailIndex} className="flex items-start gap-2 text-white/90" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.8)" }}>
+                        <span className="text-green-400 mt-0.5 flex-shrink-0 text-[10px]">✓</span>
+                        <span className="text-[11px] leading-relaxed">{detail}</span>
                       </li>
                     ))}
+
                     {service.details.length > 3 && (
-                      <li className="text-white/70 text-xs text-center italic">
-                        +{service.details.length - 3} more services
-                      </li>
+                      <li className="text-white/70 text-[10px] text-center italic">+{service.details.length - 3} more services</li>
                     )}
                   </ul>
                 </div>
 
-                {/* Hover Effect Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Call to action */}
-        <div className={`text-center mt-16 transition-all duration-1000 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`} style={{ transitionDelay: '800ms' }}>
-          <div className="bg-[#57241B] backdrop-blur-md rounded-2xl border border-white/20 p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 rounded-lg inline-block" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-              Ready to Start Your Recovery Journey?
-            </h3>
-            <p className="text-white/90 mb-6" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-              Our comprehensive programs are designed to provide the support, guidance, and care you need to overcome addiction and rebuild your life.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="#contact" 
-                className="bg-white text-blue-600 py-3 px-8 rounded-xl font-semibold hover:bg-blue-50 hover:shadow-lg transition-all duration-300 hover:scale-105"
-              >
-                Get Started Today
-              </a>
-              <a 
-                href="tel:+250788772489" 
-                className="bg-pink-600 text-white py-3 px-8 rounded-xl font-semibold hover:bg-pink-700 hover:shadow-lg transition-all duration-300 hover:scale-105"
-              >
-                Call Now: +250 788 772 489
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </section>

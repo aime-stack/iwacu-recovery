@@ -33,7 +33,8 @@ export default function AboutSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           ref={aboutRef}
-          className="w-full rounded-3xl bg-white/10 backdrop-blur-md ring-1 ring-white/20 shadow-xl"
+          className="w-full rounded-3xl backdrop-blur-md ring-1 ring-white/20 shadow-xl"
+          style={{ backgroundColor: '#7E4734' }}
         >
           <div className="px-6 py-12 md:py-16">
             <div className="flex flex-col md:flex-row gap-10 md:gap-8">
@@ -41,23 +42,24 @@ export default function AboutSection() {
                 className={`flex-1 text-white text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                 }`}
-                style={{ transitionDelay: isVisible ? "350ms" : "0ms" }}
+                style={{ 
+                  transitionDelay: isVisible ? "350ms" : "0ms",
+                  fontFamily: 'Tahoma, sans-serif'
+                }}
               >
                 <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                   Who We Are
                 </h2>
-                <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                At Iwacu Recovery Centre, we believe that no life is too broken to be restored and no story too painful to be rewritten. We are a counseling and treatment center devoted to helping individuals overcome alcohol and drug addiction, as well as emotional, psychological, and mental health struggles.
-                Our mission is to walk beside each person on their journey to healing; offering compassion, understanding, and practical support every step of the way. 
-                <p>
-                Whether you are beginning recovery or transitioning from rehabilitation, we provide a safe and welcoming environment where transformation begins.
-                We understand that recovery is not just about quitting an addiction; it’s about rediscovering your purpose, rebuilding trust, and renewing your hope. Through counseling, community, and faith, we empower individuals to reclaim their dignity and find strength in connection; with themselves, with others, and with God.
-               
+                <p className="text-justify" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                  At Iwacu Recovery Centre, we believe that no life is too broken to be restored and no story too painful to be rewritten. We are a counseling and treatment center devoted to helping individuals overcome alcohol and drug addiction, as well as emotional, psychological, and mental health struggles. 
+                  Our mission is to walk beside each person on their journey to healing; offering compassion, understanding, and practical support every step of the way.
                 </p>
-
+                <p className="text-justify" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                  Whether you are beginning recovery or transitioning from rehabilitation, we provide a safe and welcoming environment where transformation begins. 
+                  We understand that recovery is not just about quitting an addiction; it&apos;s about rediscovering your purpose, rebuilding trust, and renewing your hope. Through counseling, community, and faith, we empower individuals to reclaim their dignity and find strength in connection; with themselves, with others, and with God.
                 </p>
-                <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                At Iwacu Recovery Centre, we stand as a family of hope; believing that healing is possible, recovery is real, and every life is worth saving.
+                <p className="text-justify" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                  At Iwacu Recovery Centre, we stand as a family of hope; believing that healing is possible, recovery is real, and every life is worth saving.
                 </p>
               </div>
 
@@ -81,7 +83,10 @@ export default function AboutSection() {
                 className={`flex-1 text-white text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                 }`}
-                style={{ transitionDelay: isVisible ? "500ms" : "0ms" }}
+                style={{ 
+                  transitionDelay: isVisible ? "500ms" : "0ms",
+                  fontFamily: 'Tahoma, sans-serif'
+                }}
               >
                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                   What We Do

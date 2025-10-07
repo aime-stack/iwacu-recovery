@@ -26,27 +26,34 @@ export default function HeroSection() {
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex items-center justify-between min-h-screen">
           {/* Left side - Text content */}
-          <div className={`flex-1 max-w-2xl transition-all duration-1000 ease-out ${
+          <div className={`flex-1 max-w-2xl pt-20 md:pt-24 transition-all duration-1000 ease-out ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
           }`}>
-            <h1 className="font-bold tracking-tight leading-tight text-white mb-6">
-              <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-                Counselling
-              </div>
-              <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-                Addiction
-              </div>
-              <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-                Services
-              </div>
-            </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 font-medium" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+            <div className="mb-6">
+              <h1 className="font-bold tracking-tight leading-tight text-white mb-4">
+                <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-2" 
+                  style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                  Counselling
+                </span>
+                <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-2" 
+                  style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                  and Addiction
+                </span>
+                <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl" 
+                  style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                  Treatment Services
+                </span>
+              </h1>
+            </div>
+
+            <p className="text-lg md:text-xl text-white/90 mb-6 font-medium" 
+              style={{ textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
               Hope. Healing. Renewal.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <a 
-                href="#contact" 
+                href="contact" 
                 className="px-8 py-4 bg-white text-slate-900 font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/50 text-center"
               >
                 Get Help Now
