@@ -47,10 +47,14 @@ export default function AboutSection() {
                   Who We Are
                 </h2>
                 <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                  The Iwacu Recovery Centre is a counseling and treatment center focusing on alcohol and drugs abuse of people with addiction and related mental, psychological, and health problems. Furthermore, IRC helps young and adult people who are directly from rehabilitation centers and lead them on the way to recovery. At Iwacu Recovery Centre, whether someone seeks out the company of other recovering addicts or finds support in personal networks, it is imperative that you share your struggles with other people.
+                At Iwacu Recovery Centre, we believe that no life is too broken to be restored and no story too painful to be rewritten. We are a counseling and treatment center devoted to helping individuals overcome alcohol and drug addiction, as well as emotional, psychological, and mental health struggles.
+                Our mission is to walk beside each person on their journey to healing; offering compassion, understanding, and practical support every step of the way. Whether you are beginning recovery or transitioning from rehabilitation, we provide a safe and welcoming environment where transformation begins.
+                We understand that recovery is not just about quitting an addiction; it’s about rediscovering your purpose, rebuilding trust, and renewing your hope. Through counseling, community, and faith, we empower individuals to reclaim their dignity and find strength in connection; with themselves, with others, and with God.
+               
+
                 </p>
                 <p style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                  Therefore, the IRC is an organization dedicated to the fundamental belief that people with psychosocial problems and their families should recover their dignity, hope, rights and privileges.
+                At Iwacu Recovery Centre, we stand as a family of hope; believing that healing is possible, recovery is real, and every life is worth saving.
                 </p>
               </div>
 
