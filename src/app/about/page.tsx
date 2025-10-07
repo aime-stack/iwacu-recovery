@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import Header from "../../../components/Header";
-import HeroSky from "../../../components/HeroSky";
-import Footer from "../../../components/Footer";
 import Link from "next/link";
+import Header from "@/components/Header";
+import HeroSky from "@/components/HeroSky";
+import Footer from "@/components/Footer";
 
 export default function AboutPage() {
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
@@ -126,7 +126,6 @@ export default function AboutPage() {
                     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black shadow-sm" />
                   </div>
                 </div>
-
                 <div
                   className={`flex-1 text-white text-sm md:text-base leading-relaxed space-y-4 transition-all duration-900 ease-out ${
                     isVisible['background'] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
@@ -493,7 +492,7 @@ export default function AboutPage() {
 
           {/* Call to Action */}
           <section className="pb-8">
-            <div className="bg-gradient-to-r from-pink-600 to-blue-600 rounded-3xl p-8 shadow-xl">
+            <div className="bg-[#57241B] rounded-3xl p-8 shadow-xl">
               <h2 className="text-3xl font-bold text-white mb-4 text-center" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                 Ready to Start Your Recovery Journey?
               </h2>

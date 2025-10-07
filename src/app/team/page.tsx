@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import Header from "../../../components/Header";
-import HeroSky from "../../../components/HeroSky";
-import Footer from "../../../components/Footer";
+import Header from "@/components/Header";
+import HeroSky from "@/components/HeroSky";
+import Footer from "@/components/Footer";
 import Image from "next/image";
 
 export default function TeamPage() {
@@ -244,7 +244,7 @@ export default function TeamPage() {
 
           {/* Call to Action */}
           <section className="pb-8">
-            <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-10 shadow-2xl">
+            <div className="bg-[#57241B] rounded-3xl p-10 shadow-2xl">
               <div className="text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                   Ready to Start Your Recovery?

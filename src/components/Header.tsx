@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+'use client';
+
+import { useState } from 'react';
+import { useDonation } from '../contexts/DonationContext';
 import Image from "next/image";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const { openDonationModal } = useDonation();
 
   const handleNavClick = () => {
     setMobileMenuOpen(false);
@@ -150,12 +154,12 @@ export default function Header() {
             </ul>
             
             {/* Donate Button */}
-            <a 
-              href="#sponsor" 
-              className="px-4 py-2 bg-pink-500 text-white text-sm font-medium rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500/50"
+            <button 
+              onClick={() => openDonationModal()}
+              className="px-4 py-2 bg-pink-500 text-white text-sm font-medium rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500/50 cursor-pointer"
             >
               💝 Donate
-            </a>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -212,13 +216,15 @@ export default function Header() {
             
             {/* Mobile Donate Button */}
             <div className="px-4 py-3 border-b border-slate-200">
-              <a 
-                href="#sponsor" 
-                className="block w-full bg-pink-500 text-white px-4 py-2 rounded-lg text-sm font-medium text-center hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500/50"
-                onClick={handleNavClick}
+              <button 
+                className="block w-full bg-pink-500 text-white px-4 py-2 rounded-lg text-sm font-medium text-center hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500/50 cursor-pointer"
+                onClick={() => {
+                  handleNavClick();
+                  openDonationModal();
+                }}
               >
                 💝 Donate Now
-              </a>
+              </button>
             </div>
             
             {/* Mobile Navigation Links */}

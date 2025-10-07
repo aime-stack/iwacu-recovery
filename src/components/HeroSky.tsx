@@ -1,9 +1,16 @@
 "use client";
 
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, Text } from "@react-three/drei";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+
+interface BalloonType {
+  offsetPos: [number, number, number];
+  color: string;
+  label: string;
+  size: number;
+}
 
 function CameraRig() {
   const { camera } = useThree();
@@ -305,9 +312,9 @@ function Scene() {
 }
 
 export default function HeroSky() {
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsClient(true);
   }, []);
 

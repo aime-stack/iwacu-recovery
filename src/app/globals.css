@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brand: #57241B; /* primary */
+  --brand-soft: #8B4C42; /* secondary (soft/pastel) */
+  --accent: #E6A696; /* accent */
+  --glow: #FFD9D0; /* glow color for halo */
 }
 
 @theme inline {
@@ -25,6 +29,8 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -34,18 +40,61 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+}
+
+canvas { 
+  display: block; 
 }
 
 /* Focus styles for accessibility */
 *:focus {
-  outline: 2px solid #3695D7;
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 
+/* Decorative cloud layers using gentle radial gradients */
+.sky-bg::before,
+.sky-bg::after {
+  content: "";
+  position: fixed;
+  inset: -20% -10% auto -10%;
+  height: 60vh;
+  pointer-events: none;
+  background-repeat: repeat-x;
+  background-size: 800px 200px;
+  opacity: 0.25;
+  filter: blur(1px);
+  animation: clouds 60s linear infinite;
+  z-index: -1; /* keep behind Canvas and overlays */
+}
 
-/* Smooth scrolling for anchor links */
-html {
-  scroll-padding-top: 80px;
+.sky-bg::after {
+  inset: auto -10% -15% -10%;
+  height: 50vh;
+  opacity: 0.2;
+  animation-duration: 90s;
+}
+
+/* Cloud pattern (soft white blobs) */
+.sky-bg::before { 
+  background-image:
+    radial-gradient(ellipse at 10% 50%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 55%),
+    radial-gradient(ellipse at 40% 55%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 60%),
+    radial-gradient(ellipse at 70% 50%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 55%),
+    radial-gradient(ellipse at 90% 58%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 60%);
+}
+
+.sky-bg::after { 
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 55%),
+    radial-gradient(ellipse at 55% 52%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 60%),
+    radial-gradient(ellipse at 85% 50%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 55%);
+}
+
+@keyframes clouds {
+  from { background-position: 0 0; }
+  to { background-position: 800px 0; }
 }
 
 /* Custom scrollbar */

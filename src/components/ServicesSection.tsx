@@ -172,10 +172,10 @@ export default function ServicesSection() {
         </div>
 
         {/* Call to action */}
-        <div className={`text-center mt-16 transition-all duration-1000 delay-500 ${
+        <div className={`text-center mt-16 transition-all duration-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}>
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 max-w-4xl mx-auto">
+        }`} style={{ transitionDelay: '800ms' }}>
+          <div className="bg-[#57241B] backdrop-blur-md rounded-2xl border border-white/20 p-8 max-w-4xl mx-auto">
             <h3 className="text-2xl font-bold text-white mb-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 rounded-lg inline-block" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
               Ready to Start Your Recovery Journey?
             </h3>

@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Header from "../../../components/Header";
-import HeroSky from "../../../components/HeroSky";
-import Footer from "../../../components/Footer";
+import Header from "@/components/Header";
+import HeroSky from "@/components/HeroSky";
+import Footer from "@/components/Footer";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -49,22 +49,15 @@ export default function ContactPage() {
   return (
     <main className="relative min-h-screen text-slate-800 overflow-hidden">
       <HeroSky />
-      
       <Header />
       
       <div className="relative pt-24 pb-16 z-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 
-              className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6" 
-              style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
-            >
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
               Get in Touch
             </h1>
-            <p 
-              className="text-xl md:text-2xl text-white/95 max-w-3xl mx-auto font-medium" 
-              style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
-            >
+            <p className="text-xl md:text-2xl text-white/95 max-w-3xl mx-auto font-medium" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
               We are here to help. Reach out for support, information, or to schedule an appointment.
             </p>
           </div>
@@ -81,14 +74,11 @@ export default function ContactPage() {
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-3" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                   24/7 Emergency Support Available
                 </h3>
-                <p className="text-white/95 text-lg mb-4" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                  If you or someone you know is experiencing a mental health crisis or immediate danger, call our emergency line now.
+                <p className="text-white/95 text-lg" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                  If you or someone you know is experiencing a mental health crisis, call our emergency line now.
                 </p>
               </div>
-              <a 
-                href="tel:+250794580006" 
-                className="flex-shrink-0 bg-white text-red-600 py-4 px-8 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              >
+              <a href="tel:+250794580006" className="flex-shrink-0 bg-white text-red-600 py-4 px-8 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                 +250 794 580 006
               </a>
             </div>
@@ -116,108 +106,126 @@ export default function ContactPage() {
                       <p className="text-white/95 leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                         Kigali, Rwanda<br />
                         Near Kigali Convention Centre<br />
-                        <span></span>
+                        <span className="text-sm text-white/80">Directions provided upon appointment</span>
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="bg-brand-primary rounded-full p-3 flex-shrink-0">
-                      <span className="text-white text-xl">📞</span>
+                  <div className="flex items-start gap-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div className="bg-gradient-to-br from-green-500 to-teal-500 rounded-full p-3 flex-shrink-0">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                      </svg>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                      <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                         Phone Numbers
                       </h3>
                       <div className="space-y-2">
-                        <p className="text-white/90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                          <a href="tel:+250794580006" className="hover:text-white transition-colors">
+                        <p className="text-white/95" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                          <a href="tel:+250794580006" className="hover:text-white transition-colors font-semibold">
                             +250 794 580 006
                           </a>
-                          <span className="text-sm text-red-300 ml-2">(Emergency 24/7)</span>
+                          <span className="block text-sm text-red-300">Emergency Line 24/7</span>
                         </p>
-                        <p className="text-white/90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                          <a href="tel:+250788123456" className="hover:text-white transition-colors">
-                            +250 788 123 456
+                        <p className="text-white/95" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                          <a href="tel:+250788772489" className="hover:text-white transition-colors font-semibold">
+                            +250 788 772 489
                           </a>
-                          <span className="text-sm text-white/70 ml-2">(General inquiries)</span>
+                          <span className="block text-sm text-white/80">General Inquiries</span>
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="bg-brand-primary rounded-full p-3 flex-shrink-0">
-                      <span className="text-white text-xl">📧</span>
+                  <div className="flex items-start gap-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div className="bg-gradient-to-br from-pink-500 to-rose-500 rounded-full p-3 flex-shrink-0">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                      </svg>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                        Email
+                      <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                        Email Address
                       </h3>
-                      <p className="text-white/90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                        <a href="mailto:info@iwacurecovery.rw" className="hover:text-white transition-colors">
-                          info@iwacurecovery.rw
+                      <p className="text-white/95" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                        <a href="mailto:irecoverycentre17@gmail.com" className="hover:text-white transition-colors font-semibold break-all">
+                          irecoverycentre17@gmail.com
                         </a>
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="bg-brand-primary rounded-full p-3 flex-shrink-0">
-                      <span className="text-white text-xl">🕒</span>
+                  <div className="flex items-start gap-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div className="bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full p-3 flex-shrink-0">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                      </svg>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                        Hours of Operation
+                      <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                        Office Hours
                       </h3>
-                      <div className="text-white/90 space-y-1" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                        <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
-                        <p>Saturday: 9:00 AM - 4:00 PM</p>
-                        <p>Sunday: Emergency services only</p>
-                        <p className="text-red-300 font-semibold">Emergency: 24/7</p>
+                      <div className="text-white/95 space-y-1.5 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                        <p className="flex justify-between">
+                          <span>Monday - Friday:</span>
+                          <span className="font-semibold">8:00 AM - 6:00 PM</span>
+                        </p>
+                        <p className="flex justify-between">
+                          <span>Saturday:</span>
+                          <span className="font-semibold">9:00 AM - 4:00 PM</span>
+                        </p>
+                        <p className="flex justify-between">
+                          <span>Sunday:</span>
+                          <span className="font-semibold text-orange-300">Emergency Only</span>
+                        </p>
+                        <p className="pt-2 border-t border-white/20 text-red-300 font-bold">
+                          Emergency Services: 24/7
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Emergency Contact */}
-              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-3xl p-8 shadow-xl">
-                <div className="text-center">
-                  <div className="text-4xl mb-4">🚨</div>
-                  <h3 className="text-2xl font-bold text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-                    Emergency Support
+              <div className="grid grid-cols-2 gap-4">
+                <a href="https://wa.me/250794580006" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-green-900/80 to-emerald-900/80 backdrop-blur-md rounded-2xl border border-green-400/30 p-6 text-center shadow-xl hover:scale-105 transition-all duration-300">
+                  <div className="text-4xl mb-3">💬</div>
+                  <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                    WhatsApp
                   </h3>
-                  <p className="text-red-100 mb-6" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    If you or someone you know is in immediate danger or experiencing a mental health crisis, please call our emergency line immediately.
+                  <p className="text-white/90 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                    Chat with us
                   </p>
-                  <a 
-                    href="tel:+250794580006" 
-                    className="inline-flex items-center gap-2 bg-white text-red-600 py-4 px-8 rounded-xl font-bold text-lg hover:shadow-lg transition-all duration-300 hover:scale-105"
-                  >
-                    <span>📞</span>
-                    Call Emergency: +250 794 580 006
-                  </a>
-                </div>
+                </a>
+
+                <a href="tel:+250794580006" className="bg-gradient-to-br from-purple-900/80 to-pink-900/80 backdrop-blur-md rounded-2xl border border-purple-400/30 p-6 text-center shadow-xl hover:scale-105 transition-all duration-300">
+                  <div className="text-4xl mb-3">📅</div>
+                  <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                    Book Visit
+                  </h3>
+                  <p className="text-white/90 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                    Schedule now
+                  </p>
+                </a>
               </div>
             </div>
 
-            {/* Contact Form */}
-            <div className="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-8 shadow-xl">
+            <div className="bg-gradient-to-br from-indigo-900/80 to-blue-900/80 backdrop-blur-md rounded-3xl border border-white/30 p-8 shadow-2xl">
               <h2 className="text-3xl font-bold text-white mb-6" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-                Send us a Message
+                Send Us a Message
               </h2>
               
               {submitStatus === "success" && (
-                <div className="bg-green-600 text-white p-4 rounded-lg mb-6">
-                  Thank you for your message! We&apos;ll get back to you within 24 hours.
+                <div className="bg-green-600/90 backdrop-blur-sm text-white p-4 rounded-xl mb-6 border border-green-400/30 font-semibold">
+                  Thank you! We will respond within 24 hours.
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid gap-6 md:grid-cols-2">
+              <div className="space-y-5">
+                <div className="grid gap-5 md:grid-cols-2">
                   <div>
-                    <label htmlFor="name" className="block text-white font-semibold mb-2" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                    <label htmlFor="name" className="block text-white font-bold mb-2 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                       Full Name *
                     </label>
                     <input
@@ -227,12 +235,12 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent"
-                      placeholder="Your full name"
+                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
+                      placeholder="John Doe"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-white font-semibold mb-2" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                    <label htmlFor="email" className="block text-white font-bold mb-2 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                       Email Address *
                     </label>
                     <input
@@ -242,15 +250,15 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent"
-                      placeholder="your.email@example.com"
+                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
+                      placeholder="john@example.com"
                     />
                   </div>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="grid gap-5 md:grid-cols-2">
                   <div>
-                    <label htmlFor="phone" className="block text-white font-semibold mb-2" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                    <label htmlFor="phone" className="block text-white font-bold mb-2 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                       Phone Number
                     </label>
                     <input
@@ -259,12 +267,12 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
                       placeholder="+250 XXX XXX XXX"
                     />
                   </div>
                   <div>
-                    <label htmlFor="service" className="block text-white font-semibold mb-2" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                    <label htmlFor="service" className="block text-white font-bold mb-2 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                       Service Interest
                     </label>
                     <select
@@ -272,21 +280,24 @@ export default function ContactPage() {
                       name="service"
                       value={formData.service}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent"
-                      style={{ color: 'white' }}
+                      className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
                     >
-                      <option value="" style={{ color: '#1e293b', backgroundColor: 'white' }}>Select a service</option>
-                      <option value="general-counseling" style={{ color: '#1e293b', backgroundColor: 'white' }}>General Counseling</option>
-                      <option value="emergency-help" style={{ color: '#1e293b', backgroundColor: 'white' }}>Emergency Help</option>
-                      <option value="addiction-treatment" style={{ color: '#1e293b', backgroundColor: 'white' }}>Alcohol & Drugs Addiction Treatment</option>
-                      <option value="mentorship" style={{ color: '#1e293b', backgroundColor: 'white' }}>Mentorship & Career Development</option>
-                      <option value="other" style={{ color: '#1e293b', backgroundColor: 'white' }}>Other</option>
+                      <option value="">Select a service</option>
+                      <option value="psychoeducation">Psychoeducation</option>
+                      <option value="counseling">Counseling & Psychotherapy</option>
+                      <option value="addiction">Addiction Treatment</option>
+                      <option value="psychosocial">Psychosocial Support</option>
+                      <option value="ergotherapy">Ergo/Occupation Therapy</option>
+                      <option value="relaxation">Relaxation Program</option>
+                      <option value="art-therapy">Art Therapy</option>
+                      <option value="emergency">Emergency Support</option>
+                      <option value="other">Other</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-white font-semibold mb-2" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                  <label htmlFor="subject" className="block text-white font-bold mb-2 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                     Subject *
                   </label>
                   <input
@@ -296,14 +307,14 @@ export default function ContactPage() {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent"
-                    placeholder="Brief description of your inquiry"
+                    className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium"
+                    placeholder="How can we help you?"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-white font-semibold mb-2" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                    Message *
+                  <label htmlFor="message" className="block text-white font-bold mb-2 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                    Your Message *
                   </label>
                   <textarea
                     id="message"
@@ -312,82 +323,35 @@ export default function ContactPage() {
                     onChange={handleInputChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent resize-vertical"
-                    placeholder="Please provide details about your inquiry or how we can help you..."
+                    className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent resize-vertical font-medium"
+                    placeholder="Please share details about your inquiry..."
                   />
                 </div>
 
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-brand-primary to-brand-secondary text-white py-4 px-8 rounded-xl font-semibold text-lg hover:shadow-lg transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white py-4 px-8 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  {isSubmitting ? "Sending Message..." : "Send Message"}
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </button>
-              </form>
-            </div>
-          </div>
-
-          {/* Additional Contact Methods */}
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-6 text-center shadow-xl">
-              <div className="text-4xl mb-4">💬</div>
-              <h3 className="text-xl font-semibold text-white mb-3" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                WhatsApp
-              </h3>
-              <p className="text-white/90 mb-4" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                Chat with us on WhatsApp for quick responses
-              </p>
-              <a 
-                href="https://wa.me/250794580006" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-emerald-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
-              >
-                <span>💬</span>
-                Start Chat
-              </a>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-6 text-center shadow-xl">
-              <div className="text-4xl mb-4">📅</div>
-              <h3 className="text-xl font-semibold text-white mb-3" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                Schedule Appointment
-              </h3>
-              <p className="text-white/90 mb-4" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                Book a consultation with our team
-              </p>
-              <a 
-                href="tel:+250794580006" 
-                className="inline-flex items-center gap-2 bg-brand-primary text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                <span>📅</span>
-                Call to Book
-              </a>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-6 text-center shadow-xl">
-              <div className="text-4xl mb-4">🏥</div>
-              <h3 className="text-xl font-semibold text-white mb-3" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                Visit Our Center
-              </h3>
-              <p className="text-white/90 mb-4" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                Come see us in person for a tour
-              </p>
-              <a 
-                href="tel:+250794580006" 
-                className="inline-flex items-center gap-2 bg-brand-secondary text-white py-2 px-4 rounded-lg font-semibold hover:bg-pink-700 transition-colors"
-              >
-                <span>🏥</span>
-                Get Directions
-              </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[60vh] z-[1]"
+        style={{
+          background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(121, 149, 120, 0.15) 20%, rgba(184, 170, 133, 0.35) 40%, rgba(139, 115, 85, 0.65) 60%, rgba(101, 67, 33, 0.85) 80%, rgba(101, 67, 33, 0.95) 100%)",
+          mixBlendMode: "multiply",
+        }}
+      />
     </main>
   );
 }

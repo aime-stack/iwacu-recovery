@@ -1,12 +1,12 @@
-import Header from "../../components/Header";
-import HeroSection from "../../components/HeroSection";
-import HeroSky from "../../components/HeroSky";
-import BalloonSection from "../../components/BalloonSection";
-import AboutSection from "../../components/AboutSection";
-import ServicesSection from "../../components/ServicesSection";
-import SponsorSection from "../../components/SponsorSection";
-import ContactSection from "../../components/ContactSection";
-import Footer from "../../components/Footer";
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import HeroSky from "@/components/HeroSky";
+import BalloonSection from "@/components/BalloonSection";
+import AboutSection from "@/components/AboutSection";
+import ServicesSection from "@/components/ServicesSection";
+import SponsorSection from "@/components/SponsorSection";
+import ContactSection from "@/components/ContactSection";
+import Footer from "@/components/Footer";
 
 export default function Page() {
   return (

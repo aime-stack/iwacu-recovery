@@ -1,5 +1,7 @@
-import "../../styles/globals.css";
-import type { Metadata } from "next";
+import "./globals.css";
+import type { Metadata } from 'next';
+import ScrollToTop from '@/components/ScrollToTop';
+import Providers from '@/components/Providers';
 import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({ 
@@ -69,14 +71,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={poppins.variable}>
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/logo.png" />
-        <meta name="theme-color" content="#3695D7" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
-      <body className="font-sans antialiased">
-        {children}
+      <body className="antialiased">
+        <Providers>
+          <div id="back-to-top-anchor"></div>
+          {children}
+          <ScrollToTop />
+        </Providers>
       </body>
     </html>
   );

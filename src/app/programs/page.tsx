@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import Header from "../../../components/Header";
-import HeroSky from "../../../components/HeroSky";
-import Footer from "../../../components/Footer";
+import Header from "@/components/Header";
+import HeroSky from "@/components/HeroSky";
+import Footer from "@/components/Footer";
 import Link from "next/link";
 
 export default function ProgramsPage() {
@@ -358,9 +358,9 @@ export default function ProgramsPage() {
 
           {/* Call to Action */}
           <section className="pb-8">
-            <div className="bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 rounded-3xl p-10 shadow-2xl overflow-hidden relative group">
+            <div className="bg-[#57241B] rounded-3xl p-10 shadow-2xl overflow-hidden relative group">
               {/* Animated background effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+              <div className="absolute inset-0 bg-[#57241B] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
               
               <div className="text-center relative z-10">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 animate-pulse" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)', animation: 'pulse 3s ease-in-out infinite' }}>
