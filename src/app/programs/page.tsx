@@ -14,6 +14,11 @@ export default function ProgramsPage() {
   const [currentProgramSlide, setCurrentProgramSlide] = useState(0);
   const [isProgramHovered, setIsProgramHovered] = useState(false);
   const [isNewsHovered, setIsNewsHovered] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState<Record<number, number>>({
+    0: 0,
+    1: 0,
+    2: 0
+  });
 
   const programs = [
     {
@@ -69,22 +74,22 @@ export default function ProgramsPage() {
 
   const news = [
     {
-      date: "September, 2024",
-      title: "Iwacu Recovery Centre Opens Hope for Recovery Christian School in Bugesera",
-      description: "Kayenzi Village, Nyamata Sector, Bugesera District – Iwacu Recovery Centre (IRC) has proudly opened the Hope for Recovery Christian School in response to the heartfelt requests of parents from Kayenzi village in Nyamata Sector, Bugesera District.",
-      image: "/news1.jpg"
+      date: "10 May, 2025",
+      title: "Shoes Donation at Iwacu Recovery Christian School",
+      description: "In a heartwarming gesture of compassion, Iwacu Recovery Centre received a generous donation of shoes for students at the Iwacu Recovery Christian School. This donation will ensure that our students have proper footwear as they pursue their education and recovery journey.",
+      images: ["/news/shoes-donation-1.jpg", "/news/shoes-donation-2.jpg", "/news/shoes-donation-3.jpg"]
     },
     {
-      date: "September, 2024",
-      title: "IRC Supports Anti-Drug Clubs and Youth Awareness Initiatives Across Rwanda",
-      description: "Kigali, Rwanda – Iwacu Recovery Centre (IRC) is extending its support to Anti-Drugs Clubs in schools across the country as part of its ongoing efforts to raise awareness and prevent drug abuse among young people.",
-      image: "/news2.jpg"
+      date: "19 May, 2025",
+      title: "Embassy of Pakistan Visit",
+      description: "Iwacu Recovery Centre was honored to host a distinguished visit from the Embassy of Pakistan. The visit strengthened international partnerships and highlighted our commitment to mental health and addiction recovery services in Rwanda.",
+      images: ["/news/pakistan-embassy-1.jpg", "/news/pakistan-embassy-2.jpg"]
     },
     {
-      date: "August, 2024",
-      title: "Iwacu Recovery Centre Distributes School Kits to 287 Children in Bugesera District",
-      description: "Iwacu Recovery Centre has successfully distributed school tool kits to 287 children in Bugesera District, marking the conclusion of the youth camps held during the summer holidays of 2024.",
-      image: "/news3.jpg"
+      date: "29 August, 2025",
+      title: "Iwacu Recovery Centre Christian School Pupils Sharing Breakfast",
+      description: "Students at Iwacu Recovery Centre Christian School came together for a communal breakfast, fostering a sense of community and family. This daily routine helps build healthy habits and strengthens bonds among our students.",
+      images: ["/news/breakfast-1.jpg", "/news/breakfast-2.jpg", "/news/breakfast-3.jpg"]
     }
   ];
 
@@ -121,11 +126,36 @@ export default function ProgramsPage() {
     if (isNewsHovered) return;
     
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % news.length);
+      setCurrentSlide((prev) => {
+        const nextSlide = (prev + 1) % news.length;
+        // Reset image index when changing news slides
+        setCurrentImageIndex(prevIndex => ({
+          ...prevIndex,
+          [nextSlide]: 0
+        }));
+        return nextSlide;
+      });
     }, 8000); // 8 seconds delay
 
     return () => clearInterval(interval);
   }, [news.length, isNewsHovered]);
+
+  // Auto-slide images within current news item
+  useEffect(() => {
+    if (isNewsHovered) return;
+    
+    const currentNews = news[currentSlide];
+    if (currentNews.images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => ({
+        ...prev,
+        [currentSlide]: ((prev[currentSlide] || 0) + 1) % currentNews.images.length
+      }));
+    }, 4000); // 4 seconds per image
+
+    return () => clearInterval(interval);
+  }, [currentSlide, isNewsHovered, news]);
 
   const setRef = (key: string) => (el: HTMLDivElement | null) => {
     sectionRefs.current[key] = el;
@@ -281,7 +311,7 @@ export default function ProgramsPage() {
             </div>
           </section>
 
-          {/* Recent News - Single Card with Image Carousel */}
+          {/* Recent News - Single Card with Multiple Image Carousel */}
           <section
             ref={setRef('news')}
             className="w-full rounded-3xl bg-gradient-to-br from-slate-900/80 to-gray-900/80 backdrop-blur-md ring-1 ring-white/30 shadow-2xl overflow-hidden"
@@ -309,34 +339,62 @@ export default function ProgramsPage() {
               >
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 hover:border-white/40 transition-all duration-500 hover:shadow-2xl">
                   <div className="grid md:grid-cols-2 gap-0">
-                    {/* Image Column - Carousel */}
+                    {/* Image Column - Carousel with multiple images per news */}
                     <div className="relative h-64 md:h-full min-h-[300px] bg-gradient-to-br from-blue-900/30 to-purple-900/30 overflow-hidden">
                       <div 
                         className="flex h-full transition-transform duration-1000 ease-in-out"
                         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                       >
-                        {news.map((item, idx) => (
-                          <div key={idx} className="relative w-full h-full flex-shrink-0">
-                            <Image
-                              src={item.image}
-                              alt={item.title}
-                              fill
-                              className="object-cover"
-                              onError={(e) => {
-                                e.currentTarget.style.display = 'none';
-                                const parent = e.currentTarget.parentElement;
-                                if (parent) {
-                                  parent.style.display = 'flex';
-                                  parent.style.alignItems = 'center';
-                                  parent.style.justifyContent = 'center';
-                                  const placeholder = document.createElement('div');
-                                  placeholder.className = 'text-6xl';
-                                  placeholder.textContent = '📰';
-                                  parent.appendChild(placeholder);
-                                }
-                              }}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        {news.map((item, newsIdx) => (
+                          <div key={newsIdx} className="relative w-full h-full flex-shrink-0">
+                            {/* Inner image carousel for this news item */}
+                            <div 
+                              className="flex h-full transition-transform duration-700 ease-in-out"
+                              style={{ transform: `translateX(-${(currentImageIndex[newsIdx] || 0) * 100}%)` }}
+                            >
+                              {item.images.map((image, imgIdx) => (
+                                <div key={imgIdx} className="relative w-full h-full flex-shrink-0">
+                                  <Image
+                                    src={image}
+                                    alt={`${item.title} - Image ${imgIdx + 1}`}
+                                    fill
+                                    className="object-cover"
+                                    onError={(e) => {
+                                      e.currentTarget.style.display = 'none';
+                                      const parent = e.currentTarget.parentElement;
+                                      if (parent) {
+                                        parent.style.display = 'flex';
+                                        parent.style.alignItems = 'center';
+                                        parent.style.justifyContent = 'center';
+                                        const placeholder = document.createElement('div');
+                                        placeholder.className = 'text-6xl';
+                                        placeholder.textContent = '📰';
+                                        parent.appendChild(placeholder);
+                                      }
+                                    }}
+                                  />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                </div>
+                              ))}
+                            </div>
+                            
+                            {/* Image indicators for current news item */}
+                            {item.images.length > 1 && currentSlide === newsIdx && (
+                              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
+                                {item.images.map((_, imgIdx) => (
+                                  <button
+                                    key={imgIdx}
+                                    onClick={() => setCurrentImageIndex(prev => ({ ...prev, [newsIdx]: imgIdx }))}
+                                    className={`transition-all duration-300 rounded-full ${
+                                      (currentImageIndex[newsIdx] || 0) === imgIdx 
+                                        ? 'w-8 h-2 bg-white' 
+                                        : 'w-2 h-2 bg-white/50 hover:bg-white/70'
+                                    }`}
+                                    aria-label={`View image ${imgIdx + 1}`}
+                                  />
+                                ))}
+                              </div>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -373,7 +431,14 @@ export default function ProgramsPage() {
                   {news.map((_, idx) => (
                     <button
                       key={idx}
-                      onClick={() => setCurrentSlide(idx)}
+                      onClick={() => {
+                        setCurrentSlide(idx);
+                        // Reset image index when manually changing slides
+                        setCurrentImageIndex(prev => ({
+                          ...prev,
+                          [idx]: 0
+                        }));
+                      }}
                       className={`transition-all duration-300 rounded-full ${
                         currentSlide === idx 
                           ? 'w-10 h-3 bg-white' 
@@ -386,7 +451,14 @@ export default function ProgramsPage() {
 
                 {/* Navigation Arrows */}
                 <button
-                  onClick={() => setCurrentSlide((prev) => (prev - 1 + news.length) % news.length)}
+                  onClick={() => {
+                    const newSlide = (currentSlide - 1 + news.length) % news.length;
+                    setCurrentSlide(newSlide);
+                    setCurrentImageIndex(prev => ({
+                      ...prev,
+                      [newSlide]: 0
+                    }));
+                  }}
                   className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95 z-10"
                   aria-label="Previous news"
                 >
@@ -395,7 +467,14 @@ export default function ProgramsPage() {
                   </svg>
                 </button>
                 <button
-                  onClick={() => setCurrentSlide((prev) => (prev + 1) % news.length)}
+                  onClick={() => {
+                    const newSlide = (currentSlide + 1) % news.length;
+                    setCurrentSlide(newSlide);
+                    setCurrentImageIndex(prev => ({
+                      ...prev,
+                      [newSlide]: 0
+                    }));
+                  }}
                   className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95 z-10"
                   aria-label="Next news"
                 >

@@ -1,9 +1,11 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import Header from "@/components/Header";
 import HeroSky from "@/components/HeroSky";
 import Footer from "@/components/Footer";
+
 // Custom arrow icons
 const ChevronLeft = () => (
   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -21,35 +23,48 @@ export default function TeamPage() {
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
 
-  // Board of Members - 3 people with sliding carousel
-  // NOTE: Make sure images are in public/team/ folder
-  // Try different extensions if needed: .jpg, .jpeg, .png, .webp
-  const boardMembers = [
+  // Team Members - 4 people with sliding carousel
+  const teamMembers = [
     {
       name: "Rev. Dr. Jean Claude MUREKEYIMANA",
       role: "Co-founder & Recovery Coach",
-      image: "/team/jean-claude.jpg", // Change to .png or .jpeg if needed
+      image: "/team/jean-claude.jpg",
       bio: "Spiritual leader and recovery coach dedicated to holistic healing and transformation.",
       gradient: "from-blue-600 to-purple-600"
     },
     {
       name: "Mrs. UMULISA Aimée Josiane",
       role: "Founder & Senior Clinical Psychologist",
-      image: "/team/umulisa.jpg", // Change to .png or .jpeg if needed
+      image: "/team/umulisa.jpg",
       bio: "Visionary founder with extensive expertise in clinical psychology and mental health care.",
       gradient: "from-purple-600 to-pink-600"
     },
     {
-      name: "BYIRINGIRO",
-      role: "Social Worker & Therapist",
-      image: "/team/byiringiro.jpg", // Change to .png or .jpeg if needed
+      name: "Grace Elvine BYIRINGIRO",
+      role: "Mental Health Nurse",
+      image: "/team/byiringiro.jpg",
       bio: "Compassionate social worker specializing in therapeutic interventions and community support.",
       gradient: "from-pink-600 to-rose-600"
-    }
+    },
+    {
+      name: "Dusingizimana Marie Claire",
+      role: "Social Worker & Therapist",
+      image: "/team/marie-claire.jpg",
+      bio: "Dedicated social worker and therapist committed to empowering individuals and families through compassionate care.",
+      gradient: "from-rose-600 to-red-600"
+    },
+    {
+      name: "Rukundo Blaise Tresor",
+      role: "PR & Media Manager",
+      image: "/team/rukundo-blaise.jpg",
+      bio: "Creative media strategist and public relations specialist focused on effective storytelling and community engagement.",
+      gradient: "from-yellow-600 to-amber-600"
+    },
   ];
 
-  // Counseling Advisory Team
+  // Counseling Advisory Team - Only 3 members
   const counselingTeam = [
     {
       name: "Dr. Sarah Mukamana",
@@ -74,30 +89,6 @@ export default function TeamPage() {
       image: "/team/specialist.jpg",
       bio: "Dedicated to helping individuals overcome addiction through evidence-based approaches.",
       gradient: "from-green-600 to-emerald-600"
-    },
-    {
-      name: "Dr. Emmanuel Nkusi",
-      role: "Psychiatric Consultant",
-      specialization: "Mental Health",
-      image: "/team/psychiatrist.jpg",
-      bio: "Expert in dual diagnosis treatment and psychiatric medication management.",
-      gradient: "from-orange-600 to-amber-600"
-    },
-    {
-      name: "Marie Claire Ingabire",
-      role: "Art Therapist",
-      specialization: "Creative Therapy",
-      image: "/team/art-therapist.jpg",
-      bio: "Using creative expression to facilitate healing and emotional growth.",
-      gradient: "from-violet-600 to-purple-600"
-    },
-    {
-      name: "Patrick Mugisha",
-      role: "Recovery Coach",
-      specialization: "Peer Support",
-      image: "/team/coach.jpg",
-      bio: "Personal recovery journey inspires others seeking lasting change.",
-      gradient: "from-sky-600 to-blue-600"
     }
   ];
 
@@ -120,22 +111,32 @@ export default function TeamPage() {
 
   // Auto-advance carousel
   useEffect(() => {
+    if (isHovering) return; // Don't auto-advance when hovering
+  
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % boardMembers.length);
+      setCurrentSlide((prev) => {
+        // Stop auto-sliding at the last member
+        if (prev < teamMembers.length - 1) {
+          return prev + 1;
+        }
+        return prev; // Stay on the last slide
+      });
     }, 5000);
+  
     return () => clearInterval(timer);
-  }, [boardMembers.length]);
+  }, [teamMembers.length, isHovering]);
+  
 
   const setRef = (key: string) => (el: HTMLDivElement | null) => {
     sectionRefs.current[key] = el;
   };
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % boardMembers.length);
+    setCurrentSlide((prev) => (prev + 1) % teamMembers.length);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + boardMembers.length) % boardMembers.length);
+    setCurrentSlide((prev) => (prev - 1 + teamMembers.length) % teamMembers.length);
   };
 
   return (
@@ -197,16 +198,16 @@ export default function TeamPage() {
             </div>
           </section>
 
-          {/* Board of Members - Sliding Carousel */}
+          {/* Team Members - Sliding Carousel */}
           <section
-            ref={setRef('board')}
+            ref={setRef('team')}
             className={`transition-all duration-900 ${
-              isVisible['board'] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              isVisible['team'] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
             <div className="text-center mb-10">
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-4" style={{ textShadow: '0 4px 12px rgba(0,0,0,0.6)' }}>
-                Board of Members
+                Team Members
               </h2>
               <p className="text-xl text-white/90 max-w-2xl mx-auto" style={{ textShadow: '0 2px 6px rgba(0,0,0,0.5)' }}>
                 Leadership guiding our mission of transformation and healing
@@ -215,12 +216,16 @@ export default function TeamPage() {
 
             <div className="relative bg-white/10 backdrop-blur-md ring-1 ring-white/30 rounded-3xl shadow-2xl p-8 md:p-12">
               {/* Carousel Container */}
-              <div className="relative overflow-hidden">
+              <div 
+                className="relative overflow-hidden"
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
                 <div 
                   className="flex transition-transform duration-700 ease-in-out"
                   style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
-                  {boardMembers.map((member, idx) => (
+                  {teamMembers.map((member, idx) => (
                     <div key={idx} className="w-full flex-shrink-0 px-4">
                       <div className="max-w-4xl mx-auto">
                         <div className="flex flex-col md:flex-row items-center gap-8">
@@ -228,10 +233,12 @@ export default function TeamPage() {
                           <div className="relative w-64 h-64 md:w-80 md:h-80 flex-shrink-0">
                             <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${member.gradient} opacity-20`}></div>
                             <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-slate-700 to-slate-900">
-                              <img
+                              <Image
                                 src={member.image}
                                 alt={member.name}
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 256px, 320px"
                                 onError={(e) => {
                                   const target = e.currentTarget as HTMLImageElement;
                                   target.style.display = 'none';
@@ -253,7 +260,7 @@ export default function TeamPage() {
                           {/* Info */}
                           <div className="flex-1 text-center md:text-left">
                             <div className={`inline-block px-4 py-2 rounded-full bg-gradient-to-r ${member.gradient} text-white text-sm font-semibold mb-4`}>
-                              Board Member
+                              Team Member
                             </div>
                             <h3 className="text-3xl md:text-4xl font-bold text-white mb-2" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                               {member.name}
@@ -290,7 +297,7 @@ export default function TeamPage() {
 
               {/* Dots Indicator */}
               <div className="flex justify-center gap-2 mt-8">
-                {boardMembers.map((_, idx) => (
+                {teamMembers.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentSlide(idx)}
@@ -333,10 +340,12 @@ export default function TeamPage() {
                   <div className="relative h-64 md:h-72 bg-gradient-to-br from-slate-700 to-slate-900 overflow-hidden">
                     <div className={`absolute inset-0 bg-gradient-to-br ${member.gradient} opacity-20`}></div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <img
+                      <Image
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         onError={(e) => {
                           const target = e.currentTarget as HTMLImageElement;
                           target.style.display = 'none';

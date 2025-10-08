@@ -320,7 +320,7 @@ export default function HeroSky() {
 
   if (!isClient) {
     return (
-      <div className="absolute top-0 left-0 h-[100svh] w-full bg-gradient-to-b from-blue-600 via-blue-400 to-blue-300" style={{ position: 'fixed' }} />
+      <div className="absolute top-0 left-0 h-[100svh] w-full bg-gradient-to-b from-blue-600 via-blue-400 to-blue-300" style={{ position: 'fixed', zIndex: 0}} />
     );
   }
 

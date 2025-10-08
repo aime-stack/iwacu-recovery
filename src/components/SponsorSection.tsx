@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 interface Victim {
   id: number;
@@ -18,9 +19,8 @@ export default function SponsorSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Mock donation modal function - replace with your actual implementation
-  const openDonationModal = (name?: string, amount?: number) => {
-    alert(`Opening donation modal for ${name || 'general donation'}`);
+  const openDonationModal = (name?: string) => {
+    alert(`Opening donation modal for ${name || "general donation"}`);
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function SponsorSection() {
     "bg-pink-900/60",
     "bg-green-900/60",
     "bg-indigo-900/60",
-    "bg-teal-900/60"
+    "bg-teal-900/60",
   ];
 
   const partners = [
@@ -62,7 +62,7 @@ export default function SponsorSection() {
     { name: "Ministry of Health Rwanda", logo: "/partners/moh-rwanda.png" },
     { name: "Rwanda Biomedical Centre", logo: "/partners/rbc.png" },
     { name: "National Rehabilitation Service", logo: "/partners/nrs.png" },
-    { name: "Rwanda Forensic Institute", logo: "/partners/forensic.png" }
+    { name: "Rwanda Forensic Institute", logo: "/partners/forensic.png" },
   ];
 
   const victims: Victim[] = [
@@ -70,42 +70,46 @@ export default function SponsorSection() {
       id: 1,
       name: "Jean Paul",
       age: 28,
-      story: "I lost everything to alcohol addiction - my job, family, and home. With your support, I can rebuild my life and help others on their recovery journey.",
+      story:
+        "I lost everything to alcohol addiction - my job, family, and home. With your support, I can rebuild my life and help others on their recovery journey.",
       photo: "👨‍💼",
       needs: "Rehabilitation program, counseling sessions, job training",
       amount: 500000,
-      progress: 65
+      progress: 65,
     },
     {
       id: 2,
       name: "Marie Claire",
       age: 24,
-      story: "Drug addiction took away my dreams of becoming a nurse. I'm determined to recover and pursue my passion for helping others heal.",
+      story:
+        "Drug addiction took away my dreams of becoming a nurse. I'm determined to recover and pursue my passion for helping others heal.",
       photo: "👩‍⚕️",
       needs: "Medical treatment, therapy, education support",
       amount: 750000,
-      progress: 40
+      progress: 40,
     },
     {
       id: 3,
       name: "Emmanuel",
       age: 32,
-      story: "After 10 years of substance abuse, I found hope at Iwacu Recovery Centre. Your sponsorship can help me complete my recovery and start a new chapter.",
+      story:
+        "After 10 years of substance abuse, I found hope at Iwacu Recovery Centre. Your sponsorship can help me complete my recovery and start a new chapter.",
       photo: "👨‍🔧",
       needs: "Extended treatment, family counseling, vocational training",
       amount: 600000,
-      progress: 80
+      progress: 80,
     },
     {
       id: 4,
       name: "Aline",
       age: 27,
-      story: "My family and I suffered greatly due to my addiction. I am committed to recovery and want to inspire others to seek help.",
+      story:
+        "My family and I suffered greatly due to my addiction. I am committed to recovery and want to inspire others to seek help.",
       photo: "👩‍🎓",
       needs: "Family therapy, relapse prevention, education support",
       amount: 650000,
-      progress: 55
-    }
+      progress: 55,
+    },
   ];
 
   const currentVictim = victims[currentIndex];
@@ -113,7 +117,7 @@ export default function SponsorSection() {
   return (
     <section id="sponsor" ref={sectionRef} className="relative z-10 py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        
+
         {/* Partners Section */}
         <div className={`mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '200ms' }}>
           <div className="text-center mb-8">
@@ -128,15 +132,21 @@ export default function SponsorSection() {
           <div className="relative overflow-hidden bg-white/5 backdrop-blur-sm py-8 rounded-2xl">
             <div className="flex animate-scroll">
               {partners.concat(partners).map((partner, index) => (
-                <div key={index} className="flex-shrink-0 mx-8 flex items-center justify-center" style={{ minWidth: '150px', maxWidth: '200px' }}>
-                  <div className="bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full h-24 flex items-center justify-center">
-                    <img
+                <div
+                  key={index}
+                  className="flex-shrink-0 mx-8 flex items-center justify-center"
+                  style={{ minWidth: "150px", maxWidth: "200px" }}
+                >
+                  <div className="bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full h-24 flex items-center justify-center relative">
+                    <Image
                       src={partner.logo}
                       alt={partner.name}
-                      className="max-w-full max-h-full object-contain"
+                      width={150}
+                      height={60}
+                      className="object-contain max-h-full"
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement;
-                        target.style.display = 'none';
+                        target.style.display = "none";
                         const parent = target.parentElement;
                         if (parent) {
                           parent.innerHTML = `
@@ -154,7 +164,7 @@ export default function SponsorSection() {
           </div>
         </div>
 
-        {/* Sponsor Victim Section */}
+        {/* Sponsor Section */}
         <div className="text-center mb-16">
           <h2 className={`text-2xl md:text-4xl font-bold tracking-tight text-white mb-4 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
             Give Hope to a Life in Need
@@ -173,6 +183,7 @@ export default function SponsorSection() {
             >
               &#8592;
             </button>
+
             <div className={`${cardBackgrounds[currentIndex % cardBackgrounds.length]} backdrop-blur-md rounded-3xl shadow-2xl border border-white/20 p-8 md:p-12 w-full`}>
               <div className="flex flex-col md:flex-row gap-8 items-center">
                 <div className="flex-shrink-0 text-center md:text-left">
@@ -180,31 +191,35 @@ export default function SponsorSection() {
                   <h3 className="text-2xl font-bold text-white mb-2" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>{currentVictim.name}</h3>
                   <p className="text-white/80 mb-4" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>Age {currentVictim.age}</p>
                   <div className="mb-6">
-                    <div className="flex justify-between text-sm text-white/80 mb-2" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                    <div className="flex justify-between text-sm text-white/80 mb-2">
                       <span>Recovery Progress</span>
                       <span>{currentVictim.progress}%</span>
                     </div>
                     <div className="w-full bg-white/20 rounded-full h-3">
-                      <div className="bg-gradient-to-r from-pink-500 to-purple-600 h-3 rounded-full transition-all duration-1000" style={{ width: `${currentVictim.progress}%` }} />
+                      <div
+                        className="bg-gradient-to-r from-pink-500 to-purple-600 h-3 rounded-full transition-all duration-1000"
+                        style={{ width: `${currentVictim.progress}%` }}
+                      />
                     </div>
                   </div>
                 </div>
+
                 <div className="flex-1">
-                  <h4 className="text-xl font-semibold text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>Their Story</h4>
-                  <p className="text-white/90 mb-6 leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>{currentVictim.story}</p>
+                  <h4 className="text-xl font-semibold text-white mb-4">Their Story</h4>
+                  <p className="text-white/90 mb-6 leading-relaxed">{currentVictim.story}</p>
                   <div className="mb-6">
-                    <h5 className="font-semibold text-white mb-2" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>What they need:</h5>
-                    <p className="text-white/80 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>{currentVictim.needs}</p>
+                    <h5 className="font-semibold text-white mb-2">What they need:</h5>
+                    <p className="text-white/80 text-sm">{currentVictim.needs}</p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1">
-                      <p className="text-sm text-white/80 mb-2" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>Funding Goal</p>
-                      <p className="text-2xl font-bold text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>{currentVictim.amount.toLocaleString()} RWF</p>
+                      <p className="text-sm text-white/80 mb-2">Funding Goal</p>
+                      <p className="text-2xl font-bold text-white">{currentVictim.amount.toLocaleString()} RWF</p>
                     </div>
-                    <button 
-                      onClick={() => openDonationModal(currentVictim.name, currentVictim.amount)}
-                      className="text-white py-3 px-8 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer" 
-                      style={{ backgroundColor: '#FF6B9D' }}
+                    <button
+                      onClick={() => openDonationModal(currentVictim.name)}
+                      className="text-white py-3 px-8 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
+                      style={{ backgroundColor: "#FF6B9D" }}
                     >
                       Sponsor {currentVictim.name}
                     </button>
@@ -212,6 +227,7 @@ export default function SponsorSection() {
                 </div>
               </div>
             </div>
+
             <button
               aria-label="Next victim"
               className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white text-2xl transition"
@@ -222,7 +238,7 @@ export default function SponsorSection() {
           </div>
         </div>
 
-        {/* Navigation dots */}
+        {/* Navigation Dots */}
         <div className={`flex justify-center mt-8 space-x-2 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '600ms' }}>
           {victims.map((_, index) => (
             <button
@@ -233,39 +249,32 @@ export default function SponsorSection() {
           ))}
         </div>
 
-        {/* Call to action */}
+        {/* Call to Action */}
         <div className={`text-center mt-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '800ms' }}>
           <div className="bg-[#57241B] backdrop-blur-md rounded-2xl border border-white/20 p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-              Every Contribution Makes a Difference
-            </h3>
-            <p className="text-white/90 mb-8 max-w-2xl mx-auto" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+            <h3 className="text-2xl font-bold text-white mb-4">Every Contribution Makes a Difference</h3>
+            <p className="text-white/90 mb-8 max-w-2xl mx-auto">
               Your sponsorship provides essential resources for recovery: medical care, counseling, job training, and hope for a brighter future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => openDonationModal()} 
-                className="text-white py-3 px-8 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer" 
-                style={{ backgroundColor: '#FF6B9D' }}
-              >
+              <button onClick={() => openDonationModal()} className="text-white py-3 px-8 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer" style={{ backgroundColor: "#FF6B9D" }}>
                 Sponsor Monthly
               </button>
-              <button 
-                onClick={() => openDonationModal()} 
-                className="text-white py-3 px-8 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer" 
-                style={{ backgroundColor: '#FF6B9D' }}
-              >
+              <button onClick={() => openDonationModal()} className="text-white py-3 px-8 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer" style={{ backgroundColor: "#FF6B9D" }}>
                 One-time Donation
               </button>
             </div>
           </div>
         </div>
 
-        {/* Scrolling Animation */}
         <style jsx>{`
           @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
           }
           .animate-scroll {
             animation: scroll 30s linear infinite;
