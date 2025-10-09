@@ -105,7 +105,7 @@ export default function ContactPage() {
                       </h3>
                       <p className="text-white/95 leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                         Kigali, Rwanda<br />
-                        Near Kigali Convention Centre<br />
+                        Kicukiro-Karembure<br />
                         <span className="text-sm text-white/80">Directions provided upon appointment</span>
                       </p>
                     </div>
