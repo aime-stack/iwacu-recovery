@@ -14,7 +14,6 @@ export default function ContactPage() {
     message: "",
     service: ""
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
@@ -25,7 +24,6 @@ export default function ContactPage() {
       [name]: value
     }));
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -45,12 +43,10 @@ export default function ContactPage() {
       setTimeout(() => setSubmitStatus("idle"), 5000);
     }, 2000);
   };
-
   return (
     <main className="relative min-h-screen text-slate-800 overflow-hidden">
       <HeroSky />
       <Header />
-      
       <div className="relative pt-32 md:pt-36 pb-16 z-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -63,10 +59,8 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-
       <div className="relative z-10 py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"> 
           <div className="mb-12 bg-gradient-to-r from-red-900/80 to-orange-900/80 backdrop-blur-md rounded-3xl border border-red-400/30 p-8 shadow-2xl">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <div className="text-6xl">🚨</div>
@@ -83,16 +77,13 @@ export default function ContactPage() {
               </a>
             </div>
           </div>
-
-          <div className="grid gap-8 lg:grid-cols-2">
-            
+          <div className="grid gap-8 lg:grid-cols-2">  
             <div className="space-y-8">
               <div className="bg-gradient-to-br from-blue-900/80 to-purple-900/80 backdrop-blur-md rounded-3xl border border-white/30 p-8 shadow-2xl">
                 <h2 className="text-3xl font-bold text-white mb-8" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                   Contact Information
                 </h2>
                 <div className="space-y-6">
-                  
                   <div className="flex items-start gap-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
                     <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full p-3 flex-shrink-0">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -105,12 +96,11 @@ export default function ContactPage() {
                       </h3>
                       <p className="text-white/95 leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                         Kigali, Rwanda<br />
-                        Kicukiro-Karembure<br />
+                        Kicukiro-Gahanga-Karembure<br />
                         <span className="text-sm text-white/80">Directions provided upon appointment</span>
                       </p>
                     </div>
                   </div>
-
                   <div className="flex items-start gap-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
                     <div className="bg-gradient-to-br from-green-500 to-teal-500 rounded-full p-3 flex-shrink-0">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -137,7 +127,6 @@ export default function ContactPage() {
                       </div>
                     </div>
                   </div>
-
                   <div className="flex items-start gap-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
                     <div className="bg-gradient-to-br from-pink-500 to-rose-500 rounded-full p-3 flex-shrink-0">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -155,7 +144,6 @@ export default function ContactPage() {
                       </p>
                     </div>
                   </div>
-
                   <div className="flex items-start gap-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
                     <div className="bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full p-3 flex-shrink-0">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -187,7 +175,6 @@ export default function ContactPage() {
                   </div>
                 </div>
               </div>
-
               <div className="grid grid-cols-2 gap-4">
                 <a href="https://wa.me/250794580006" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-green-900/80 to-emerald-900/80 backdrop-blur-md rounded-2xl border border-green-400/30 p-6 text-center shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
                   <div className="text-4xl mb-3">💬</div>
@@ -323,7 +310,6 @@ export default function ContactPage() {
                     placeholder="Please share details about your inquiry..."
                   />
                 </div>
-
                 <button
                   type="button"
                   onClick={handleSubmit}
@@ -337,9 +323,7 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-
       <Footer />
-
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 h-[60vh] z-[1]"

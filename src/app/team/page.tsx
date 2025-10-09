@@ -29,7 +29,7 @@ export default function TeamPage() {
   const teamMembers = [
     {
       name: "Rev. Dr. Jean Claude MUREKEYIMANA",
-      role: "Co-founder & Recovery Coach",
+      role: "Founder & Recovery Coach",
       image: "/team/jean-claude.jpg",
       bio: "Spiritual leader and recovery coach dedicated to holistic healing and transformation.",
       gradient: "from-blue-600 to-purple-600"
@@ -67,11 +67,11 @@ export default function TeamPage() {
   // Counseling Advisory Team - Only 3 members
   const counselingTeam = [
     {
-      name: "Dr. Sarah Mukamana",
-      role: "Clinical Director",
-      specialization: "Addiction Medicine",
-      image: "/team/director.jpg",
-      bio: "Over 15 years of experience in addiction treatment and mental health care.",
+      name: "Dr. Susan Gitau",
+      role: "Dr. Susan Gitau ( PhD )",
+      specialization: "Counselling Psychology",
+      image: "/team/susan-gitau.jpg",
+      bio: "Over 10 years of experience in counseling, trauma care, mental health advocacy, and community empowerment.",
       gradient: "from-teal-600 to-cyan-600"
     },
     {
@@ -317,10 +317,10 @@ export default function TeamPage() {
           >
             <div className="text-center mb-10">
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-4" style={{ textShadow: '0 4px 12px rgba(0,0,0,0.6)' }}>
-                Counseling Advisory
+                Advisory Team
               </h2>
               <p className="text-xl text-white/90 max-w-2xl mx-auto" style={{ textShadow: '0 2px 6px rgba(0,0,0,0.5)' }}>
-                Expert counselors and therapists providing comprehensive support
+                Health Practitioners providing comprehensive support
               </p>
             </div>
 
