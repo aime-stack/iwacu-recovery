@@ -63,6 +63,9 @@ export default function SponsorSection() {
     { name: "Rwanda Biomedical Centre", logo: "/partners/rbc.png" },
     { name: "National Rehabilitation Service", logo: "/partners/nrs.png" },
     { name: "Rwanda Forensic Institute", logo: "/partners/forensic.png" },
+    { name: "Colgate Rwanda", logo: "/partners/colgate.png" },
+    { name: "Shema Clinic", logo: "/partners/shema.png" },
+    { name: "SGC Foundation", logo: "/partners/sgc-foundation.png" },
   ];
 
   const victims: Victim[] = [
@@ -131,7 +134,7 @@ export default function SponsorSection() {
 
           <div className="relative overflow-hidden bg-white/5 backdrop-blur-sm py-8 rounded-2xl">
             <div className="flex animate-scroll">
-              {partners.concat(partners).map((partner, index) => (
+              {partners.concat(partners).concat(partners).map((partner, index) => (
                 <div
                   key={index}
                   className="flex-shrink-0 mx-8 flex items-center justify-center"
@@ -143,7 +146,8 @@ export default function SponsorSection() {
                       alt={partner.name}
                       width={150}
                       height={60}
-                      className="object-contain max-h-full"
+                      style={{ width: 'auto', height: 'auto', maxWidth: '150px', maxHeight: '60px' }}
+                      className="object-contain"
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement;
                         target.style.display = "none";
@@ -273,11 +277,11 @@ export default function SponsorSection() {
               transform: translateX(0);
             }
             100% {
-              transform: translateX(-50%);
+              transform: translateX(calc(-100% / 3));
             }
           }
           .animate-scroll {
-            animation: scroll 30s linear infinite;
+            animation: scroll 50s linear infinite;
           }
           .animate-scroll:hover {
             animation-play-state: paused;

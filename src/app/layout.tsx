@@ -1,19 +1,21 @@
 import "./globals.css";
-import type { Metadata } from 'next';
-import ScrollToTop from '@/components/ScrollToTop';
-import Providers from '@/components/Providers';
-import { Poppins } from 'next/font/google';
+import type { Metadata } from "next";
+import ScrollToTop from "@/components/ScrollToTop";
+import Providers from "@/components/Providers";
+import { Poppins } from "next/font/google";
 
-const poppins = Poppins({ 
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-poppins',
+const poppins = Poppins({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
   title: "Iwacu Recovery Centre - Counselling Addiction Services",
-  description: "Professional addiction counselling and recovery services. Hope. Healing. Renewal. Individual, group, and family counselling sessions available.",
-  keywords: "addiction recovery, counselling services, mental health, alcohol addiction, drug addiction, rehabilitation, Rwanda",
+  description:
+    "Professional addiction counselling and recovery services. Hope. Healing. Renewal. Individual, group, and family counselling sessions available.",
+  keywords:
+    "addiction recovery, counselling services, mental health, alcohol addiction, drug addiction, rehabilitation, Rwanda",
   authors: [{ name: "Iwacu Recovery Centre" }],
   creator: "Iwacu Recovery Centre",
   publisher: "Iwacu Recovery Centre",
@@ -22,31 +24,33 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://iwacurecovery.rw'),
+  metadataBase: new URL("https://iwacurecovery.rw"),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: {
     title: "Iwacu Recovery Centre - Counselling Addiction Services",
-    description: "Professional addiction counselling and recovery services. Hope. Healing. Renewal.",
-    url: 'https://iwacurecovery.rw',
-    siteName: 'Iwacu Recovery Centre',
+    description:
+      "Professional addiction counselling and recovery services. Hope. Healing. Renewal.",
+    url: "https://iwacurecovery.rw",
+    siteName: "Iwacu Recovery Centre",
     images: [
       {
-        url: '/logo.png',
+        url: "/logo.png",
         width: 1200,
         height: 630,
-        alt: 'Iwacu Recovery Centre Logo',
+        alt: "Iwacu Recovery Centre Logo",
       },
     ],
-    locale: 'en_US',
-    type: 'website',
+    locale: "en_US",
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: "Iwacu Recovery Centre - Counselling Addiction Services",
-    description: "Professional addiction counselling and recovery services. Hope. Healing. Renewal.",
-    images: ['/logo.png'],
+    description:
+      "Professional addiction counselling and recovery services. Hope. Healing. Renewal.",
+    images: ["/logo.png"],
   },
   robots: {
     index: true,
@@ -54,13 +58,13 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: "your-google-verification-code",
   },
 };
 
@@ -70,8 +74,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={poppins.variable}>
-      <body className="antialiased">
+    <html lang="en" className={poppins.variable} suppressHydrationWarning>
+      <body className="antialiased" suppressHydrationWarning>
         <Providers>
           <div id="back-to-top-anchor"></div>
           {children}

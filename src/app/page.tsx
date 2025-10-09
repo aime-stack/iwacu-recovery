@@ -30,7 +30,10 @@ export default function Page() {
           <div className="relative z-10">
             <AboutSection />
             <ServicesSection />
-            <SponsorSection />
+            <SponsorSection 
+
+            />
+            
             <ContactSection />
           </div>
 

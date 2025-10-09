@@ -172,7 +172,7 @@ export default function Footer() {
                   <p className="text-slate-300 text-sm leading-relaxed">
                     KK 32 Avenue<br />
                     Kigali, Rwanda<br />
-                    <span className="text-xs text-slate-400">Near Kigali Convention Centre</span>
+                    <span className="text-xs text-slate-400">Kicukiro-Karembure</span>
                   </p>
                 </div>
               </div>
