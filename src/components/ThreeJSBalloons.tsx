@@ -4,7 +4,6 @@ import { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Text, Line } from "@react-three/drei";
 import * as THREE from "three";
-import Hands3D from "./Hands3D";
 
 interface BalloonData {
   position: [number, number, number];
@@ -271,8 +270,6 @@ function Scene() {
       ))}
       
       <BalloonStrings balloons={balloons} />
-      
-      <Hands3D />
     </>
   );
 }
