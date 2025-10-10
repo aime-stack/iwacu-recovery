@@ -2,9 +2,20 @@
 
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import Header from "@/components/Header";
-import HeroSky from "@/components/HeroSky";
-import Footer from "@/components/Footer";
+import dynamic from "next/dynamic";
+
+// Dynamically import components with error handling
+const Header = dynamic(() => import("@/components/Header"), { ssr: false });
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
+const HeroSky = dynamic(() => import("@/components/HeroSkyWrapper"), { 
+  ssr: false,
+  loading: () => (
+    <div 
+      className="absolute top-0 left-0 h-[100svh] w-full bg-gradient-to-b from-blue-600 via-blue-400 to-blue-300" 
+      style={{ position: "fixed", zIndex: 0 }} 
+    />
+  ),
+});
 
 // Custom arrow icons
 const ChevronLeft = () => (
@@ -25,7 +36,7 @@ export default function TeamPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
 
-  // Team Members - 4 people with sliding carousel
+  // Team Members - 5 people with sliding carousel
   const teamMembers = [
     {
       name: "Rev. Dr. Jean Claude MUREKEYIMANA",
@@ -109,23 +120,19 @@ export default function TeamPage() {
     return () => Object.values(observers).forEach((obs) => obs.disconnect());
   }, []);
 
-  // Auto-advance carousel
+  // Auto-advance carousel with looping (loops back to first after last)
   useEffect(() => {
     if (isHovering) return; // Don't auto-advance when hovering
   
     const timer = setInterval(() => {
       setCurrentSlide((prev) => {
-        // Stop auto-sliding at the last member
-        if (prev < teamMembers.length - 1) {
-          return prev + 1;
-        }
-        return prev; // Stay on the last slide
+        // Loop back to first slide after reaching the last one
+        return (prev + 1) % teamMembers.length;
       });
     }, 5000);
   
     return () => clearInterval(timer);
   }, [teamMembers.length, isHovering]);
-  
 
   const setRef = (key: string) => (el: HTMLDivElement | null) => {
     sectionRefs.current[key] = el;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Header from "@/components/Header";
-import HeroSky from "@/components/HeroSky";
+import HeroSkyWrapper from "@/components/HeroSkyWrapper";
 import Footer from "@/components/Footer";
 
 export default function ContactPage() {
@@ -45,7 +45,7 @@ export default function ContactPage() {
   };
   return (
     <main className="relative min-h-screen text-slate-800 overflow-hidden">
-      <HeroSky />
+      <HeroSkyWrapper />
       <Header />
       <div className="relative pt-32 md:pt-36 pb-16 z-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -1,11 +1,24 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import Header from "@/components/Header";
-import HeroSky from "@/components/HeroSky";
-import Footer from "@/components/Footer";
+import { useRef, useEffect, useState, useMemo } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
+
+// Dynamically import components to prevent SSR issues
+const Header = dynamic(() => import("@/components/Header"), { ssr: false });
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
+
+// ✅ FIXED: Import HeroSkyWrapper instead of HeroSky directly
+const HeroSky = dynamic(() => import("@/components/HeroSkyWrapper"), { 
+  ssr: false,
+  loading: () => (
+    <div 
+      className="absolute top-0 left-0 h-[100svh] w-full bg-gradient-to-b from-blue-600 via-blue-400 to-blue-300" 
+      style={{ position: "fixed", zIndex: 0 }} 
+    />
+  ),
+});
 
 export default function ProgramsPage() {
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
@@ -20,7 +33,7 @@ export default function ProgramsPage() {
     2: 0
   });
 
-  const programs = [
+  const programs = useMemo(() => [
     {
       title: "Psychoeducation",
       description: "Psychoeducation is the process of providing individuals or groups with information and support about mental health, helping them understand psychological concepts, symptoms, and coping strategies to improve well-being and manage challenges effectively.",
@@ -70,9 +83,10 @@ export default function ProgramsPage() {
       gradient: "from-orange-600 to-amber-600",
       bgColor: "bg-orange-900/60"
     }
-  ];
+  ], []);
 
-  const news = [
+  // ✅ FIXED: Wrap news in useMemo to fix the dependency warning
+  const news = useMemo(() => [
     {
       date: "10 May, 2025",
       title: "Shoes Donation at Iwacu Recovery Christian School",
@@ -91,7 +105,7 @@ export default function ProgramsPage() {
       description: "Students at Iwacu Recovery Centre Christian School came together for a communal breakfast, fostering a sense of community and family. This daily routine helps build healthy habits and strengthens bonds among our students.",
       images: ["/news/breakfast-1.jpg", "/news/breakfast-2.jpg", "/news/breakfast-3.jpg"]
     }
-  ];
+  ], []);
 
   useEffect(() => {
     const observers: Record<string, IntersectionObserver> = {};
@@ -359,6 +373,7 @@ export default function ProgramsPage() {
                                     alt={`${item.title} - Image ${imgIdx + 1}`}
                                     fill
                                     className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     onError={(e) => {
                                       e.currentTarget.style.display = 'none';
                                       const parent = e.currentTarget.parentElement;

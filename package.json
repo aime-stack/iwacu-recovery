@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start -p 3000"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.6",

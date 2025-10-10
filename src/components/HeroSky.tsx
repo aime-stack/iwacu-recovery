@@ -1,9 +1,13 @@
 "use client";
 
-import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import React, { Suspense, useEffect, useMemo, useRef, useState, memo, useCallback } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, Text } from "@react-three/drei";
 import * as THREE from "three";
+
+// ============================================================================
+// TYPE DEFINITIONS
+// ============================================================================
 
 interface BalloonType {
   offsetPos: [number, number, number];
@@ -12,26 +16,41 @@ interface BalloonType {
   size: number;
 }
 
-function CameraRig() {
+interface BalloonProps {
+  balloon: BalloonType;
+  i: number;
+  hovered: number | null;
+  setHovered: React.Dispatch<React.SetStateAction<number | null>>;
+  clicked: number | null;
+  setClicked: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+// ============================================================================
+// CAMERA RIG
+// ============================================================================
+
+const CameraRig = memo(() => {
   const { camera } = useThree();
   const [isMobile, setIsMobile] = useState(false);
-  const target = useMemo(() => ({ x: -1.5, y: 0 }), []); // Changed to negative to look left
+  
+  const targetRef = useRef({ x: -1.5, y: 0 });
+  const basePositionRef = useRef({ x: -1.5, mobile: -0.5 });
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
     };
+    
     checkMobile();
-    window.addEventListener("resize", checkMobile);
+    window.addEventListener("resize", checkMobile, { passive: true });
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
-    if (isMobile) {
-      camera.position.set(-0.5, 0.5, 10); // Negative x for left side
-    } else {
-      camera.position.set(-1.5, 0.5, 10); // Negative x for left side
-    }
+    const baseX = isMobile ? basePositionRef.current.mobile : basePositionRef.current.x;
+    camera.position.set(baseX, 0.5, 10);
+    targetRef.current.x = baseX;
   }, [camera, isMobile]);
 
   useEffect(() => {
@@ -39,60 +58,53 @@ function CameraRig() {
       const nx = (e.clientX / window.innerWidth) * 2 - 1;
       const ny = (e.clientY / window.innerHeight) * 2 - 1;
       const movementFactor = isMobile ? 0.15 : 0.25;
-      target.x = (isMobile ? -0.5 : -1.5) + nx * movementFactor; // Negative for left
-      target.y = -ny * 0.15;
+      const baseX = isMobile ? basePositionRef.current.mobile : basePositionRef.current.x;
+      targetRef.current.x = baseX + nx * movementFactor;
+      targetRef.current.y = -ny * 0.15;
     };
-    window.addEventListener("pointermove", onMove);
+    
+    window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
-  }, [target, isMobile]);
+  }, [isMobile]);
 
   useFrame((_, dt) => {
-    camera.position.x += (target.x - camera.position.x) * Math.min(1, dt * 1.5);
-    camera.position.y += (target.y - camera.position.y) * Math.min(1, dt * 1.5);
-    camera.lookAt(-3, 0, 0); // Look towards left side where balloons are now
+    const clampedDt = Math.min(dt, 0.1);
+    const lerpFactor = Math.min(1, clampedDt * 1.5);
+    
+    camera.position.x += (targetRef.current.x - camera.position.x) * lerpFactor;
+    camera.position.y += (targetRef.current.y - camera.position.y) * lerpFactor;
+    camera.lookAt(-3, 0, 0);
   });
 
   return null;
-}
+});
 
-interface BalloonType {
-  offsetPos: [number, number, number];
-  color: string;
-  label: string;
-  size: number;
-}
+CameraRig.displayName = "CameraRig";
 
-function Balloon({
-  balloon,
-  i,
-  hovered,
-  setHovered,
-  clicked,
-  setClicked,
-}: {
-  balloon: BalloonType;
-  i: number;
-  hovered: number | null;
-  setHovered: React.Dispatch<React.SetStateAction<number | null>>;
-  clicked: number | null;
-  setClicked: React.Dispatch<React.SetStateAction<number | null>>;
-}) {
+// ============================================================================
+// BALLOON COMPONENT
+// ============================================================================
+
+const Balloon = memo(({ balloon, i, hovered, setHovered, clicked, setClicked }: BalloonProps) => {
   const balloonRef = useRef<THREE.Group>(null!);
+  
+  const targetScaleVec = useMemo(() => new THREE.Vector3(), []);
+
+  const timeOffsets = useMemo(() => ({
+    float: i * 0.7,
+    rotation: i,
+  }), [i]);
 
   useFrame((state) => {
     if (!balloonRef.current) return;
     const t = state.clock.getElapsedTime();
     
-    const individualFloat = Math.sin(t * 0.5 + i * 0.7) * 0.15;
-    balloonRef.current.position.y = balloon.offsetPos[1] + individualFloat;
-    
-    balloonRef.current.rotation.y = Math.sin(t * 0.4 + i) * 0.1;
+    balloonRef.current.position.y = balloon.offsetPos[1] + Math.sin(t * 0.5 + timeOffsets.float) * 0.15;
+    balloonRef.current.rotation.y = Math.sin(t * 0.4 + timeOffsets.rotation) * 0.1;
 
     const targetScale = clicked === i ? 1.3 : hovered === i ? 1.15 : 1;
-    balloonRef.current.scale.lerp(
-      new THREE.Vector3(targetScale, targetScale, targetScale),
-      0.1
-    );
+    targetScaleVec.set(targetScale, targetScale, targetScale);
+    balloonRef.current.scale.lerp(targetScaleVec, 0.1);
   });
 
   const stringPoints = useMemo(() => {
@@ -102,70 +114,80 @@ function Balloon({
       balloon.offsetPos[2]
     );
     const end = new THREE.Vector3(0, -2.5, 0);
-    const midPoint1 = new THREE.Vector3(
+    const mid1 = new THREE.Vector3(
       balloon.offsetPos[0] * 0.7,
       balloon.offsetPos[1] - balloon.size * 0.9 - 0.6,
       balloon.offsetPos[2] * 0.7
     );
-    const midPoint2 = new THREE.Vector3(
+    const mid2 = new THREE.Vector3(
       balloon.offsetPos[0] * 0.3,
       -1.5,
       balloon.offsetPos[2] * 0.3
     );
-    const curve = new THREE.CatmullRomCurve3([start, midPoint1, midPoint2, end]);
-    return curve.getPoints(40);
-  }, [balloon]);
+    return new THREE.CatmullRomCurve3([start, mid1, mid2, end]).getPoints(40);
+  }, [balloon.offsetPos, balloon.size]);
 
-  const stringGeometry = useMemo(
-    () => new THREE.BufferGeometry().setFromPoints(stringPoints),
-    [stringPoints]
-  );
+  const handlePointerEnter = useCallback(() => setHovered(i), [i, setHovered]);
+  const handlePointerLeave = useCallback(() => setHovered(null), [setHovered]);
+  const handleClick = useCallback(() => {
+    setClicked(i);
+    setTimeout(() => setClicked(null), 800);
+  }, [i, setClicked]);
+
+  const stringGeometry = useMemo(() => {
+    const geometry = new THREE.BufferGeometry().setFromPoints(stringPoints);
+    return geometry;
+  }, [stringPoints]);
+
+  const stringLine = useMemo(() => {
+    const material = new THREE.LineBasicMaterial({ color: "#8B7355", transparent: true, opacity: 0.8 });
+    return new THREE.Line(stringGeometry, material);
+  }, [stringGeometry]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      stringGeometry.dispose();
+      stringLine.material.dispose();
+    };
+  }, [stringGeometry, stringLine]);
 
   return (
     <group>
-      <primitive
-        object={
-          new THREE.Line(
-            stringGeometry,
-            new THREE.LineBasicMaterial({ 
-              color: "#8B7355", 
-              transparent: true, 
-              opacity: 0.8
-            })
-          )
-        }
-      />
-      
+      {/* Balloon string */}
+      <primitive object={stringLine} />
+
+      {/* Balloon group */}
       <group
         ref={balloonRef}
         position={balloon.offsetPos}
-        onPointerEnter={() => setHovered(i)}
-        onPointerLeave={() => setHovered(null)}
-        onClick={() => {
-          setClicked(i);
-          setTimeout(() => setClicked(null), 800);
-        }}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+        onClick={handleClick}
       >
+        {/* Main balloon sphere */}
         <mesh scale={[balloon.size, balloon.size * 1.2, balloon.size]}>
           <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial 
-            color={balloon.color} 
-            emissive={balloon.color} 
+          <meshStandardMaterial
+            color={balloon.color}
+            emissive={balloon.color}
             emissiveIntensity={0.2}
             roughness={0.3}
             metalness={0.1}
           />
         </mesh>
-        
+
+        {/* Balloon knot */}
         <mesh position={[0, -balloon.size * 0.9, 0]} scale={[0.15, 0.25, 0.15]}>
           <sphereGeometry args={[balloon.size * 0.3, 8, 8]} />
           <meshStandardMaterial color={balloon.color} />
         </mesh>
-        
+
+        {/* Label */}
         <Text
           position={[0, 0, balloon.size + 0.1]}
           fontSize={0.12}
-          color="#FFFFFF"
+          color="#FFF"
           anchorX="center"
           anchorY="middle"
           outlineWidth={0.012}
@@ -176,82 +198,65 @@ function Balloon({
       </group>
     </group>
   );
-}
+});
 
-function BalloonBundle() {
+Balloon.displayName = "Balloon";
+
+// ============================================================================
+// BALLOON BUNDLE
+// ============================================================================
+
+const BalloonBundle = memo(() => {
   const bundleRef = useRef<THREE.Group>(null!);
   const [hovered, setHovered] = useState<number | null>(null);
   const [clicked, setClicked] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
-    window.addEventListener("resize", checkMobile);
+    window.addEventListener("resize", checkMobile, { passive: true });
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useFrame((state) => {
     if (!bundleRef.current) return;
     const t = state.clock.getElapsedTime();
-    
     bundleRef.current.position.y = -1 + Math.sin(t * 0.3) * 0.05;
     bundleRef.current.position.x = Math.cos(t * 0.2) * 0.08;
     bundleRef.current.rotation.z = Math.sin(t * 0.25) * 0.03;
   });
 
-  const balloons = useMemo<BalloonType[]>(
-    () => {
-      const sizeFactor = isMobile ? 0.8 : 1;
-      const spreadFactor = isMobile ? 0.6 : 1;
-      
-      return [
-        { 
-          offsetPos: [-0.4 * spreadFactor, 0.9, 0.3], 
-          color: "#FF6B9D", 
-          label: "", 
-          size: 1.1 * sizeFactor 
-        },
-        { 
-          offsetPos: [-0.15 * spreadFactor, 0.7, 0.5], 
-          color: "#4ECDC4", 
-          label: "", 
-          size: 1.0 * sizeFactor 
-        },
-        { 
-          offsetPos: [0.15 * spreadFactor, 0.8, 0.5], 
-          color: "#FFD93D", 
-          label: "", 
-          size: 1.05 * sizeFactor 
-        },
-        { 
-          offsetPos: [0.4 * spreadFactor, 0.6, 0.3], 
-          color: "#B19CD9", 
-          label: "", 
-          size: 1.0 * sizeFactor 
-        },
-      ];
-    },
-    [isMobile]
-  );
+  const balloons = useMemo<BalloonType[]>(() => {
+    const sizeF = isMobile ? 0.8 : 1;
+    const spreadF = isMobile ? 0.6 : 1;
+    return [
+      { offsetPos: [-0.4 * spreadF, 0.9, 0.3], color: "#FF6B9D", label: "", size: 1.1 * sizeF },
+      { offsetPos: [-0.15 * spreadF, 0.7, 0.5], color: "#4ECDC4", label: "", size: 1.0 * sizeF },
+      { offsetPos: [0.15 * spreadF, 0.8, 0.5], color: "#FFD93D", label: "", size: 1.05 * sizeF },
+      { offsetPos: [0.4 * spreadF, 0.6, 0.3], color: "#B19CD9", label: "", size: 1.0 * sizeF },
+    ];
+  }, [isMobile]);
 
-  const bundleScale = isMobile ? 1.2 : 1.6;
-  const bundlePositionX = isMobile ? 0 : 1.5;
-  const bundlePositionZ = isMobile ? -8 : -8;
+  const bundleTransform = useMemo(() => ({
+    scale: isMobile ? 1.2 : 1.6,
+    posX: isMobile ? 0 : 1.5,
+    posZ: -8,
+  }), [isMobile]);
 
   return (
     <group 
       ref={bundleRef} 
-      position={[bundlePositionX, -1, bundlePositionZ]} 
-      scale={[bundleScale, bundleScale, bundleScale]}
+      position={[bundleTransform.posX, -1, bundleTransform.posZ]} 
+      scale={[bundleTransform.scale, bundleTransform.scale, bundleTransform.scale]}
     >
+      {/* Anchor point */}
       <mesh position={[0, -2.5, 0]}>
         <sphereGeometry args={[0.08, 8, 8]} />
         <meshStandardMaterial color="#8B7355" />
       </mesh>
-      
+
+      {/* Balloons */}
       {balloons.map((b, i) => (
         <Balloon
           key={i}
@@ -265,21 +270,25 @@ function BalloonBundle() {
       ))}
     </group>
   );
-}
+});
 
-function RealisticSky() {
+BalloonBundle.displayName = "BalloonBundle";
+
+// ============================================================================
+// REALISTIC SKY
+// ============================================================================
+
+const RealisticSky = memo(() => {
   const skyGradient = useMemo(() => {
     const canvas = document.createElement("canvas");
     canvas.width = 2;
     canvas.height = 512;
     const ctx = canvas.getContext("2d")!;
     const gradient = ctx.createLinearGradient(0, 0, 0, 512);
-    
     gradient.addColorStop(0, "#5B8DBE");
     gradient.addColorStop(0.3, "#6FA3D1");
     gradient.addColorStop(0.6, "#84B5DB");
     gradient.addColorStop(1, "#A8CCE5");
-    
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 2, 512);
     return new THREE.CanvasTexture(canvas);
@@ -291,49 +300,42 @@ function RealisticSky() {
       <meshBasicMaterial map={skyGradient} side={THREE.BackSide} />
     </mesh>
   );
-}
+});
 
-function Scene() {
+RealisticSky.displayName = "RealisticSky";
+
+// ============================================================================
+// SCENE
+// ============================================================================
+
+const Scene = memo(() => {
   return (
     <>
       <color attach="background" args={["#5B8DBE"]} />
       <fog attach="fog" args={["#84B5DB", 20, 70]} />
       <PerspectiveCamera makeDefault position={[0, 0.5, 8]} />
-      
       <ambientLight intensity={0.6} color="#B8D4E8" />
-      <directionalLight position={[8, 15, 10]} intensity={0.8} color="#FFFFFF" />
+      <directionalLight position={[8, 15, 10]} intensity={0.8} color="#FFF" />
       <hemisphereLight args={["#7FA8C9", "#5B8DBE", 0.5]} />
-      
       <RealisticSky />
       <BalloonBundle />
       <CameraRig />
     </>
   );
-}
+});
 
-export default function HeroSky() {
-  const [isClient, setIsClient] = React.useState(false);
+Scene.displayName = "Scene";
 
-  React.useEffect(() => {
-    setIsClient(true);
-  }, []);
+// ============================================================================
+// HERO SKY CANVAS
+// ============================================================================
 
-  if (!isClient) {
-    return (
-      <div className="absolute top-0 left-0 h-[100svh] w-full bg-gradient-to-b from-blue-600 via-blue-400 to-blue-300" style={{ position: 'fixed', zIndex: 0}} />
-    );
-  }
-
+function HeroSky() {
   return (
-    <div className="absolute top-0 left-0 h-[100svh] w-full" style={{ position: 'fixed' }}>
-      <Canvas
-        dpr={[1, 2]}
-        camera={{ fov: 55, near: 0.1, far: 200 }}
-      >
-        <Suspense fallback={null}>
-          <Scene />
-        </Suspense>
-      </Canvas>
-    </div>
+    <Suspense fallback={null}>
+      <Scene />
+    </Suspense>
   );
 }
+
+export default HeroSky;

@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import HeroSky from "@/components/HeroSky";
+import HeroSkyWrapper from "@/components/HeroSkyWrapper"; // use wrapper
 import BalloonSection from "@/components/BalloonSection";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -8,17 +8,17 @@ import SponsorSection from "@/components/SponsorSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import NewsletterBanner from '@/components/NewsletterBanner';
-import OurTrustedPartners from '@/components/OurTrustedPartners'; // ✅ import directly
+import OurTrustedPartners from '@/components/OurTrustedPartners';
 
 export default function Page() {
   return (
     <>
       <NewsletterBanner />
-      
+
       <main className="relative min-h-screen text-slate-800 overflow-hidden">
-        <HeroSky />
+        <HeroSkyWrapper /> {/* use the wrapper here */}
         <Header />
-        
+
         <div className="relative">
           <HeroSection />
           <BalloonSection />
@@ -28,12 +28,8 @@ export default function Page() {
           <AboutSection />
           <ServicesSection />
 
-          {/* Partners section directly on homepage */}
           <OurTrustedPartners />
-
-          {/* Sponsor carousel */}
           <SponsorSection />
-
           <ContactSection />
         </div>
 

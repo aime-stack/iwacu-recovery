@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import Image from 'next/image'; // <-- Import Image
+import Image from 'next/image';
 import { getArticlesByCategory } from '@/lib/articles';
 
 export const metadata = {
   title: 'Education Articles | Iwacu Recovery Centre',
-  description: 'Learn about addiction, recovery, and mental health through our educational resources.',
+  description: 'Educational resources about addiction, recovery, and mental health.',
 };
 
 export default function EducationPage() {
@@ -16,10 +16,10 @@ export default function EducationPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
-            Education & <span className="text-blue-500">Resources</span>
+            Education <span className="text-blue-500">Articles</span>
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Explore our collection of educational articles about addiction, recovery, and mental health.
+            Learn about addiction, recovery processes, mental health, and wellness through our educational resources.
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export default function EducationPage() {
                       alt={article.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      priority={true} // Optional: mark as high-priority image for LCP
+                      priority
                     />
                   </div>
                 )}
