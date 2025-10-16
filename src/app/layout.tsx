@@ -24,15 +24,15 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://iwacurecovery.rw"),
+  metadataBase: new URL("https://www.iwacurecoverycentre.com"),
   alternates: {
-    canonical: "/",
+    canonical: "https://www.iwacurecoverycentre.com",
   },
   openGraph: {
     title: "Iwacu Recovery Centre - Counselling Addiction Services",
     description:
       "Professional addiction counselling and recovery services. Hope. Healing. Renewal.",
-    url: "https://iwacurecovery.rw",
+    url: "https://www.iwacurecoverycentre.com",
     siteName: "Iwacu Recovery Centre",
     images: [
       {
@@ -63,10 +63,16 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
   verification: {
     google: "your-google-verification-code",
   },
-};
+  };
 
 export default function RootLayout({
   children,
