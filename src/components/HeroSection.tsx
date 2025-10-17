@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,7 +21,6 @@ export default function HeroSection() {
         <div className="absolute top-[60%] left-[5%] w-36 h-18 bg-white/25 rounded-full blur-xl animate-float" />
         <div className="absolute top-[40%] right-[25%] w-28 h-14 bg-white/35 rounded-full blur-xl animate-float" />
       </div>
-
 
       {/* Hero Content Container */}
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -52,15 +52,21 @@ export default function HeroSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
+              <Link 
+                href="/screening" 
+                className="px-8 py-4 bg-yellow-400 text-gray-900 font-bold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 text-center cursor-pointer animate-pulse hover:animate-none"
+              >
+                📋 Free Assessment
+              </Link>
               <a 
                 href="contact" 
-                className="px-8 py-4 bg-white text-slate-900 font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/50 text-center"
+                className="px-8 py-4 bg-white text-slate-900 font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/50 text-center cursor-pointer"
               >
                 Get Help Now
               </a>
               <a 
                 href="#about" 
-                className="px-8 py-4 bg-pink-500 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-500/50 text-center"
+                className="px-8 py-4 bg-pink-500 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-500/50 text-center cursor-pointer"
               >
                 Learn More
               </a>
