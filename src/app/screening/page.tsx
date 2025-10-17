@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, AlertCircle, Phone, Mail } from 'lucide-react';
 
 interface PersonalInfo {
@@ -163,7 +162,7 @@ export default function ScreeningPage() {
         color: 'green',
         icon: CheckCircle,
         message: 'Your responses suggest a low risk of substance abuse. However, staying informed and maintaining healthy habits is important.',
-        recommendation: 'Consider occasional check-ins and maintain awareness of substance use patterns. We\'re here if you ever need support.',
+        recommendation: 'Consider occasional check-ins and maintain awareness of substance use patterns. We&apos;re here if you ever need support.',
         bgColor: 'bg-green-50',
         borderColor: 'border-green-200',
         textColor: 'text-green-800',
@@ -210,13 +209,13 @@ export default function ScreeningPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-6">
-          <Link 
-            href="/"
+          <button 
+            onClick={() => window.history.back()}
             className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
           >
             <ArrowLeft size={20} />
             <span>Back to Home</span>
-          </Link>
+          </button>
         </div>
 
         {/* Main Card */}
@@ -355,7 +354,7 @@ export default function ScreeningPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Next of Kin's Phone / Tel. y'umuntu ukwitaho
+                    Next of Kin&apos;s Phone / Tel. y&apos;umuntu ukwitaho
                   </label>
                   <input
                     type="tel"
@@ -514,18 +513,18 @@ export default function ScreeningPage() {
                     </div>
 
                     <div className="flex gap-4">
-                      <Link
-                        href="/book-call"
+                      <button
+                        onClick={() => window.location.href = '/book-call'}
                         className="flex-1 text-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors cursor-pointer shadow-lg"
                       >
                         Schedule Consultation
-                      </Link>
-                      <Link
-                        href="/"
+                      </button>
+                      <button
+                        onClick={() => window.location.href = '/'}
                         className="flex-1 text-center px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
                       >
                         Return Home
-                      </Link>
+                      </button>
                     </div>
 
                     <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">

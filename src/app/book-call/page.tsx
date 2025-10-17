@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Calendar, Clock, Phone, CheckCircle, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
 
 interface FormData {
   name: string;
@@ -105,13 +104,13 @@ export default function BookCallPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-pink-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Back Button */}
-        <Link 
-          href="/"
+        <button 
+          onClick={() => window.history.back()}
           className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
         >
           <ArrowLeft size={20} />
           <span>Back to Home</span>
-        </Link>
+        </button>
 
         {/* Main Card */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -317,13 +316,13 @@ export default function BookCallPage() {
                   </div>
                   <Phone className="mx-auto mb-3" size={40} />
                   <p className="text-sm font-semibold text-gray-800">
-                    Complete the payment on your phone, then click "I've Paid" below
+                    Complete the payment on your phone, then click &quot;I&apos;ve Paid&quot; below
                   </p>
                 </div>
 
                 <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
                   <p className="text-sm text-yellow-800">
-                    <strong>Note:</strong> Please complete the payment before confirming. You'll receive a confirmation SMS from MTN after successful payment.
+                    <strong>Note:</strong> Please complete the payment before confirming. You&apos;ll receive a confirmation SMS from MTN after successful payment.
                   </p>
                 </div>
 
@@ -338,7 +337,7 @@ export default function BookCallPage() {
                     onClick={handleNextStep}
                     className="flex-1 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors cursor-pointer shadow-lg"
                   >
-                    I've Paid
+                    I&apos;ve Paid
                   </button>
                 </div>
               </div>
@@ -352,7 +351,7 @@ export default function BookCallPage() {
                 <CheckCircle size={80} className="text-green-500 mx-auto" />
                 <h3 className="text-3xl font-bold text-gray-900">Booking Confirmed!</h3>
                 <p className="text-gray-600">
-                  Your call has been scheduled successfully. We'll send you a confirmation email at{' '}
+                  Your call has been scheduled successfully. We&apos;ll send you a confirmation email at{' '}
                   <span className="font-semibold text-gray-900">{formData.email}</span> and an SMS reminder before your appointment.
                 </p>
                 <div className="bg-gray-50 rounded-xl p-6">
@@ -363,12 +362,12 @@ export default function BookCallPage() {
                     <p><span className="font-semibold">Phone:</span> {formData.phone}</p>
                   </div>
                 </div>
-                <Link
-                  href="/"
+                <button
+                  onClick={() => window.location.href = '/'}
                   className="inline-block w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors cursor-pointer shadow-lg"
                 >
                   Return to Home
-                </Link>
+                </button>
               </div>
             </div>
           )}
