@@ -56,7 +56,7 @@ export default function HeroSection() {
                 href="/screening" 
                 className="px-8 py-4 bg-yellow-400 text-gray-900 font-bold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 text-center cursor-pointer animate-pulse hover:animate-none"
               >
-                📋 Free Assessment
+                📋 Substance Check
               </Link>
               <a 
                 href="contact" 
