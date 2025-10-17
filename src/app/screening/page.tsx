@@ -88,7 +88,7 @@ const questions = [
   {
     id: 15,
     en: "When you stop using or when you can't use, do you start to feel depressed or agitated?",
-    rw: "Iyo uhagaritse wanywaga, waba ugira agahinda gakabije cyangwa uhagarika umutima?"
+    rw: "Iyo uhagaritse wanywaga, waba ugira agahinda gakabije cyangwa uhagarika umutika?"
   },
   {
     id: 16,
@@ -118,7 +118,7 @@ const questions = [
 ];
 
 export default function ScreeningPage() {
-  const [step, setStep] = useState(0); // 0: Info, 1-20: Questions, 21: Results
+  const [step, setStep] = useState(0);
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
     name: '',
     age: '',
@@ -162,10 +162,11 @@ export default function ScreeningPage() {
         color: 'green',
         icon: CheckCircle,
         message: 'Your responses suggest a low risk of substance abuse. However, staying informed and maintaining healthy habits is important.',
-        recommendation: 'Consider occasional check-ins and maintain awareness of substance use patterns. We&apos;re here if you ever need support.',
-        bgColor: 'bg-green-50',
-        borderColor: 'border-green-200',
+        recommendation: 'Consider occasional check-ins and maintain awareness of substance use patterns. We are here if you ever need support.',
+        bgColor: 'bg-gradient-to-br from-green-50 to-emerald-100',
+        borderColor: 'border-green-400',
         textColor: 'text-green-800',
+        iconColor: 'text-green-600',
         score: `${yesCount} out of 20 questions`
       };
     } else if (risk === 'medium') {
@@ -175,9 +176,10 @@ export default function ScreeningPage() {
         icon: AlertTriangle,
         message: 'Your responses indicate some concerning patterns that may benefit from professional guidance.',
         recommendation: 'We recommend scheduling a consultation with our counseling team to discuss your situation and explore support options.',
-        bgColor: 'bg-yellow-50',
-        borderColor: 'border-yellow-300',
-        textColor: 'text-yellow-800',
+        bgColor: 'bg-gradient-to-br from-yellow-50 to-amber-100',
+        borderColor: 'border-yellow-400',
+        textColor: 'text-yellow-900',
+        iconColor: 'text-yellow-600',
         score: `${yesCount} out of 20 questions`
       };
     } else {
@@ -187,9 +189,10 @@ export default function ScreeningPage() {
         icon: AlertCircle,
         message: 'Your responses suggest significant substance use concerns that require immediate professional attention.',
         recommendation: 'We strongly recommend contacting us immediately for a comprehensive assessment and treatment plan. Recovery is possible with the right support.',
-        bgColor: 'bg-red-50',
-        borderColor: 'border-red-300',
-        textColor: 'text-red-800',
+        bgColor: 'bg-gradient-to-br from-red-50 to-rose-100',
+        borderColor: 'border-red-400',
+        textColor: 'text-red-900',
+        iconColor: 'text-red-600',
         score: `${yesCount} out of 20 questions`
       };
     }
@@ -221,7 +224,7 @@ export default function ScreeningPage() {
         {/* Main Card */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           {/* Header Section */}
-          <div className="bg-[#57241B] text-white p-6 md:p-8">
+          <div className="bg-gradient-to-r from-[#57241B] to-[#7a3326] text-white p-6 md:p-8">
             <h1 className="text-2xl md:text-3xl font-bold mb-2">
               Substance Abuse Screening Assessment
             </h1>
@@ -232,7 +235,7 @@ export default function ScreeningPage() {
 
           {/* Progress Bar */}
           {step > 0 && step <= 20 && (
-            <div className="bg-gray-100 px-6 py-4">
+            <div className="bg-gray-50 px-6 py-4">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm font-medium text-gray-700">
                   Question {step} of 20
@@ -241,9 +244,9 @@ export default function ScreeningPage() {
                   {Math.round((step / 20) * 100)}% Complete
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
                 <div 
-                  className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 h-2.5 rounded-full transition-all duration-300"
                   style={{ width: `${(step / 20) * 100}%` }}
                 />
               </div>
@@ -264,7 +267,8 @@ export default function ScreeningPage() {
                     name="name"
                     value={personalInfo.name}
                     onChange={handlePersonalInfoChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
+                    placeholder="Enter your full name"
                     required
                   />
                 </div>
@@ -277,7 +281,8 @@ export default function ScreeningPage() {
                     name="age"
                     value={personalInfo.age}
                     onChange={handlePersonalInfoChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
+                    placeholder="Enter your age"
                     required
                   />
                 </div>
@@ -289,7 +294,7 @@ export default function ScreeningPage() {
                     name="gender"
                     value={personalInfo.gender}
                     onChange={handlePersonalInfoChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                     required
                   >
                     <option value="">Select</option>
@@ -306,7 +311,7 @@ export default function ScreeningPage() {
                     name="maritalStatus"
                     value={personalInfo.maritalStatus}
                     onChange={handlePersonalInfoChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                   >
                     <option value="">Select</option>
                     <option value="Single">Single / Ingaragu</option>
@@ -324,7 +329,8 @@ export default function ScreeningPage() {
                     name="education"
                     value={personalInfo.education}
                     onChange={handlePersonalInfoChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
+                    placeholder="e.g., High School, University"
                   />
                 </div>
                 <div>
@@ -336,7 +342,8 @@ export default function ScreeningPage() {
                     name="religion"
                     value={personalInfo.religion}
                     onChange={handlePersonalInfoChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
+                    placeholder="Your religion"
                   />
                 </div>
                 <div>
@@ -348,7 +355,8 @@ export default function ScreeningPage() {
                     name="phone"
                     value={personalInfo.phone}
                     onChange={handlePersonalInfoChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
+                    placeholder="+250 xxx xxx xxx"
                     required
                   />
                 </div>
@@ -361,7 +369,8 @@ export default function ScreeningPage() {
                     name="nextOfKinPhone"
                     value={personalInfo.nextOfKinPhone}
                     onChange={handlePersonalInfoChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
+                    placeholder="+250 xxx xxx xxx"
                   />
                 </div>
               </div>
@@ -370,7 +379,7 @@ export default function ScreeningPage() {
                 <button
                   onClick={() => setStep(1)}
                   disabled={!canProceed()}
-                  className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors cursor-pointer shadow-lg flex items-center gap-2"
+                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all cursor-pointer shadow-lg flex items-center gap-2"
                 >
                   Start Assessment
                   <ArrowRight size={20} />
@@ -403,7 +412,7 @@ export default function ScreeningPage() {
                   }}
                   className={`py-6 px-6 text-lg font-semibold rounded-lg border-2 transition-all cursor-pointer ${
                     answers[step] === true
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
+                      ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white border-blue-600 shadow-lg'
                       : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400 hover:shadow-md'
                   }`}
                 >
@@ -420,7 +429,7 @@ export default function ScreeningPage() {
                   }}
                   className={`py-6 px-6 text-lg font-semibold rounded-lg border-2 transition-all cursor-pointer ${
                     answers[step] === false
-                      ? 'bg-gray-600 text-white border-gray-600 shadow-lg'
+                      ? 'bg-gradient-to-br from-gray-600 to-gray-700 text-white border-gray-600 shadow-lg'
                       : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400 hover:shadow-md'
                   }`}
                 >
@@ -462,22 +471,26 @@ export default function ScreeningPage() {
                 const riskInfo = getRiskInfo();
                 return (
                   <>
-                    <div className={`${riskInfo.bgColor} border-2 ${riskInfo.borderColor} rounded-xl p-6 mb-6`}>
+                    <div className={`${riskInfo.bgColor} border-2 ${riskInfo.borderColor} rounded-xl p-6 mb-6 shadow-lg`}>
                       <div className="flex items-center gap-4 mb-4">
-                        <RiskIcon size={48} className={riskInfo.textColor} />
+                        <div className="bg-white rounded-full p-3 shadow-md">
+                          <RiskIcon size={48} className={riskInfo.iconColor} />
+                        </div>
                         <div>
                           <h2 className={`text-2xl font-bold ${riskInfo.textColor}`}>
                             {riskInfo.level}
                           </h2>
-                          <p className="text-sm text-gray-600">{riskInfo.score}</p>
+                          <p className="text-sm text-gray-600 font-medium">{riskInfo.score}</p>
                         </div>
                       </div>
-                      <p className={`${riskInfo.textColor} mb-4`}>
+                      <p className={`${riskInfo.textColor} mb-4 text-base`}>
                         {riskInfo.message}
                       </p>
-                      <p className={`${riskInfo.textColor} font-semibold`}>
-                        {riskInfo.recommendation}
-                      </p>
+                      <div className="bg-white/50 rounded-lg p-4 border border-white/60">
+                        <p className={`${riskInfo.textColor} font-semibold`}>
+                          {riskInfo.recommendation}
+                        </p>
+                      </div>
                     </div>
 
                     {/* Additional Info */}
@@ -489,8 +502,8 @@ export default function ScreeningPage() {
                         value={additionalInfo}
                         onChange={(e) => setAdditionalInfo(e.target.value)}
                         rows={4}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="Any other information you'd like to share about your situation..."
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
+                        placeholder="Any other information you would like to share about your situation..."
                       />
                     </div>
 
@@ -498,14 +511,14 @@ export default function ScreeningPage() {
                     <div className="grid md:grid-cols-2 gap-4 mb-6">
                       <a
                         href="tel:+250788772489"
-                        className="flex items-center justify-center gap-3 px-6 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors cursor-pointer shadow-lg"
+                        className="flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all cursor-pointer shadow-lg"
                       >
                         <Phone size={20} />
                         Call Us Now
                       </a>
                       <a
                         href="mailto:iwacurecovercentre17@gmail.com"
-                        className="flex items-center justify-center gap-3 px-6 py-4 bg-pink-500 text-white font-semibold rounded-lg hover:bg-pink-600 transition-colors cursor-pointer shadow-lg"
+                        className="flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-pink-500 to-pink-600 text-white font-semibold rounded-lg hover:from-pink-600 hover:to-pink-700 transition-all cursor-pointer shadow-lg"
                       >
                         <Mail size={20} />
                         Email Us
@@ -515,7 +528,7 @@ export default function ScreeningPage() {
                     <div className="flex gap-4">
                       <button
                         onClick={() => window.location.href = '/book-call'}
-                        className="flex-1 text-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors cursor-pointer shadow-lg"
+                        className="flex-1 text-center px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all cursor-pointer shadow-lg"
                       >
                         Schedule Consultation
                       </button>
@@ -527,8 +540,8 @@ export default function ScreeningPage() {
                       </button>
                     </div>
 
-                    <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-                      <p className="text-sm text-blue-800">
+                    <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-lg shadow-sm">
+                      <p className="text-sm text-blue-900">
                         <strong>Confidentiality Notice:</strong> Your responses are confidential. This assessment is for screening purposes only and does not constitute a medical diagnosis. Professional evaluation is recommended for accurate assessment.
                       </p>
                     </div>
