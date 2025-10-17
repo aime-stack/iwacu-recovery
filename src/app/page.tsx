@@ -5,10 +5,10 @@ import BalloonSection from "@/components/BalloonSection";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import SponsorSection from "@/components/SponsorSection";
-import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import NewsletterBanner from '@/components/NewsletterBanner';
 import OurTrustedPartners from '@/components/OurTrustedPartners';
+import CallToAction from "@/components/CallToAction";
 
 export default function Page() {
   return (
@@ -30,7 +30,7 @@ export default function Page() {
 
           <OurTrustedPartners />
           <SponsorSection />
-          <ContactSection />
+          <CallToAction />
         </div>
 
         <Footer />

@@ -72,8 +72,8 @@ export default function ContactPage() {
                   If you or someone you know is experiencing a mental health crisis, call our emergency line now.
                 </p>
               </div>
-              <a href="tel:+250794580006" className="flex-shrink-0 bg-white text-red-600 py-4 px-8 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
-                +250 794 580 006
+              <a href="tel:+2500788772489" className="flex-shrink-0 bg-white text-red-600 py-4 px-8 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
+                +250 788 772 489
               </a>
             </div>
           </div>
@@ -113,8 +113,8 @@ export default function ContactPage() {
                       </h3>
                       <div className="space-y-2">
                         <p className="text-white/95" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                          <a href="tel:+250794580006" className="hover:text-white transition-colors font-semibold cursor-pointer">
-                            +250 794 580 006
+                          <a href="tel:+2500788772489" className="hover:text-white transition-colors font-semibold cursor-pointer">
+                            +250 788 772 489
                           </a>
                           <span className="block text-sm text-red-300">Emergency Line 24/7</span>
                         </p>

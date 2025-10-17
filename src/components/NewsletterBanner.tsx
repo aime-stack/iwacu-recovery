@@ -14,10 +14,10 @@ export default function NewsletterBanner() {
     const hasSeenModal = sessionStorage.getItem('newsletter_modal_dismissed');
     
     if (!hasSeenModal) {
-      // Show modal after a brief delay for better UX
+      // Show modal after 10 seconds
       const timer = setTimeout(() => {
         setIsOpen(true);
-      }, 1000);
+      }, 10000);
       
       return () => clearTimeout(timer);
     }
@@ -38,7 +38,7 @@ export default function NewsletterBanner() {
       // You can find this in your Mailchimp embedded form code
       const MAILCHIMP_URL = 'YOUR_MAILCHIMP_FORM_ACTION_URL';
       
-      const response = await fetch(MAILCHIMP_URL, {
+      await fetch(MAILCHIMP_URL, {
         method: 'POST',
         body: new URLSearchParams({
           EMAIL: email,
@@ -56,7 +56,7 @@ export default function NewsletterBanner() {
         handleClose();
       }, 2000);
       
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
