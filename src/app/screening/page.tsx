@@ -320,7 +320,7 @@ export default function ScreeningPage() {
                     <option value="Widowed">Widowed / Bapfakazi</option>
                   </select>
                 </div>
-                           <div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Education Level / Amashuri wize
                   </label>
@@ -337,7 +337,7 @@ export default function ScreeningPage() {
                     <option value="High School">High School / Icyiciro cya kabiri</option>
                     <option value="Vocational/Technical">Vocational/Technical / Umwuga/Tekiniki</option>
                     <option value="University">University / Kaminuza</option>
-                    <option value="Postgraduate">Postgraduate / Impamyabumenyi y'ikirenga</option>
+                    <option value="Postgraduate">Postgraduate / Impamyabumenyi y&apos;ikirenga</option>
                   </select>
                 </div>
                 <div>

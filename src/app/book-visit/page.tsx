@@ -170,7 +170,7 @@ export default function BookVisitPage() {
                 </svg>
                 <div>
                   <p className="font-bold mb-1">Booking Request Received!</p>
-                  <p className="text-sm text-white/90">Thank you for scheduling a visit. We'll be in touch within 24 hours to confirm your appointment.</p>
+                  <p className="text-sm text-white/90">Thank you for scheduling a visit. We&apos;ll be in touch within 24 hours to confirm your appointment.</p>
                 </div>
               </div>
             )}
@@ -357,7 +357,7 @@ export default function BookVisitPage() {
                   Need Immediate Support?
                 </h3>
                 <p className="text-white/95 mb-4 leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                  If you're experiencing a crisis or need urgent assistance, please call our 24/7 emergency helpline:
+                  If you&apos;re experiencing a crisis or need urgent assistance, please call our 24/7 emergency helpline:
                 </p>
                 <a 
                   href="tel:+250788772489" 
