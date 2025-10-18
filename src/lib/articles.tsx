@@ -168,7 +168,7 @@ export const articles: Article[] = [
     readTime: "12 min read"
   },
   {
-    id: 3,
+    id: 2,
     title: "When a Man Fails to Love and a Woman Fails to Submit: Understanding God's Condition for Marriage",
     slug: "when-man-fails-to-love-woman-fails-to-submit",
     author: "Rev. Dr. Jean Claude MUREKEYIMANA",
@@ -341,92 +341,137 @@ export const articles: Article[] = [
   },
   {
     id: 3,
-    title: "What We’re Really Thirsty For: A Wedding, Alcohol, and Life Lessons",
+    title: "What We're Really Thirsty For: A Wedding, Alcohol, and Life Lessons",
     slug: "what-are-we-really-thirsty-for",
     author: "Rev. Dr. Jean Claude MUREKEYIMANA",
     date: "2024-08-26",
-    excerpt: "At a lavish wedding filled with laughter, music, and overflowing drinks, I found myself reflecting on our deep, complicated love for alcohol — the joy, the escape, and the stories hidden behind every glass.",
+    excerpt: "This story begins at a lavish wedding filled with laughter, music, and overflowing drinks. As I watched guests reach for glass after glass, some already drunk yet craving more, I found myself pulled from celebration into contemplation. What are we truly seeking when we reach for the bottle?",
     content: `
-    <div class="article-content">
-      <section class="abstract bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg mb-8">
-        <h2 class="text-2xl font-bold text-slate-900 mb-4">Synopsis</h2>
-        <p class="text-slate-800 leading-relaxed mb-4">
-          At a lavish wedding, I found myself surrounded by laughter, music, and overflowing drinks. What began as a joyful celebration soon became a lens through which I reflected on humanity's complex relationship with alcohol. Observing guests — some reveling, some struggling — I noticed alcohol acting both as a source of joy and a coping mechanism for deeper pains, pressures, and hidden struggles.
+      <div class="article-content prose prose-lg max-w-none">
+        
+        <p class="text-slate-600 text-sm mb-8 italic">
+          Published by Rev. Dr. Jean Claude MUREKEYIMANA, August 2024
         </p>
-        <p class="text-slate-800 leading-relaxed">
-          Through these reflections, I saw alcohol as more than a drink: a mirror reflecting our desires, vulnerabilities, and unspoken stories. This narrative highlights the visible consequences of drinking — from physical harm to disengagement in social moments — and calls for awareness, compassion, and self-reflection. Ultimately, it asks: beyond the bottle, what are we truly seeking?
+
+        <p class="text-slate-800 leading-relaxed mb-6">
+          Recently, I attended the wedding of a friend and a well-known, successful businessman. It was a lavish celebration. Laughter echoed through the halls, music filled the air, and the tables were overflowing with drinks of every kind: soft drinks for some, but for most, the real attraction was the alcohol—whiskey, beer, wine… name it, it was there.
         </p>
-        <div class="mt-4 pt-4 border-t border-blue-200">
-          <p class="text-sm font-semibold text-slate-700">Keywords:</p>
-          <p class="text-sm text-slate-700">Alcohol, Celebration, Addiction, Coping, Reflection, Human Behavior</p>
+
+        <p class="text-slate-800 leading-relaxed mb-6">
+          People were enjoying themselves. <em>Really</em> enjoying. Glasses clinking, toasts flying, the atmosphere bubbling with excitement. But as I sat there taking it all in, something struck me—something that pulled me from celebration into contemplation.
+        </p>
+
+        <p class="text-slate-800 leading-relaxed mb-8 font-semibold text-lg">
+          What is it about alcohol that pulls people in so deeply?
+        </p>
+
+        <div class="bg-gradient-to-r from-blue-50 to-pink-50 p-8 rounded-lg my-8 border-l-4 border-blue-500">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4">The Man with the Empty Bottle</h2>
+          
+          <p class="text-slate-800 leading-relaxed mb-4">
+            I watched as guests consumed drink after drink, some already visibly drunk yet still craving more. I saw a man, visibly disabled—not from birth, but clearly marked by the consequences of life, possibly alcohol itself. He sat with a small beer bottle in hand, sipping slowly.
+          </p>
+
+          <p class="text-slate-800 leading-relaxed mb-4">
+            A big bottle of whiskey was brought out, and suddenly, the crowd surged forward, offering empty plastic bottles and old containers, eager for a share.
+          </p>
+
+          <p class="text-slate-800 leading-relaxed mb-4">
+            Even this man, despite his condition, reached out. He received a portion and beamed with joy—the kind of joy that might mask pain, or perhaps defiance. He looked at his empty beer bottle before setting it aside, shook his head slowly, and reached for the whiskey.
+          </p>
+
+          <p class="text-slate-800 leading-relaxed italic">
+            And in that moment, I felt something. A quiet voice inside whispered, <em>maybe he remembered how he got here. Maybe he chose to say, "Disability is not inability."</em>
+          </p>
         </div>
-      </section>
 
-      <section class="mb-10">
-        <h2 class="text-3xl font-bold text-slate-900 mb-4">1. Observing Alcohol at a Wedding</h2>
-        <p class="text-slate-800 leading-relaxed mb-4">
-          The wedding of a successful friend was extravagant: music echoed through the halls, laughter filled every corner, and tables were piled high with drinks. Alcohol flowed freely, and guests clinked glasses in delight. Yet amid the celebration, I noticed something unsettling — the patterns of consumption, the eagerness for more, and the hidden stories behind each sip.
+        <p class="text-slate-800 leading-relaxed mb-6">
+          Whether or not I read too much into it, the moment stuck with me.
         </p>
-        <p class="text-slate-700 leading-relaxed italic bg-slate-50 p-4 rounded border-l-4 border-slate-300">
-          Witnessing this, I realized that alcohol is more than a social lubricant; it reveals our joys, coping mechanisms, and vulnerabilities.
-        </p>
-      </section>
 
-      <section class="mb-10">
-        <h2 class="text-3xl font-bold text-slate-900 mb-4">2. The Allure and Pull of the Bottle</h2>
-        <p class="text-slate-800 leading-relaxed mb-4">
-          Guests drank with abandon; some were visibly intoxicated yet continued to seek more. A man, visibly disabled by life’s hardships, reached out for another sip of whiskey, his joy mingled with quiet defiance. In that moment, I saw alcohol's dual nature: a source of celebration, yet also a chain of compulsion, offering comfort while hinting at hidden struggles.
-        </p>
-        <p class="text-slate-700 leading-relaxed italic bg-slate-50 p-4 rounded border-l-4 border-slate-300">
-          Observing him made me reflect on how culture, emotion, and personal history intertwine, shaping behaviors that are both joyful and self-destructive.
-        </p>
-      </section>
+        <h2 class="text-2xl font-bold text-slate-900 mt-10 mb-4">The Marks We Carry</h2>
 
-      <section class="mb-10">
-        <h2 class="text-3xl font-bold text-slate-900 mb-4">3. Visible Marks of Struggle</h2>
-        <p class="text-slate-800 leading-relaxed mb-4">
-          Broken teeth, bruised faces, and weary expressions were silent reminders of the long battles many had faced with alcohol. Despite the festive air, some guests were too intoxicated to truly engage, revealing the paradox of alcohol as both a source of fun and a vehicle for harm. The celebration masked pain, yet the signs were unmistakable for those who looked closely.
+        <p class="text-slate-800 leading-relaxed mb-6">
+          All around me, I saw reminders: broken teeth, bruised faces, weary expressions—markers of long battles with alcohol. Yet there they were, drinking like there was no tomorrow. In the middle of a joyous wedding, many were too drunk to dance, too lost to engage, too far gone to remember the celebration itself.
         </p>
-        <p class="text-slate-700 leading-relaxed italic bg-slate-50 p-4 rounded border-l-4 border-slate-300">
-          These observations reinforced the need for awareness, empathy, and intervention — both socially and personally.
-        </p>
-      </section>
 
-      <section class="mb-10">
-        <h2 class="text-3xl font-bold text-slate-900 mb-4">4. A Personal Reflection</h2>
-        <p class="text-slate-800 leading-relaxed mb-4">
-          Having once shared a close relationship with alcohol myself, I recognized the patterns in others: seeking courage, comfort, or escape. A familiar guest, aware of my past, approached, asking for a blessing. In that brief encounter, I saw how alcohol intertwines with human longing, accountability, and the desire for guidance, even amidst indulgence.
+        <p class="text-slate-800 leading-relaxed mb-8">
+          And I remembered my own story. My own relationship with alcohol. The days when I was in love with the bottle; when it gave me courage, comfort, an illusion of power and presence.
         </p>
-        <p class="text-slate-700 leading-relaxed italic bg-slate-50 p-4 rounded border-l-4 border-slate-300">
-          This moment reminded me that change and mentorship remain possible, even in spaces dominated by habits and social pressures.
-        </p>
-      </section>
 
-      <section class="mb-10">
-        <h2 class="text-3xl font-bold text-slate-900 mb-4">5. Alcohol as a Reflection of Desire</h2>
-        <p class="text-slate-800 leading-relaxed mb-4">
-          Each drink seemed to tell a story — some drank to celebrate, others to forget, some to cope. Alcohol reflects hidden desires, unmet needs, and unresolved struggles. Recognizing this complexity invites deeper understanding, compassion, and self-reflection, rather than judgment. It is both a cultural tradition and, at times, a trap.
-        </p>
-        <p class="text-slate-700 leading-relaxed italic bg-slate-50 p-4 rounded border-l-4 border-slate-300">
-          Observing these behaviors encouraged me to ask: what are we truly seeking when we reach for the bottle?
-        </p>
-      </section>
+        <div class="bg-slate-100 p-6 rounded-lg my-8 border-l-4 border-slate-400">
+          <p class="text-slate-900 font-semibold mb-3">
+            But now, on the other side of that life, I find myself asking:
+          </p>
+          <ul class="space-y-2 text-slate-800 list-disc list-inside">
+            <li>Why do we love alcohol so much?</li>
+            <li>Is it culture?</li>
+            <li>Peer pressure?</li>
+            <li>Lack of information?</li>
+            <li>Emotional pain?</li>
+            <li>A coping mechanism?</li>
+            <li>Or simply addiction masked as enjoyment?</li>
+          </ul>
+        </div>
 
-      <section class="mb-10">
-        <h2 class="text-3xl font-bold text-slate-900 mb-4">6. Final Reflection</h2>
-        <p class="text-slate-800 leading-relaxed mb-4">
-          Alcohol is more than a drink; it mirrors human desire, resilience, and vulnerability. Weddings and social gatherings highlight both the joys and consequences of drinking. By reflecting on these moments, we gain insight into ourselves and the people around us, calling for compassion, awareness, and thoughtful engagement.
+        <h2 class="text-2xl font-bold text-slate-900 mt-10 mb-4">A Moment of Recognition</h2>
+
+        <p class="text-slate-800 leading-relaxed mb-6">
+          At some point during the event, a drunk guest who once knew me in my drinking days staggered over. He had heard that I'd changed, that I'd found a new path.
         </p>
-        <blockquote class="border-l-4 border-blue-600 pl-6 py-4 my-6 bg-blue-50 rounded-r-lg">
-          <p class="text-slate-800 italic mb-3 text-lg">For me, the question goes beyond "Why do we drink?" It becomes, "What are we really thirsty for?"</p>
-          <p class="text-slate-800 italic">This story invites introspection, empathy, and responsible engagement with alcohol in our social and personal lives.</p>
-        </blockquote>
-      </section>
-    </div>
-  `,
+
+        <p class="text-slate-800 leading-relaxed mb-4">
+          <em>"I heard you're a priest now,"</em> he said, slurring slightly. <em>"Please, my elder, bless me."</em>
+        </p>
+
+        <p class="text-slate-800 leading-relaxed mb-6">
+          He still remembered my past position in government and gave me a nod of respect, even in his intoxicated state.
+        </p>
+
+        <p class="text-slate-800 leading-relaxed mb-6">
+          I looked at him with a mix of sorrow and compassion. <em>"God bless you,"</em> I said softly.
+        </p>
+
+        <p class="text-slate-800 leading-relaxed mb-8 font-semibold">
+          And I meant it.
+        </p>
+
+        <p class="text-slate-800 leading-relaxed mb-8">
+          Because behind the fun, the parties, and the bottles, there are stories. Stories of pain, of survival, of loss, of resilience—and sometimes, of denial.
+        </p>
+
+        <div class="bg-gradient-to-br from-blue-100 to-pink-100 p-8 rounded-xl my-10 shadow-lg">
+          <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">Final Thought</h2>
+          
+          <p class="text-slate-800 leading-relaxed mb-6 text-lg">
+            Alcohol isn't just a drink. For many, it's a mirror—a reflection of something deeper within. Some see celebration; others see escape. Some see a social tradition; others see chains.
+          </p>
+
+          <p class="text-slate-800 leading-relaxed mb-6 text-lg">
+            But maybe, just maybe, it's time we start asking the harder questions.
+          </p>
+
+          <p class="text-2xl font-bold text-blue-700 text-center leading-relaxed">
+            Not just, <em>"Why do we drink?"</em>
+          </p>
+          
+          <p class="text-2xl font-bold text-blue-700 text-center leading-relaxed mt-4">
+            But, <em>"What are we really thirsty for?"</em>
+          </p>
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-slate-200">
+          <p class="text-slate-600 italic text-center">
+            This story is an invitation—to introspection, compassion, and honest conversation about our relationship with alcohol and what it reveals about our deeper needs.
+          </p>
+        </div>
+
+      </div>
+    `,
     category: 'recovery',
-    readTime: "12 min read"
+    readTime: "8 min read"
   },
+
 ];
 
 // Helper functions

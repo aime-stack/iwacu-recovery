@@ -320,18 +320,25 @@ export default function ScreeningPage() {
                     <option value="Widowed">Widowed / Bapfakazi</option>
                   </select>
                 </div>
-                <div>
+                           <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Education Level / Amashuri wize
                   </label>
-                  <input
-                    type="text"
+                  <select
                     name="education"
                     value={personalInfo.education}
                     onChange={handlePersonalInfoChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white placeholder-gray-400"
-                    placeholder="e.g., High School, University"
-                  />
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                  >
+                    <option value="">Select</option>
+                    <option value="No Formal Education">No Formal Education / Nta mashuri yize</option>
+                    <option value="Primary">Primary / Abanza</option>
+                    <option value="Secondary">Secondary / Ayisumbuye</option>
+                    <option value="High School">High School / Icyiciro cya kabiri</option>
+                    <option value="Vocational/Technical">Vocational/Technical / Umwuga/Tekiniki</option>
+                    <option value="University">University / Kaminuza</option>
+                    <option value="Postgraduate">Postgraduate / Impamyabumenyi y'ikirenga</option>
+                  </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
