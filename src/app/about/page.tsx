@@ -540,7 +540,7 @@ export default function AboutPage() {
                   >
                     {activities.map((activity, idx) => (
                       <div key={idx} className="w-full flex-shrink-0 px-2">
-                        <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20">
+                        <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 relative">
                           <div className="flex flex-col md:flex-row gap-0">
                             {/* Image Column */}
                             <div className="md:w-1/2 relative h-64 md:h-auto md:min-h-[400px]">
@@ -575,6 +575,28 @@ export default function AboutPage() {
                               </p>
                             </div>
                           </div>
+                          
+                          {/* Navigation Arrows - positioned at image center */}
+                          <button
+                            onClick={() =>
+                              setCurrentSlide((prev) => (prev - 1 + activities.length) % activities.length)
+                            }
+                            className="absolute left-2 md:left-4 top-32 md:top-[200px] -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-2 md:p-3 rounded-full transition-all duration-300 hover:scale-110 z-10"
+                            aria-label="Previous slide"
+                          >
+                            <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={() => setCurrentSlide((prev) => (prev + 1) % activities.length)}
+                            className="absolute right-2 md:right-[calc(50%+1rem)] top-32 md:top-[200px] -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-2 md:p-3 rounded-full transition-all duration-300 hover:scale-110 z-10"
+                            aria-label="Next slide"
+                          >
+                            <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </button>
                         </div>
                       </div>
                     ))}
@@ -596,28 +618,6 @@ export default function AboutPage() {
                     />
                   ))}
                 </div>
-
-                {/* Navigation Arrows */}
-                <button
-                  onClick={() =>
-                    setCurrentSlide((prev) => (prev - 1 + activities.length) % activities.length)
-                  }
-                  className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110"
-                  aria-label="Previous slide"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => setCurrentSlide((prev) => (prev + 1) % activities.length)}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110"
-                  aria-label="Next slide"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
               </div>
             </div>
           </section>

@@ -58,7 +58,7 @@ export default function SponsorSection() {
           "I lost everything to alcohol addiction - my job, family, and home. With your support, I can rebuild my life and help others on their recovery journey.",
         photo: "👨‍💼",
         needs: "Rehabilitation program, counseling sessions, job training",
-        amount: 500000,
+        amount: 650,
         progress: 65,
       },
       {
@@ -69,7 +69,7 @@ export default function SponsorSection() {
           "Drug addiction took away my dreams of becoming a nurse. I'm determined to recover and pursue my passion for helping others heal.",
         photo: "👩‍⚕️",
         needs: "Medical treatment, therapy, education support",
-        amount: 750000,
+        amount: 650,
         progress: 40,
       },
       {
@@ -80,7 +80,7 @@ export default function SponsorSection() {
           "After 10 years of substance abuse, I found hope at Iwacu Recovery Centre. Your sponsorship can help me complete my recovery and start a new chapter.",
         photo: "👨‍🔧",
         needs: "Extended treatment, family counseling, vocational training",
-        amount: 600000,
+        amount: 650,
         progress: 80,
       },
       {
@@ -91,7 +91,7 @@ export default function SponsorSection() {
           "My family and I suffered greatly due to my addiction. I am committed to recovery and want to inspire others to seek help.",
         photo: "👩‍🎓",
         needs: "Family therapy, relapse prevention, education support",
-        amount: 650000,
+        amount: 650,
         progress: 55,
       },
     ],
@@ -184,7 +184,7 @@ export default function SponsorSection() {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1">
                       <p className="text-sm text-white/80 mb-2">Funding Goal</p>
-                      <p className="text-2xl font-bold text-white">{currentVictim.amount.toLocaleString()} RWF</p>
+                      <p className="text-2xl font-bold text-white">{currentVictim.amount.toLocaleString()} $</p>
                     </div>
                     <button
                       onClick={() => openDonationModal(currentVictim.name)}
