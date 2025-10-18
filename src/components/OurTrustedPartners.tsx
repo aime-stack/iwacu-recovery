@@ -19,6 +19,8 @@ const partners: Partner[] = [
   { name: "Colgate Rwanda", logo: "/partners/colgate.png" },
   { name: "Shema Clinic", logo: "/partners/shema.png" },
   { name: "SGC Foundation", logo: "/partners/sgc-foundation.png" },
+  { name: "Baho Family Organisation", logo: "/partners/baho-family.png" },
+  { name: "Good People International", logo: "/partners/good-people-international.png" },
 ];
 
 export default function OurTrustedPartners() {
@@ -44,6 +46,10 @@ export default function OurTrustedPartners() {
     };
   }, []);
 
+  // Create enough duplicates for seamless infinite scroll
+  // We need at least 2 full sets to ensure smooth looping
+  const duplicatedPartners = [...partners, ...partners];
+
   return (
     <div
       ref={sectionRef}
@@ -63,12 +69,12 @@ export default function OurTrustedPartners() {
       </div>
 
       <div className="relative overflow-hidden bg-white/5 backdrop-blur-sm py-8 rounded-2xl">
-        <div className="flex animate-scroll">
-          {partners.concat(partners).concat(partners).map((partner, index) => (
+        <div className="flex animate-scroll-seamless">
+          {duplicatedPartners.map((partner, index) => (
             <div
-              key={index}
-              className="flex-shrink-0 mx-8 flex items-center justify-center"
-              style={{ minWidth: "150px", maxWidth: "200px" }}
+              key={`${partner.name}-${index}`}
+              className="flex-shrink-0 mx-6 md:mx-8 flex items-center justify-center"
+              style={{ width: "180px" }}
             >
               <div className="bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full h-24 flex items-center justify-center relative">
                 <Image
@@ -94,18 +100,20 @@ export default function OurTrustedPartners() {
       </div>
 
       <style jsx>{`
-        @keyframes scroll {
+        @keyframes scroll-seamless {
           0% {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-100% / 3));
+            transform: translateX(-50%);
           }
         }
-        .animate-scroll {
-          animation: scroll 50s linear infinite;
+        .animate-scroll-seamless {
+          animation: scroll-seamless 30s linear infinite;
+          display: flex;
+          width: max-content;
         }
-        .animate-scroll:hover {
+        .animate-scroll-seamless:hover {
           animation-play-state: paused;
         }
       `}</style>

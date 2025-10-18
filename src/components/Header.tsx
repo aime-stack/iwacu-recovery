@@ -23,7 +23,7 @@ export default function Header() {
     { name: "About", href: "/about" },
     { name: "Programs", href: "/programs" },
     { name: "Team", href: "/team" },
-    { name: "School", href: "https://school.iwacurecovery.org", external: true },
+    { name: "School", href: "https://school.iwacurecovery.com", external: true },
     { name: "Blogs", href: "#blogs", hasDropdown: true },
     { name: "Contact Us", href: "/contact" },
   ];
@@ -291,7 +291,7 @@ export default function Header() {
               <div className="space-y-2 text-sm text-slate-300">
                 <div className="flex items-center space-x-2">
                   <span className="text-brand-primary">📍</span>
-                  <span>Kigali, Rwanda - Near Kigali Convention Centre</span>
+                  <span>Rwanda-Kigali-Kicukiro-Gahanga-Karembure</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-brand-primary">📞</span>

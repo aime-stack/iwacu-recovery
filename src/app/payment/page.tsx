@@ -60,7 +60,7 @@ export default function PaymentPage() {
             </h1>
             <p className="text-lg text-gray-600">
               To book your consultation call, please make a payment of 
-              <span className="font-bold text-blue-600 text-2xl block mt-2">5,000 RWF</span>
+              <span className="font-bold text-blue-600 text-2xl block mt-2">10,000 RWF</span>
             </p>
           </div>
 
@@ -100,7 +100,7 @@ export default function PaymentPage() {
                 <span className="font-bold text-blue-600 mr-3 mt-1">•</span>
                 <div>
                   <p className="text-gray-700">Enter amount:</p>
-                  <p className="font-bold text-xl text-gray-900 mt-1">5,000 RWF</p>
+                  <p className="font-bold text-xl text-gray-900 mt-1">10,000 RWF</p>
                 </div>
               </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Header from "@/components/Header";
 import HeroSkyWrapper from "@/components/HeroSkyWrapper";
 import Footer from "@/components/Footer";
@@ -186,7 +187,7 @@ export default function ContactPage() {
                   </p>
                 </a>
 
-                <a href="tel:+250794580006" className="bg-gradient-to-br from-purple-900/80 to-pink-900/80 backdrop-blur-md rounded-2xl border border-purple-400/30 p-6 text-center shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                <Link href="/book-visit" className="bg-gradient-to-br from-purple-900/80 to-pink-900/80 backdrop-blur-md rounded-2xl border border-purple-400/30 p-6 text-center shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
                   <div className="text-4xl mb-3">📅</div>
                   <h3 className="text-lg font-bold text-white mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                     Book Visit
@@ -194,7 +195,7 @@ export default function ContactPage() {
                   <p className="text-white/90 text-sm" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                     Schedule now
                   </p>
-                </a>
+                </Link>
               </div>
             </div>
 

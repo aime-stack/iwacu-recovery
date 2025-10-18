@@ -26,10 +26,10 @@ export default function CallToAction() {
                 Email Us
               </a>
               <Link
-                href="/payment"
+                href="/book-visit"
                 className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 text-center cursor-pointer"
               >
-                Schedule a Call
+                Book a Visit
               </Link>
             </div>
           </div>
