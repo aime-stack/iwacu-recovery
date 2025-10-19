@@ -14,6 +14,7 @@ import Image from "next/image";
  * 7. Made the lightbox more immersive with better backdrop and animations
  * 8. Fixed image implementation to match Programs page error handling
  * 9. Added human placeholder SVG for missing images
+ * 10. Updated filter behavior: "All" shows animated scrolling, specific categories show static grid
  */
 
 // Define your gallery images here
@@ -214,69 +215,199 @@ export default function Gallery() {
                 ))}
               </div>
 
-              {/* Gallery Grid with staggered animations */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredImages.map((image, idx) => (
-                  <div
-                    key={image.id}
-                    className={`group relative bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-white/10 hover:border-white/30 transform hover:scale-105 hover:-translate-y-2 ${
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                    }`}
-                    style={{ 
-                      transitionDelay: isVisible ? `${300 + idx * 50}ms` : "0ms",
-                    }}
-                    onClick={() => setSelectedImage(image)}
-                  >
-                    {/* Image Container - Matching Programs page implementation */}
-                    <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-blue-900/30 to-purple-900/30">
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          const parent = e.currentTarget.parentElement;
-                          if (parent) {
-                            const placeholder = document.createElement('div');
-                            placeholder.className = 'absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800';
-                            placeholder.innerHTML = `
-                              <svg class="w-24 h-24 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                              </svg>
-                            `;
-                            parent.appendChild(placeholder);
-                          }
-                        }}
-                      />
-                      {/* Gradient overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      
-                      {/* Hidden description that appears on hover */}
-                      <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <p className="text-white text-sm font-medium" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
-                          Click to view
+              {/* Conditional Gallery Display */}
+              {selectedCategory === "All" ? (
+                /* Infinite Scrolling Gallery - Only for "All" category */
+                <div className="space-y-6 overflow-hidden">
+                  {/* Row 1 - Left to Right */}
+                  <div className="relative">
+                    <div className="flex gap-6 animate-scroll-left">
+                      {/* Duplicate images for seamless loop */}
+                      {[...filteredImages, ...filteredImages].map((image, idx) => (
+                        <div
+                          key={`row1-${idx}`}
+                          className={`group relative bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-white/10 hover:border-white/30 transform hover:scale-105 hover:-translate-y-2 flex-shrink-0 w-[280px] sm:w-[320px] ${
+                            isVisible ? "opacity-100" : "opacity-0"
+                          }`}
+                          style={{ 
+                            transitionDelay: isVisible ? `${idx * 50}ms` : "0ms",
+                          }}
+                          onClick={() => setSelectedImage(image)}
+                        >
+                          {/* Image Container */}
+                          <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-blue-900/30 to-purple-900/30">
+                            <Image
+                              src={image.src}
+                              alt={image.alt}
+                              fill
+                              className="object-cover group-hover:scale-110 transition-transform duration-700"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                                const parent = e.currentTarget.parentElement;
+                                if (parent) {
+                                  const placeholder = document.createElement('div');
+                                  placeholder.className = 'absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800';
+                                  placeholder.innerHTML = `
+                                    <svg class="w-24 h-24 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                  `;
+                                  parent.appendChild(placeholder);
+                                }
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                              <p className="text-white text-sm font-medium" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+                                Click to view
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Content */}
+                          <div className="p-4 bg-gradient-to-br from-slate-900/60 to-gray-900/60">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg">
+                                {image.category}
+                              </span>
+                            </div>
+                            <h3 className="font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-300 group-hover:to-purple-300 transition-all duration-300 mb-1" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                              {image.title}
+                            </h3>
+                            <p className="text-white/70 text-sm line-clamp-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+                              {image.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Row 2 - Right to Left (Opposite Direction) */}
+                  <div className="relative">
+                    <div className="flex gap-6 animate-scroll-right">
+                      {[...filteredImages, ...filteredImages].map((image, idx) => (
+                        <div
+                          key={`row2-${idx}`}
+                          className={`group relative bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-white/10 hover:border-white/30 transform hover:scale-105 hover:-translate-y-2 flex-shrink-0 w-[280px] sm:w-[320px] ${
+                            isVisible ? "opacity-100" : "opacity-0"
+                          }`}
+                          style={{ 
+                            transitionDelay: isVisible ? `${100 + idx * 50}ms` : "0ms",
+                          }}
+                          onClick={() => setSelectedImage(image)}
+                        >
+                          {/* Image Container */}
+                          <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30">
+                            <Image
+                              src={image.src}
+                              alt={image.alt}
+                              fill
+                              className="object-cover group-hover:scale-110 transition-transform duration-700"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                                const parent = e.currentTarget.parentElement;
+                                if (parent) {
+                                  const placeholder = document.createElement('div');
+                                  placeholder.className = 'absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800';
+                                  placeholder.innerHTML = `
+                                    <svg class="w-24 h-24 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                  `;
+                                  parent.appendChild(placeholder);
+                                }
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                              <p className="text-white text-sm font-medium" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+                                Click to view
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Content */}
+                          <div className="p-4 bg-gradient-to-br from-slate-900/60 to-gray-900/60">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg">
+                                {image.category}
+                              </span>
+                            </div>
+                            <h3 className="font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-300 group-hover:to-pink-300 transition-all duration-300 mb-1" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                              {image.title}
+                            </h3>
+                            <p className="text-white/70 text-sm line-clamp-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+                              {image.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* Static Grid Gallery - For filtered categories */
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {filteredImages.map((image, idx) => (
+                    <div
+                      key={`static-${image.id}`}
+                      className={`group relative bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-white/10 hover:border-white/30 transform hover:scale-105 hover:-translate-y-2 ${
+                        isVisible ? "opacity-100" : "opacity-0"
+                      }`}
+                      style={{ 
+                        transitionDelay: isVisible ? `${idx * 50}ms` : "0ms",
+                      }}
+                      onClick={() => setSelectedImage(image)}
+                    >
+                      {/* Image Container */}
+                      <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-blue-900/30 to-purple-900/30">
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-700"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            const parent = e.currentTarget.parentElement;
+                            if (parent) {
+                              const placeholder = document.createElement('div');
+                              placeholder.className = 'absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800';
+                              placeholder.innerHTML = `
+                                <svg class="w-24 h-24 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                </svg>
+                              `;
+                              parent.appendChild(placeholder);
+                            }
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                          <p className="text-white text-sm font-medium" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+                            Click to view
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-4 bg-gradient-to-br from-slate-900/60 to-gray-900/60">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg">
+                            {image.category}
+                          </span>
+                        </div>
+                        <h3 className="font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-300 group-hover:to-purple-300 transition-all duration-300 mb-1" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                          {image.title}
+                        </h3>
+                        <p className="text-white/70 text-sm line-clamp-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+                          {image.description}
                         </p>
                       </div>
                     </div>
-
-                    {/* Content with gradient accent */}
-                    <div className="p-4 bg-gradient-to-br from-slate-900/60 to-gray-900/60">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg">
-                          {image.category}
-                        </span>
-                      </div>
-                      <h3 className="font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-300 group-hover:to-purple-300 transition-all duration-300 mb-1" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                        {image.title}
-                      </h3>
-                      <p className="text-white/70 text-sm line-clamp-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
-                        {image.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
 
               {/* Empty State with improved styling */}
               {filteredImages.length === 0 && (
@@ -407,12 +538,46 @@ export default function Gallery() {
           }
         }
 
+        @keyframes scroll-left {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        @keyframes scroll-right {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+
         .animate-fadeIn {
           animation: fadeIn 0.3s ease-out;
         }
 
         .animate-scaleIn {
           animation: scaleIn 0.4s ease-out;
+        }
+
+        .animate-scroll-left {
+          animation: scroll-left 40s linear infinite;
+        }
+
+        .animate-scroll-left:hover {
+          animation-play-state: paused;
+        }
+
+        .animate-scroll-right {
+          animation: scroll-right 40s linear infinite;
+        }
+
+        .animate-scroll-right:hover {
+          animation-play-state: paused;
         }
 
         .line-clamp-2 {
