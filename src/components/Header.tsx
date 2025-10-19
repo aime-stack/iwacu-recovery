@@ -23,6 +23,7 @@ export default function Header() {
     { name: "About", href: "/about" },
     { name: "Programs", href: "/programs" },
     { name: "Team", href: "/team" },
+    { name: "Gallery", href: "/gallery" }, // NEW GALLERY ITEM
     { name: "School", href: "https://school.iwacurecovery.com", external: true },
     { name: "Blogs", href: "#blogs", hasDropdown: true },
     { name: "Contact Us", href: "/contact" },
