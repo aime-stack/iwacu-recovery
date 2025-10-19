@@ -33,6 +33,17 @@ export default function ProgramsPage() {
     2: 0
   });
 
+  // Touch state for programs carousel
+  const [programTouchStart, setProgramTouchStart] = useState<number | null>(null);
+  const [programTouchEnd, setProgramTouchEnd] = useState<number | null>(null);
+
+  // Touch state for news carousel
+  const [newsTouchStart, setNewsTouchStart] = useState<number | null>(null);
+  const [newsTouchEnd, setNewsTouchEnd] = useState<number | null>(null);
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
   const programs = useMemo(() => [
     {
       title: "Psychoeducation",
@@ -85,7 +96,6 @@ export default function ProgramsPage() {
     }
   ], []);
 
-  // ✅ FIXED: Wrap news in useMemo to fix the dependency warning
   const news = useMemo(() => [
     {
       date: "10 May, 2025",
@@ -106,6 +116,66 @@ export default function ProgramsPage() {
       images: ["/news/breakfast-1.jpg", "/news/breakfast-2.jpg", "/news/breakfast-3.jpg"]
     }
   ], []);
+
+  // Programs swipe handlers
+  const onProgramTouchStart = (e: React.TouchEvent) => {
+    setProgramTouchEnd(null);
+    setProgramTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onProgramTouchMove = (e: React.TouchEvent) => {
+    setProgramTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onProgramTouchEnd = () => {
+    if (!programTouchStart || !programTouchEnd) return;
+    
+    const distance = programTouchStart - programTouchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      setCurrentProgramSlide((prev) => (prev + 1) % programs.length);
+    }
+    if (isRightSwipe) {
+      setCurrentProgramSlide((prev) => (prev - 1 + programs.length) % programs.length);
+    }
+  };
+
+  // News swipe handlers
+  const onNewsTouchStart = (e: React.TouchEvent) => {
+    setNewsTouchEnd(null);
+    setNewsTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onNewsTouchMove = (e: React.TouchEvent) => {
+    setNewsTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onNewsTouchEnd = () => {
+    if (!newsTouchStart || !newsTouchEnd) return;
+    
+    const distance = newsTouchStart - newsTouchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      const newSlide = (currentSlide + 1) % news.length;
+      setCurrentSlide(newSlide);
+      setCurrentImageIndex(prev => ({
+        ...prev,
+        [newSlide]: 0
+      }));
+    }
+    if (isRightSwipe) {
+      const newSlide = (currentSlide - 1 + news.length) % news.length;
+      setCurrentSlide(newSlide);
+      setCurrentImageIndex(prev => ({
+        ...prev,
+        [newSlide]: 0
+      }));
+    }
+  };
 
   useEffect(() => {
     const observers: Record<string, IntersectionObserver> = {};
@@ -230,15 +300,21 @@ export default function ProgramsPage() {
                 <p className="text-lg text-white/90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                   Comprehensive care tailored to your recovery journey
                 </p>
+                <p className="text-sm text-white/70 mt-2 md:hidden" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                  👆 Swipe to explore programs
+                </p>
               </div>
 
-              {/* Carousel Container */}
+              {/* Carousel Container with Touch Support */}
               <div 
                 className="relative"
                 onMouseEnter={() => setIsProgramHovered(true)}
                 onMouseLeave={() => setIsProgramHovered(false)}
+                onTouchStart={onProgramTouchStart}
+                onTouchMove={onProgramTouchMove}
+                onTouchEnd={onProgramTouchEnd}
               >
-                <div className="overflow-hidden">
+                <div className="overflow-hidden touch-pan-y">
                   <div 
                     className="flex transition-transform duration-1000 ease-in-out"
                     style={{ transform: `translateX(-${currentProgramSlide * 100}%)` }}
@@ -246,35 +322,35 @@ export default function ProgramsPage() {
                     {programs.map((program, idx) => (
                       <div
                         key={idx}
-                        className="w-full flex-shrink-0 px-2"
+                        className="w-full flex-shrink-0 px-1 sm:px-4 md:px-8 lg:px-12"
                       >
-                        <div className={`${program.bgColor} backdrop-blur-lg rounded-3xl p-8 md:p-10 border border-white/30 hover:border-white/50 transition-all duration-500 shadow-2xl`}>
-                          <div className="flex flex-col md:flex-row gap-8 items-center">
+                        <div className={`${program.bgColor} backdrop-blur-lg rounded-3xl p-6 sm:p-8 md:p-10 border border-white/30 hover:border-white/50 transition-all duration-500 shadow-2xl`}>
+                          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center">
                             {/* Icon Section */}
                             <div className="flex-shrink-0">
-                              <div className={`w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-gradient-to-br ${program.gradient} flex items-center justify-center text-5xl md:text-6xl shadow-2xl transform transition-all duration-500 hover:scale-110 hover:rotate-6`}>
+                              <div className={`w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-3xl bg-gradient-to-br ${program.gradient} flex items-center justify-center text-4xl sm:text-5xl md:text-6xl shadow-2xl transform transition-all duration-500 hover:scale-110 hover:rotate-6`}>
                                 {program.icon}
                               </div>
                             </div>
 
                             {/* Content Section */}
                             <div className="flex-1 text-center md:text-left">
-                              <h3 className="text-2xl md:text-3xl font-bold text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+                              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 md:mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
                                 {program.title}
                               </h3>
                               
-                              <p className="text-white/95 leading-relaxed mb-6 text-base md:text-lg" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                              <p className="text-white/95 leading-relaxed mb-5 md:mb-6 text-sm sm:text-base md:text-lg" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                                 {program.description}
                               </p>
                               
                               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                                 <Link
                                   href="/contact"
-                                  className={`bg-gradient-to-r ${program.gradient} text-white py-3 px-8 rounded-xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105 text-center transform hover:-translate-y-1`}
+                                  className={`bg-gradient-to-r ${program.gradient} text-white py-2.5 sm:py-3 px-6 sm:px-8 rounded-xl text-sm sm:text-base font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105 text-center transform hover:-translate-y-1`}
                                 >
                                   Schedule Appointment
                                 </Link>
-                                <button className="bg-white/20 backdrop-blur-sm text-white py-3 px-8 rounded-xl font-medium hover:bg-white/30 transition-all duration-300 border border-white/40 hover:border-white/60 transform hover:scale-105">
+                                <button className="bg-white/20 backdrop-blur-sm text-white py-2.5 sm:py-3 px-6 sm:px-8 rounded-xl text-sm sm:text-base font-medium hover:bg-white/30 transition-all duration-300 border border-white/40 hover:border-white/60 transform hover:scale-105">
                                   Learn More
                                 </button>
                               </div>
@@ -294,30 +370,30 @@ export default function ProgramsPage() {
                       onClick={() => setCurrentProgramSlide(idx)}
                       className={`transition-all duration-300 rounded-full ${
                         currentProgramSlide === idx 
-                          ? 'w-10 h-3 bg-white' 
-                          : 'w-3 h-3 bg-white/40 hover:bg-white/60'
+                          ? 'w-8 sm:w-10 h-2.5 sm:h-3 bg-white' 
+                          : 'w-2.5 sm:w-3 h-2.5 sm:h-3 bg-white/40 hover:bg-white/60'
                       }`}
                       aria-label={`Go to program ${idx + 1}`}
                     />
                   ))}
                 </div>
 
-                {/* Navigation Arrows */}
+                {/* Navigation Arrows - Visible only on desktop */}
                 <button
                   onClick={() => setCurrentProgramSlide((prev) => (prev - 1 + programs.length) % programs.length)}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95"
+                  className="hidden md:flex absolute left-0 lg:-left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 lg:p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95 z-10"
                   aria-label="Previous program"
                 >
-                  <svg className="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 lg:w-6 lg:h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
                 <button
                   onClick={() => setCurrentProgramSlide((prev) => (prev + 1) % programs.length)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95"
+                  className="hidden md:flex absolute right-0 lg:-right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 lg:p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl active:scale-95 z-10"
                   aria-label="Next program"
                 >
-                  <svg className="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 lg:w-6 lg:h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -345,11 +421,14 @@ export default function ProgramsPage() {
                 </p>
               </div>
 
-              {/* Single Card Container */}
+              {/* Single Card Container with Touch Support */}
               <div 
                 className="relative"
                 onMouseEnter={() => setIsNewsHovered(true)}
                 onMouseLeave={() => setIsNewsHovered(false)}
+                onTouchStart={onNewsTouchStart}
+                onTouchMove={onNewsTouchMove}
+                onTouchEnd={onNewsTouchEnd}
               >
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 hover:border-white/40 transition-all duration-500 hover:shadow-2xl">
                   <div className="grid md:grid-cols-2 gap-0">
@@ -503,27 +582,27 @@ export default function ProgramsPage() {
 
           {/* Call to Action */}
           <section className="pb-8">
-            <div className="bg-[#57241B] rounded-3xl p-10 shadow-2xl overflow-hidden relative group">
+            <div className="bg-[#57241B] rounded-3xl p-8 sm:p-10 shadow-2xl overflow-hidden relative group">
               {/* Animated background effect */}
               <div className="absolute inset-0 bg-[#57241B] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
               
               <div className="text-center relative z-10">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 animate-pulse" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)', animation: 'pulse 3s ease-in-out infinite' }}>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 animate-pulse" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)', animation: 'pulse 3s ease-in-out infinite' }}>
                   Ready to Begin Your Healing Journey?
                 </h2>
-                <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto transform transition-all duration-500 group-hover:scale-105" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                <p className="text-white/90 text-base sm:text-lg mb-8 max-w-2xl mx-auto transform transition-all duration-500 group-hover:scale-105" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                   Our dedicated team of professionals is here to support you with personalized care and evidence-based treatment programs.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link 
                     href="/contact" 
-                    className="bg-white text-purple-600 py-4 px-10 rounded-xl font-bold text-lg hover:bg-gray-50 hover:shadow-xl transition-all duration-300 hover:scale-105 text-center transform hover:-translate-y-1 active:scale-95"
+                    className="bg-white text-purple-600 py-3 sm:py-4 px-8 sm:px-10 rounded-xl font-bold text-base sm:text-lg hover:bg-gray-50 hover:shadow-xl transition-all duration-300 hover:scale-105 text-center transform hover:-translate-y-1 active:scale-95"
                   >
                     Get Started Today
                   </Link>
                   <a 
                     href="tel:+250788772489" 
-                    className="bg-transparent border-2 border-white text-white py-4 px-10 rounded-xl font-bold text-lg hover:bg-white/10 hover:shadow-xl transition-all duration-300 hover:scale-105 text-center transform hover:-translate-y-1 active:scale-95"
+                    className="bg-transparent border-2 border-white text-white py-3 sm:py-4 px-8 sm:px-10 rounded-xl font-bold text-base sm:text-lg hover:bg-white/10 hover:shadow-xl transition-all duration-300 hover:scale-105 text-center transform hover:-translate-y-1 active:scale-95"
                   >
                     Call: +250 788 772 489
                   </a>

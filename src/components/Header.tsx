@@ -23,7 +23,7 @@ export default function Header() {
     { name: "About", href: "/about" },
     { name: "Programs", href: "/programs" },
     { name: "Team", href: "/team" },
-    { name: "Gallery", href: "/gallery" }, // NEW GALLERY ITEM
+    { name: "Gallery", href: "/gallery" },
     { name: "School", href: "https://school.iwacurecovery.com", external: true },
     { name: "Blogs", href: "#blogs", hasDropdown: true },
     { name: "Contact Us", href: "/contact" },
@@ -284,21 +284,21 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Now with max-height and scrolling */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 bg-white/90 backdrop-blur-md">
+          <div className="md:hidden border-t border-slate-200 bg-white/90 backdrop-blur-md max-h-[calc(100vh-4rem)] overflow-y-auto">
             {/* Mobile Contact Info */}
-            <div className="px-4 py-3 border-b border-slate-200 bg-slate-800/90">
+            <div className="px-4 py-3 border-b border-slate-200 bg-slate-800/90 sticky top-0 z-10">
               <div className="space-y-2 text-sm text-slate-300">
                 <div className="flex items-center space-x-2">
                   <span className="text-brand-primary">📍</span>
-                  <span>Rwanda-Kigali-Kicukiro-Gahanga-Karembure</span>
+                  <span className="text-xs">Rwanda-Kigali-Kicukiro-Gahanga-Karembure</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-brand-primary">📞</span>
                   <a
                     href="tel:+250788772489"
-                    className="hover:text-white transition-colors cursor-pointer"
+                    className="hover:text-white transition-colors cursor-pointer text-xs"
                   >
                     +250 788 772 489
                   </a>
@@ -307,7 +307,7 @@ export default function Header() {
                   <span className="text-brand-primary">📧</span>
                   <a
                     href="mailto:irecoverycentre17@gmail.com"
-                    className="hover:text-white transition-colors cursor-pointer"
+                    className="hover:text-white transition-colors cursor-pointer text-xs"
                   >
                     irecoverycentre17@gmail.com
                   </a>
@@ -315,8 +315,8 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Mobile Donate Button */}
-            <div className="px-4 py-3 border-b border-slate-200">
+            {/* Mobile Donate Button - Sticky */}
+            <div className="px-4 py-3 border-b border-slate-200 bg-white/95 sticky top-[120px] z-10">
               <button
                 className="block w-full bg-pink-500 text-white px-4 py-2 rounded-lg text-sm font-medium text-center hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500/50 cursor-pointer"
                 onClick={() => {
@@ -328,8 +328,8 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Mobile Navigation Links */}
-            <ul className="py-4 space-y-2">
+            {/* Mobile Navigation Links - Scrollable Content */}
+            <ul className="py-4 space-y-2 pb-6">
               {navItems.map((item) => (
                 <li key={item.name}>
                   {item.hasDropdown ? (
@@ -338,7 +338,7 @@ export default function Header() {
                         className="w-full flex items-center justify-between px-4 py-2 text-slate-800 hover:text-slate-900 hover:bg-slate-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:rounded-md cursor-pointer"
                         onClick={handleDropdownToggle}
                       >
-                        <span>{item.name}</span>
+                        <span className="font-medium">{item.name}</span>
                         <svg
                           className={`w-4 h-4 transition-transform duration-300 ${
                             mobileDropdownOpen ? "rotate-180" : ""
@@ -358,17 +358,17 @@ export default function Header() {
 
                       {/* Mobile Dropdown for Blogs - Only Categories */}
                       {mobileDropdownOpen && (
-                        <ul className="ml-4 mt-2 space-y-1">
+                        <ul className="ml-2 mt-2 space-y-1 border-l-2 border-slate-200 pl-2">
                           {blogCategories.map((category) => (
                             <li key={category.name}>
                               <a
                                 href={category.href}
-                                className="flex items-center space-x-3 px-4 py-3 text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors duration-200 cursor-pointer"
+                                className="flex items-center space-x-3 px-3 py-3 text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors duration-200 cursor-pointer"
                                 onClick={handleNavClick}
                               >
                                 <span className="text-xl">{category.icon}</span>
                                 <div className="flex-1">
-                                  <div className="font-medium">{category.name}</div>
+                                  <div className="font-medium text-sm">{category.name}</div>
                                   <div className="text-xs text-slate-500">View all articles</div>
                                 </div>
                               </a>
@@ -384,15 +384,35 @@ export default function Header() {
                         target: "_blank",
                         rel: "noopener noreferrer",
                       })}
-                      className="block px-4 py-2 text-slate-800 hover:text-slate-900 hover:bg-slate-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:rounded-md cursor-pointer"
+                      className="flex items-center justify-between px-4 py-2 text-slate-800 hover:text-slate-900 hover:bg-slate-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:rounded-md cursor-pointer"
                       onClick={handleNavClick}
                     >
-                      {item.name}
+                      <span className="font-medium">{item.name}</span>
+                      {item.external && (
+                        <svg
+                          className="w-4 h-4 text-slate-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                      )}
                     </a>
                   )}
                 </li>
               ))}
             </ul>
+
+            {/* Scroll Indicator at bottom */}
+            <div className="text-center py-3 text-xs text-slate-400 border-t border-slate-200">
+              Scroll for more options ↓
+            </div>
           </div>
         )}
       </nav>
