@@ -11,7 +11,7 @@ const navItems = [
   { name: "Programs", href: "/programs" },
   { name: "Team", href: "/team" },
   { name: "Gallery", href: "/gallery" },
-  { name: "School", href: "https://school.iwacurecovery.org", external: true },
+  { name: "School", href: "https://school.iwacurecovery.com", external: true },
   { name: "Blogs", href: "#blogs", hasDropdown: true },
   { name: "Contact Us", href: "/contact" },
 ];
