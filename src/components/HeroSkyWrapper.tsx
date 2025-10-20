@@ -1,35 +1,40 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Canvas } from '@react-three/fiber';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 
-// Dynamically import HeroSky with no SSR
-const HeroSky = dynamic(() => import("./HeroSky"), {
+const HeroSky = dynamic(() => import('./HeroSky'), { 
   ssr: false,
-  loading: () => (
-    <div 
-      className="absolute inset-0 bg-gradient-to-b from-sky-400 via-sky-300 to-blue-200" 
-      style={{ zIndex: 0 }}
-    />
-  ),
+  loading: () => null,
 });
 
 export default function HeroSkyWrapper() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Don't render anything until we're on the client
+  if (!isClient) {
+    return (
+      <div className="absolute top-0 left-0 h-[100svh] w-full" style={{ position: "fixed", zIndex: 0 }} />
+    );
+  }
+
   return (
-    <div className="fixed inset-0 -z-10">
+    <div className="absolute top-0 left-0 h-[100svh] w-full" style={{ position: "fixed", zIndex: 0 }}>
       <Canvas
         dpr={[1, 2]}
-        camera={{ position: [0, 0.5, 8], fov: 50 }}
-        gl={{ 
-          antialias: true, 
+        camera={{ fov: 55, near: 0.1, far: 200 }}
+        gl={{
+          antialias: true,
           alpha: false,
-          powerPreference: "high-performance"
+          powerPreference: "high-performance",
         }}
       >
-        <Suspense fallback={null}>
-          <HeroSky />
-        </Suspense>
+        <HeroSky />
       </Canvas>
     </div>
   );
