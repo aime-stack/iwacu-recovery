@@ -1,25 +1,37 @@
 "use client";
 
 import Header from "@/components/Header";
-import HeroSkyWrapper from "@/components/HeroSkyWrapper";
+import HeroSky from "@/components/HeroSky";
 import Footer from "@/components/Footer";
 import Gallery from "@/components/Gallery";
+
+/**
+ * DESIGN CHANGES:
+ * 1. Added HeroSky background component for consistency with Programs page
+ * 2. Included Header and Footer for full page layout
+ * 3. Added proper z-index layering (Sky: 0, Content: 10)
+ * 4. Added earth surface transition overlay at bottom (matching Programs)
+ * 5. Structured layout to match Programs page exactly
+ */
 
 export default function GalleryPage() {
   return (
     <main className="relative min-h-screen text-slate-800 overflow-hidden">
-      {/* Sky background that covers entire site */}
-      <HeroSkyWrapper />
+      {/* Sky background that covers entire site - matching Programs page */}
+      <HeroSky />
       
+      {/* Header with fixed positioning */}
       <Header />
       
-      {/* Gallery Content */}
-      <Gallery />
+      {/* Gallery Content - z-10 to appear above sky */}
+      <div className="relative z-10">
+        <Gallery />
+      </div>
 
       {/* Footer */}
       <Footer />
 
-      {/* Earth surface transition overlay */}
+      {/* Earth surface transition overlay - matching Programs page */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 h-[60vh] z-[1]"

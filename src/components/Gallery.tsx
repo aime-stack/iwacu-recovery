@@ -109,7 +109,7 @@ const galleryImages = [
   },
   {
     id: 12,
-    src: "/gallery/activity3.jpg",
+    src: "/gallery/",
     alt: "Music Therapy",
     category: "Activities",
     title: "Music Therapy Session",

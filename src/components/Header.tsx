@@ -4,6 +4,45 @@ import { useState } from "react";
 import { useDonation } from "../contexts/DonationContext";
 import Image from "next/image";
 
+// CRITICAL FIX: Move static data outside component to prevent hydration mismatch
+const navItems = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Programs", href: "/programs" },
+  { name: "Team", href: "/team" },
+  { name: "Gallery", href: "/gallery" },
+  { name: "School", href: "https://school.iwacurecovery.org", external: true },
+  { name: "Blogs", href: "#blogs", hasDropdown: true },
+  { name: "Contact Us", href: "/contact" },
+];
+
+const blogCategories = [
+  { 
+    name: "Recovery Stories", 
+    href: "/blog/recovery-stories", 
+    color: "pink",
+    icon: "💝"
+  },
+  { 
+    name: "Mental Health", 
+    href: "/blog/mental-health", 
+    color: "purple",
+    icon: "🧠"
+  },
+  { 
+    name: "Education", 
+    href: "/blog/education", 
+    color: "blue",
+    icon: "📚"
+  },
+  { 
+    name: "Wellness Tips", 
+    href: "/blog/wellness", 
+    color: "green",
+    icon: "🌱"
+  },
+];
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
@@ -17,44 +56,6 @@ export default function Header() {
   const handleDropdownToggle = () => {
     setMobileDropdownOpen(!mobileDropdownOpen);
   };
-
-  const navItems = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Programs", href: "/programs" },
-    { name: "Team", href: "/team" },
-    { name: "Gallery", href: "/gallery" },
-    { name: "School", href: "https://school.iwacurecovery.com", external: true },
-    { name: "Blogs", href: "#blogs", hasDropdown: true },
-    { name: "Contact Us", href: "/contact" },
-  ];
-
-  const blogCategories = [
-    { 
-      name: "Recovery Stories", 
-      href: "/blog/recovery-stories", 
-      color: "pink",
-      icon: "💝"
-    },
-    { 
-      name: "Mental Health", 
-      href: "/blog/mental-health", 
-      color: "purple",
-      icon: "🧠"
-    },
-    { 
-      name: "Education", 
-      href: "/blog/education", 
-      color: "blue",
-      icon: "📚"
-    },
-    { 
-      name: "Wellness Tips", 
-      href: "/blog/wellness", 
-      color: "green",
-      icon: "🌱"
-    },
-  ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-sky-200/30 backdrop-blur-md border-b border-sky-300/20">
