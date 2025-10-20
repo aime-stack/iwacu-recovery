@@ -1,28 +1,34 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Header from "@/components/Header";
-import HeroSky from "@/components/HeroSky";
 import Footer from "@/components/Footer";
-import Gallery from "@/components/Gallery";
 
 /**
- * DESIGN CHANGES:
- * 1. Added HeroSky background component for consistency with Programs page
- * 2. Included Header and Footer for full page layout
- * 3. Added proper z-index layering (Sky: 0, Content: 10)
- * 4. Added earth surface transition overlay at bottom (matching Programs)
- * 5. Structured layout to match Programs page exactly
+ * FIXED: Dynamically import HeroSky with ssr: false to prevent R3F prerender errors
+ * The Gallery component doesn't use R3F, so it can be imported normally
  */
+
+// Import Gallery normally (no R3F hooks)
+import Gallery from "@/components/Gallery";
+
+// Dynamically import HeroSky with SSR disabled (uses R3F hooks)
+const HeroSky = dynamic(() => import("@/components/HeroSky"), { 
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-gradient-to-b from-sky-400 via-sky-300 to-blue-200 z-0" />
+  )
+});
 
 export default function GalleryPage() {
   return (
     <main className="relative min-h-screen text-slate-800 overflow-hidden">
       {/* Sky background that covers entire site - matching Programs page */}
       <HeroSky />
-      
+
       {/* Header with fixed positioning */}
       <Header />
-      
+
       {/* Gallery Content - z-10 to appear above sky */}
       <div className="relative z-10">
         <Gallery />

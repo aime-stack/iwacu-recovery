@@ -77,7 +77,7 @@ export default function OurTrustedPartners() {
   const [isVisible, setIsVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  // Removed unused scrollContainerRef
 
   // Touch state for swipe functionality
   const [touchStart, setTouchStart] = useState<number | null>(null);
