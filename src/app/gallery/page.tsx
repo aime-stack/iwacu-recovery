@@ -1,30 +1,20 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Gallery from "@/components/Gallery";
+import HeroSkyWrapper from "@/components/HeroSkyWrapper";
 
 /**
- * FIXED: Dynamically import HeroSky with ssr: false to prevent R3F prerender errors
- * The Gallery component doesn't use R3F, so it can be imported normally
+ * FIXED: Using HeroSkyWrapper that properly handles Canvas and dynamic import
+ * This prevents R3F hooks from being called during SSR
  */
-
-// Import Gallery normally (no R3F hooks)
-import Gallery from "@/components/Gallery";
-
-// Dynamically import HeroSky with SSR disabled (uses R3F hooks)
-const HeroSky = dynamic(() => import("@/components/HeroSky"), { 
-  ssr: false,
-  loading: () => (
-    <div className="absolute inset-0 bg-gradient-to-b from-sky-400 via-sky-300 to-blue-200 z-0" />
-  )
-});
 
 export default function GalleryPage() {
   return (
     <main className="relative min-h-screen text-slate-800 overflow-hidden">
-      {/* Sky background that covers entire site - matching Programs page */}
-      <HeroSky />
+      {/* Sky background using the wrapper */}
+      <HeroSkyWrapper />
 
       {/* Header with fixed positioning */}
       <Header />
@@ -37,7 +27,7 @@ export default function GalleryPage() {
       {/* Footer */}
       <Footer />
 
-      {/* Earth surface transition overlay - matching Programs page */}
+      {/* Earth surface transition overlay */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 h-[60vh] z-[1]"
