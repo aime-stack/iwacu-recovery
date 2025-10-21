@@ -1,6 +1,8 @@
+// src/components/SponsorSection.tsx
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useDonation } from "../contexts/DonationContext";
 
 interface Victim {
   id: number;
@@ -17,10 +19,7 @@ export default function SponsorSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
-
-  const openDonationModal = useCallback((name?: string) => {
-    alert(`Opening donation modal for ${name || "general donation"}`);
-  }, []);
+  const { openDonationModal } = useDonation();
 
   // Intersection Observer for animations
   useEffect(() => {
@@ -184,7 +183,7 @@ export default function SponsorSection() {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1">
                       <p className="text-sm text-white/80 mb-2">Funding Goal</p>
-                      <p className="text-2xl font-bold text-white">{currentVictim.amount.toLocaleString()} $</p>
+                      <p className="text-2xl font-bold text-white">${currentVictim.amount.toLocaleString()}</p>
                     </div>
                     <button
                       onClick={() => openDonationModal(currentVictim.name)}
@@ -219,42 +218,12 @@ export default function SponsorSection() {
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
+              aria-label={`View ${victims[index].name}'s story`}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentIndex ? "bg-pink-500 scale-125" : "bg-slate-300 hover:bg-slate-400"
               }`}
             />
           ))}
-        </div>
-
-        {/* Call to Action */}
-        <div
-          className={`text-center mt-16 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-          style={{ transitionDelay: "800ms" }}
-        >
-          <div className="bg-[#57241B] backdrop-blur-md rounded-2xl border border-white/20 p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">Every Contribution Makes a Difference</h3>
-            <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-              Your sponsorship provides essential resources for recovery: medical care, counseling, job training, and hope for a brighter future.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => openDonationModal()}
-                className="text-white py-3 px-8 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
-                style={{ backgroundColor: "#FF6B9D" }}
-              >
-                Sponsor Monthly
-              </button>
-              <button
-                onClick={() => openDonationModal()}
-                className="text-white py-3 px-8 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
-                style={{ backgroundColor: "#FF6B9D" }}
-              >
-                One-time Donation
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </section>

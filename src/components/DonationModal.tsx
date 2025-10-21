@@ -1,304 +1,285 @@
+// src/components/DonationModal.tsx
 "use client";
 
-import { useState } from 'react';
-import PaymentStatus from './PaymentStatus';
+import { useState, useEffect } from "react";
+import { X } from "lucide-react";
 
 interface DonationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  victimName?: string;
-  targetAmount?: number;
+  sponsorName?: string;
 }
 
-function DonationModalContent({ isOpen, onClose, victimName, targetAmount }: DonationModalProps) {
-  const [donationType, setDonationType] = useState<'local' | 'international'>('local');
-  const [amount, setAmount] = useState('');
-  const [currency, setCurrency] = useState('RWF');
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [paymentStatus, setPaymentStatus] = useState<'processing' | 'success' | 'error' | null>(null);
-  const [statusMessage, setStatusMessage] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
+type DonationType = "one-time" | "recurring";
+type Frequency = "monthly" | "quarterly" | "yearly";
 
-  const predefinedAmounts = {
-    RWF: ['5,000', '10,000', '20,000', '50,000', '100,000'],
-    USD: ['10', '25', '50', '100', '200']
-  };
+export default function DonationModal({
+  isOpen,
+  onClose,
+  sponsorName,
+}: DonationModalProps) {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    amount: "",
+  });
+  const [donationType, setDonationType] = useState<DonationType>("one-time");
+  const [frequency, setFrequency] = useState<Frequency>("monthly");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [mounted, setMounted] = useState(false);
 
-  const validatePhoneNumber = (phone: string) => {
-    // Remove any spaces or special characters
-    const cleanPhone = phone.replace(/\s+/g, '');
-    // Check if it's a valid Rwandan phone number (MTN or Airtel)
-    const pattern = /^(07[238]\d{7})$/;
-    return pattern.test(cleanPhone);
-  };
-
-  const validateAmount = (amt: string) => {
-    // Remove commas and convert to number
-    const numericAmount = parseFloat(amt.replace(/,/g, ''));
-    if (isNaN(numericAmount)) return false;
-    
-    // Validate minimum and maximum amounts
-    const min = currency === 'RWF' ? 500 : 1;
-    const max = currency === 'RWF' ? 2000000 : 2000;
-    return numericAmount >= min && numericAmount <= max;
-  };
-
-  const validateEmail = (email: string) => {
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(email);
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate amount
-    if (!validateAmount(amount)) {
-      const minAmt = currency === 'RWF' ? '500 RWF' : '$1';
-      const maxAmt = currency === 'RWF' ? '2,000,000 RWF' : '$2,000';
-      setPaymentStatus('error');
-      setStatusMessage(`Please enter a valid amount between ${minAmt} and ${maxAmt}`);
-      return;
-    }
-
-    // Validate email
-    if (!validateEmail(email)) {
-      setPaymentStatus('error');
-      setStatusMessage('Please enter a valid email address');
-      return;
-    }
-
-    // Validate name
-    if (!name.trim()) {
-      setPaymentStatus('error');
-      setStatusMessage('Please enter your name');
-      return;
-    }
-
-    // Validate phone number for local donations
-    if (donationType === 'local' && !validatePhoneNumber(phoneNumber)) {
-      setPaymentStatus('error');
-      setStatusMessage('Please enter a valid Rwandan phone number (e.g., 0781234567)');
-      return;
-    }
-
-    setPaymentStatus('processing');
-    setStatusMessage('Initializing payment...');
-    setIsProcessing(true);
+    setError("");
+    setLoading(true);
 
     try {
-      const response = await fetch('/api/payment/initialize', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const endpoint = donationType === "recurring" ? "/api/donate/recurring" : "/api/donate";
+      
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: amount.replace(/,/g, ''),
-          currency,
-          email,
-          name,
-          phone_number: phoneNumber,
-          victimName,
+          ...formData,
+          amount: parseFloat(formData.amount),
+          sponsorName,
+          ...(donationType === "recurring" && { frequency }),
         }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to initialize payment');
+        throw new Error(data.error || "Payment initiation failed");
       }
 
-      const data = await response.json();
-      
-      if (data.status === 'success' && data.data?.link) {
-        // Redirect to Flutterwave checkout page
-        window.location.href = data.data.link;
-      } else {
-        throw new Error('Invalid payment link received');
+      if (data.paymentLink) {
+        window.location.href = data.paymentLink;
       }
-    } catch (error) {
-      setPaymentStatus('error');
-      setStatusMessage(error instanceof Error ? error.message : 'Payment initialization failed');
-    } finally {
-      setIsProcessing(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+      setLoading(false);
     }
   };
 
-  if (!isOpen) return null;
+  if (!mounted || !isOpen) return null;
+
+  const suggestedAmounts = donationType === "recurring" 
+    ? [10, 25, 50, 100] 
+    : [20, 50, 100, 250];
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-        <div className="p-6 md:p-8">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
-              Make a Donation
-              {victimName && ` to Support ${victimName}`}
-            </h2>
-            {targetAmount && (
-              <p className="text-gray-600">
-                Target Amount: {currency === 'RWF' ? 'RWF' : '$'}{' '}
-                {currency === 'RWF' 
-                  ? Number(targetAmount).toLocaleString()
-                  : (targetAmount / 1200).toLocaleString()}
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+      <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-pink-500 to-purple-600 p-6 text-white sticky top-0 z-10">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/20 transition-colors"
+            aria-label="Close modal"
+            type="button"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <h2 className="text-2xl font-bold mb-2">Make a Donation</h2>
+          {sponsorName && (
+            <p className="text-white/90 text-sm">
+              Supporting {sponsorName}&apos;s recovery journey
+            </p>
+          )}
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+              {error}
+            </div>
+          )}
+
+          {/* Donation Type Toggle */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-3">
+              Donation Type
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setDonationType("one-time")}
+                className={`py-3 px-4 rounded-lg font-medium transition-all ${
+                  donationType === "one-time"
+                    ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                }`}
+              >
+                One-Time
+              </button>
+              <button
+                type="button"
+                onClick={() => setDonationType("recurring")}
+                className={`py-3 px-4 rounded-lg font-medium transition-all ${
+                  donationType === "recurring"
+                    ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                }`}
+              >
+                💝 Monthly
+              </button>
+            </div>
+          </div>
+
+          {/* Frequency Selection (for recurring) */}
+          {donationType === "recurring" && (
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-3">
+                Payment Frequency
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {(["monthly", "quarterly", "yearly"] as Frequency[]).map((freq) => (
+                  <button
+                    key={freq}
+                    type="button"
+                    onClick={() => setFrequency(freq)}
+                    className={`py-2 px-3 rounded-lg text-sm font-medium transition-all ${
+                      frequency === freq
+                        ? "bg-pink-500 text-white"
+                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    }`}
+                  >
+                    {freq.charAt(0).toUpperCase() + freq.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Suggested Amounts */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-3">
+              {donationType === "recurring" ? "Monthly Amount (USD)" : "Amount (USD)"}
+            </label>
+            <div className="grid grid-cols-4 gap-2 mb-3">
+              {suggestedAmounts.map((amount) => (
+                <button
+                  key={amount}
+                  type="button"
+                  onClick={() => setFormData({ ...formData, amount: amount.toString() })}
+                  className={`py-2 px-3 rounded-lg font-medium transition-all ${
+                    formData.amount === amount.toString()
+                      ? "bg-pink-500 text-white"
+                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  }`}
+                >
+                  ${amount}
+                </button>
+              ))}
+            </div>
+            <input
+              id="amount"
+              type="number"
+              required
+              min="1"
+              step="0.01"
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition-all bg-white text-slate-900 placeholder:text-slate-400"
+              value={formData.amount}
+              onChange={(e) =>
+                setFormData({ ...formData, amount: e.target.value })
+              }
+              placeholder="Enter custom amount"
+              autoComplete="off"
+            />
+            {donationType === "recurring" && formData.amount && (
+              <p className="text-xs text-slate-500 mt-2">
+                You&apos;ll be charged ${formData.amount} {frequency}
               </p>
             )}
           </div>
 
-          {/* Donation Type Selection */}
-          <div className="flex gap-4 mb-8">
-            <button
-              type="button"
-              className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all ${
-                donationType === 'local'
-                  ? 'bg-[#57241B] text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-              onClick={() => {
-                setDonationType('local');
-                setCurrency('RWF');
-              }}
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-slate-700 mb-2"
             >
-              Local Donation (Rwanda)
-            </button>
-            <button
-              type="button"
-              className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all ${
-                donationType === 'international'
-                  ? 'bg-[#57241B] text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-              onClick={() => {
-                setDonationType('international');
-                setCurrency('USD');
-              }}
-            >
-              International Donation
-            </button>
+              Full Name *
+            </label>
+            <input
+              id="name"
+              type="text"
+              required
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition-all bg-white text-slate-900 placeholder:text-slate-400"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              placeholder="John Doe"
+              autoComplete="name"
+            />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Amount Selection */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-3">
-                Select Amount ({currency})
-              </label>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
-                {predefinedAmounts[currency === 'RWF' ? 'RWF' : 'USD'].map((amt) => (
-                  <button
-                    key={amt}
-                    type="button"
-                    className={`py-2 px-4 rounded-lg border-2 transition-all ${
-                      amount === amt
-                        ? 'border-[#57241B] bg-[#57241B] text-white'
-                        : 'border-gray-200 hover:border-[#57241B] hover:text-[#57241B]'
-                    }`}
-                    onClick={() => setAmount(amt)}
-                  >
-                    {currency === 'RWF' ? 'RWF' : '$'} {amt}
-                  </button>
-                ))}
-              </div>
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Enter custom amount"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="w-full py-3 px-4 border-2 border-gray-200 rounded-xl focus:border-[#57241B] focus:outline-none transition-all"
-                />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
-                  {currency}
-                </span>
-              </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-slate-700 mb-2"
+            >
+              Email Address *
+            </label>
+            <input
+              id="email"
+              type="email"
+              required
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition-all bg-white text-slate-900 placeholder:text-slate-400"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              placeholder="john@example.com"
+              autoComplete="email"
+            />
+          </div>
+
+          {/* Recurring Donation Benefits */}
+          {donationType === "recurring" && (
+            <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+              <h4 className="font-semibold text-purple-900 mb-2 flex items-center gap-2">
+                <span>💜</span> Monthly Giving Benefits
+              </h4>
+              <ul className="text-sm text-purple-800 space-y-1">
+                <li>✓ Sustainable support for recovery programs</li>
+                <li>✓ Cancel or modify anytime</li>
+                <li>✓ Regular impact updates</li>
+                <li>✓ Tax receipts for all donations</li>
+              </ul>
             </div>
+          )}
 
-            {/* Donor Information */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full py-3 px-4 border-2 border-gray-200 rounded-xl focus:border-[#57241B] focus:outline-none transition-all"
-                  required
-                />
-              </div>
+          <div className="pt-4 flex gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 px-4 py-3 border border-slate-300 rounded-lg font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 px-4 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Processing..." : donationType === "recurring" ? "Start Monthly Giving" : "Donate Now"}
+            </button>
+          </div>
+        </form>
 
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full py-3 px-4 border-2 border-gray-200 rounded-xl focus:border-[#57241B] focus:outline-none transition-all"
-                  required
-                />
-              </div>
-
-              {donationType === 'local' && (
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Phone Number (Mobile Money)
-                  </label>
-                  <input
-                    type="tel"
-                    placeholder="07X XXX XXXX"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="w-full py-3 px-4 border-2 border-gray-200 rounded-xl focus:border-[#57241B] focus:outline-none transition-all"
-                    required
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-4">
-              <button
-                type="button"
-                onClick={onClose}
-                className="flex-1 py-3 px-6 rounded-xl border-2 border-gray-200 text-gray-600 font-semibold hover:bg-gray-100 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={!amount || !email || !name || (donationType === 'local' && !phoneNumber) || isProcessing}
-                className="flex-1 py-3 px-6 rounded-xl bg-[#57241B] text-white font-semibold hover:bg-[#6d2c21] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isProcessing ? 'Processing...' : 'Donate Now'}
-              </button>
-            </div>
-          </form>
+        {/* Footer */}
+        <div className="px-6 pb-6 text-center text-xs text-slate-500">
+          Your donation is secure and processed through Flutterwave
         </div>
       </div>
-
-      {/* Payment Status */}
-      <PaymentStatus
-        isVisible={paymentStatus !== null}
-        status={paymentStatus || 'processing'}
-        message={statusMessage}
-        onClose={() => {
-          if (paymentStatus === 'success') {
-            onClose();
-          } else {
-            setPaymentStatus(null);
-            setStatusMessage('');
-          }
-        }}
-      />
     </div>
   );
-}
-
-export default function DonationModal(props: DonationModalProps) {
-  return <DonationModalContent {...props} />;
 }

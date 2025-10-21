@@ -1,0 +1,38 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DIRECT_URL")
+}
+
+model Donation {
+  id            Int      @id @default(autoincrement())
+  name          String
+  email         String
+  amount        Float
+  transactionId String   @unique
+  status        String
+  isRecurring   Boolean  @default(false)
+  frequency     String?
+  sponsorName   String?  // This tracks which victim they're sponsoring
+  createdAt     DateTime @default(now())
+}
+
+model Subscription {
+  id                  Int      @id @default(autoincrement())
+  email               String
+  name                String
+  amount              Float
+  frequency           String   // "monthly", "quarterly", "yearly"
+  planId              String   @unique
+  subscriptionId      String?  @unique
+  status              String   // "active", "cancelled", "paused"
+  nextPaymentDate     DateTime?
+  lastPaymentDate     DateTime?
+  sponsorName         String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}

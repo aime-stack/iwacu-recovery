@@ -1,7 +1,9 @@
+// src/app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
 import ScrollToTop from "@/components/ScrollToTop";
 import Providers from "@/components/Providers";
+import { DonationProvider } from "@/contexts/DonationContext";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
@@ -72,7 +74,7 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code",
   },
-  };
+};
 
 export default function RootLayout({
   children,
@@ -82,11 +84,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.variable} suppressHydrationWarning>
       <body className="antialiased" suppressHydrationWarning>
-        <Providers>
-          <div id="back-to-top-anchor"></div>
-          {children}
-          <ScrollToTop />
-        </Providers>
+        <DonationProvider>
+          <Providers>
+            <div id="back-to-top-anchor"></div>
+            {children}
+            <ScrollToTop />
+          </Providers>
+        </DonationProvider>
       </body>
     </html>
   );

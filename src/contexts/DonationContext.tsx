@@ -1,63 +1,43 @@
-'use client';
+// src/contexts/DonationContext.tsx
+"use client";
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import dynamic from 'next/dynamic';
-
-// Use dynamic import for the DonationModal to avoid hydration issues
-const DonationModal = dynamic(() => import('@/components/DonationModal'), {
-  ssr: false, // This ensures the modal is only rendered on the client side
-});
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface DonationContextType {
-  isOpen: boolean;
-  victimName?: string;
-  targetAmount?: number;
-  openDonationModal: (victimName?: string, targetAmount?: number) => void;
+  openDonationModal: (sponsorName?: string) => void;
   closeDonationModal: () => void;
 }
 
-const DonationContext = createContext<DonationContextType | undefined>(undefined);
+const DonationContext = createContext<DonationContextType | undefined>(
+  undefined
+);
 
 export function DonationProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [victimName, setVictimName] = useState<string>();
-  const [targetAmount, setTargetAmount] = useState<number>();
+  const [, setSponsorName] = useState<string | undefined>();
 
-  const openDonationModal = (name?: string, amount?: number) => {
-    setVictimName(name);
-    setTargetAmount(amount);
-    setIsOpen(true);
+  const openDonationModal = (name?: string) => {
+    setSponsorName(name);
+    // Navigate to donate page
+    window.location.href = `/donate${name ? `?sponsor=${encodeURIComponent(name)}` : ""}`;
   };
 
   const closeDonationModal = () => {
-    setIsOpen(false);
-    setVictimName(undefined);
-    setTargetAmount(undefined);
+    setSponsorName(undefined);
   };
 
   return (
-    <DonationContext.Provider value={{
-      isOpen,
-      victimName,
-      targetAmount,
-      openDonationModal,
-      closeDonationModal,
-    }}>
+    <DonationContext.Provider
+      value={{ openDonationModal, closeDonationModal }}
+    >
       {children}
-      <DonationModal 
-        isOpen={isOpen}
-        onClose={closeDonationModal}
-        victimName={victimName}
-        targetAmount={targetAmount}
-      />
     </DonationContext.Provider>
   );
 }
 
 export function useDonation() {
   const context = useContext(DonationContext);
-  if (context === undefined) {
-    throw new Error('useDonation must be used within a DonationProvider');
+  if (!context) {
+    throw new Error("useDonation must be used within DonationProvider");
   }
   return context;
 }
