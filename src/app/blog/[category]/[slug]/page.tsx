@@ -10,7 +10,7 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { category, slug } = await params;
 
-  const urlCategory = category as 'education' | 'recovery-stories';
+  const urlCategory = category as 'education' | 'recovery-stories' | 'mental-health' | 'wellness';
 
   return <ArticlePage slug={slug} category={urlCategory} />;
 }

@@ -1,11 +1,13 @@
 "use client";
 
 import { useRef, useEffect, useState, useMemo } from "react";
+import { useDonation } from "@/contexts/DonationContext";
 
 export default function HopeRecoverySchool() {
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
   const [currentProgramSlide, setCurrentProgramSlide] = useState(0);
   const [currentGallerySlide, setCurrentGallerySlide] = useState(0);
+   const { openDonationModal } = useDonation();
   const [isProgramHovered, setIsProgramHovered] = useState(false);
   const [isGalleryHovered, setIsGalleryHovered] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -687,7 +689,7 @@ export default function HopeRecoverySchool() {
                     </div>
                     <div>
                       <label className="block text-white mb-2 font-medium">I&apos;m interested in *</label>
-                      <select className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white/40 transition-all">
+                      <select className="w-full px-4 py-3 rounded-xl bg-white/90 border-2 border-white/30 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent font-medium cursor-pointer">
                         <option value="">Select an option</option>
                         <option value="enroll">Enrolling a child</option>
                         <option value="volunteer">Volunteering</option>
@@ -724,8 +726,8 @@ export default function HopeRecoverySchool() {
                         <h3 className="text-xl font-bold text-white mb-2">Visit Us</h3>
                         <p className="text-white/90">
                           Hope for Recovery Christian School<br />
-                          Kigali, Rwanda<br />
-                          <span className="text-sm text-white/70">Near Iwacu Recovery Centre</span>
+                          Bugesera, Rwanda<br />
+                          <span className="text-sm text-white/70"></span>
                         </p>
                       </div>
                     </div>
@@ -754,8 +756,7 @@ export default function HopeRecoverySchool() {
                       <div>
                         <h3 className="text-xl font-bold text-white mb-2">Email Us</h3>
                         <p className="text-white/90">
-                          info@hoperecoveryschool.org<br />
-                          admissions@hoperecoveryschool.org
+                          iwacurecoverycentre17@gmail.com<br />
                         </p>
                       </div>
                     </div>
@@ -795,7 +796,7 @@ export default function HopeRecoverySchool() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
-                    onClick={() => scrollToSection('involve')}
+                    onClick={() => openDonationModal()}
                     className="bg-white text-orange-600 py-4 px-10 rounded-xl font-bold text-lg hover:bg-gray-50 hover:shadow-xl transition-all duration-300 hover:scale-105 transform hover:-translate-y-1"
                   >
                     Support a Child Today

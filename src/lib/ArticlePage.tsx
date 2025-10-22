@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getArticleBySlug, getArticlesByCategory } from './articles';
 
-type URLCategory = 'education' | 'recovery-stories';
-type ArticleCategory = 'education' | 'recovery' | 'mentalHealth' | 'wellness';
+type URLCategory = 'education' | 'recovery-stories' | 'mental-health' | 'wellness';
+type ArticleCategory = 'education' | 'recovery' | 'mental-health' | 'wellness';
 
 interface ArticlePageProps {
   slug: string;
@@ -24,14 +24,29 @@ export default function ArticlePage({ slug, category }: ArticlePageProps) {
   const article = getArticleBySlug(slug);
   if (!article) return <p>Article not found.</p>;
 
-  const articleCategory: ArticleCategory = category === 'recovery-stories' ? 'recovery' : category;
+  // Map URL categories to Article categories
+  const categoryMap: Record<URLCategory, ArticleCategory> = {
+    'education': 'education',
+    'recovery-stories': 'recovery',
+    'mental-health': 'mental-health',
+    'wellness': 'wellness'
+  };
+
+  const articleCategory: ArticleCategory = categoryMap[category];
 
   const relatedArticles = getArticlesByCategory(articleCategory)
     .filter(a => a.id !== article.id)
     .slice(0, 3);
 
-  const backLink = category === 'education' ? '/blog/education' : '/blog/recovery-stories';
-  const backText = category === 'education' ? 'Back to Education Articles' : 'Back to Recovery Stories';
+  // Map categories to their back links and text
+  const categoryInfo: Record<URLCategory, { link: string; text: string; title: string }> = {
+    'education': { link: '/blog/education', text: 'Back to Education Articles', title: 'Articles' },
+    'recovery-stories': { link: '/blog/recovery-stories', text: 'Back to Recovery Stories', title: 'Stories' },
+    'mental-health': { link: '/blog/mental-health', text: 'Back to Mental Health', title: 'Articles' },
+    'wellness': { link: '/blog/wellness-tips', text: 'Back to Wellness Tips', title: 'Articles' }
+  };
+
+  const { link: backLink, text: backText, title: categoryTitle } = categoryInfo[category];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-pink-50 pt-32 pb-16">
@@ -84,7 +99,7 @@ export default function ArticlePage({ slug, category }: ArticlePageProps) {
         {relatedArticles.length > 0 && (
           <section className="mt-16">
             <h2 className="text-3xl font-bold text-slate-900 mb-8">
-              Related {category === 'education' ? 'Articles' : 'Stories'}
+              Related {categoryTitle}
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
               {relatedArticles.map((related) => (
