@@ -2,6 +2,8 @@
 
 import { useRef, useEffect, useState, useMemo } from "react";
 import { useDonation } from "@/contexts/DonationContext";
+import Image from "next/image";
+
 
 export default function HopeRecoverySchool() {
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
@@ -194,19 +196,34 @@ export default function HopeRecoverySchool() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-2xl shadow-lg">
-                🌟
-              </div>
-              <div>
-                <h1 className="text-lg sm:text-xl font-bold text-white" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
-                  Hope for Recovery
-                </h1>
-                <p className="text-xs text-white/90" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
-                  Christian School
-                </p>
-              </div>
-            </div>
+<div className="flex items-center space-x-3">
+  <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg relative">
+    <Image
+      src="/irc.png"
+      alt="IRC Logo"
+      fill
+      className="object-cover"
+      sizes="48px"
+      priority
+    />
+  </div>
+  <div>
+    <h1
+      className="text-lg sm:text-xl font-bold text-white"
+      style={{ textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}
+    >
+      Hope for Recovery
+    </h1>
+    <p
+      className="text-xs text-white/90"
+      style={{ textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}
+    >
+      Christian School
+    </p>
+  </div>
+</div>
+
+
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-1">
@@ -806,8 +823,8 @@ export default function HopeRecoverySchool() {
                       <div>
                         <h3 className="text-xl font-bold text-white mb-2">Call Us</h3>
                         <p className="text-white/90">
-                          Phone: <a href="tel:+250788772489" className="hover:underline">+250 788 772 489</a><br />
-                          WhatsApp: <a href="https://wa.me/250788772489" className="hover:underline">+250 788 772 489</a>
+                          Phone: <a href="tel:+250788897969" className="hover:underline">+250 788 897 969</a><br />
+                          WhatsApp: <a href="https://wa.me/250788897969" className="hover:underline">+250 788 897 969</a>
                         </p>
                       </div>
                     </div>
@@ -885,15 +902,32 @@ export default function HopeRecoverySchool() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-2xl">
-                  🌟
-                </div>
-                <div>
-                  <h3 className="text-white font-bold">Hope for Recovery</h3>
-                  <p className="text-white/70 text-sm">Christian School</p>
-                </div>
-              </div>
+<div className="flex items-center space-x-3">
+  <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg relative">
+    <Image
+      src="/irc.png"
+      alt="IRC Logo"
+      fill
+      className="object-cover"
+      sizes="48px"
+      priority
+    />
+  </div>
+  <div>
+    <h1
+      className="text-lg sm:text-xl font-bold text-white"
+      style={{ textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}
+    >
+      Hope for Recovery
+    </h1>
+    <p
+      className="text-xs text-white/90"
+      style={{ textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}
+    >
+      Christian School
+    </p>
+  </div>
+</div>
               <p className="text-white/80 text-sm" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
                 Rise, Succeed & Transform
               </p>
@@ -917,9 +951,9 @@ export default function HopeRecoverySchool() {
             <div>
               <h4 className="text-white font-bold mb-4">Contact</h4>
               <div className="space-y-2 text-white/80 text-sm">
-                <p>Kigali, Rwanda</p>
-                <p>+250 788 772 489</p>
-                <p>info@hoperecoveryschool.org</p>
+                <p>Bugesera, Rwanda</p>
+                <p>+250 788 897 969</p>
+                <p>iwacurecovery17@gmail.com</p>
               </div>
             </div>
 
