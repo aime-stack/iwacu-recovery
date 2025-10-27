@@ -73,6 +73,13 @@ export default function TeamPage() {
       bio: "Creative media strategist and public relations specialist focused on effective storytelling and community engagement.",
       gradient: "from-yellow-600 to-amber-600"
     },
+  {
+      name: "Ange Michelle",
+      role: "Counseling Psychologist",
+      image: "/team/ange.jpg",
+      bio: "A compassionate counseling psychologist dedicated to supporting mental health, recovery, and personal growth.",
+      gradient: "from-yellow-600 to-amber-600"
+    },
   ];
 
   // Counseling Advisory Team - Only 3 members
@@ -86,10 +93,10 @@ export default function TeamPage() {
       gradient: "from-teal-600 to-cyan-600"
     },
     {
-      name: "Jean-Pierre Habimana",
-      role: "Lead Counselor",
-      specialization: "Psychotherapy",
-      image: "/team/counselor1.jpg",
+      name: "Silouan Silala Vea",
+      role: "Advisory Counselor",
+      specialization: "Religious Leadership",
+      image: "/team/silouan-silala.jpg",
       bio: "Specialized in cognitive behavioral therapy and family counseling.",
       gradient: "from-indigo-600 to-blue-600"
     },

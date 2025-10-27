@@ -7,11 +7,20 @@ export default function HopeRecoverySchool() {
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
   const [currentProgramSlide, setCurrentProgramSlide] = useState(0);
   const [currentGallerySlide, setCurrentGallerySlide] = useState(0);
-   const { openDonationModal } = useDonation();
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+  const { openDonationModal } = useDonation();
   const [isProgramHovered, setIsProgramHovered] = useState(false);
   const [isGalleryHovered, setIsGalleryHovered] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  // Hero carousel images
+  const heroImages = useMemo(() => [
+    { url: "https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=1200", alt: "Children learning together" },
+    { url: "https://images.pexels.com/photos/8923170/pexels-photo-8923170.jpeg?auto=compress&cs=tinysrgb&w=1200", alt: "Happy students in classroom" },
+    { url: "https://images.pexels.com/photos/8364026/pexels-photo-8364026.jpeg?auto=compress&cs=tinysrgb&w=1200", alt: "Children reading and studying" },
+    { url: "https://images.pexels.com/photos/8466660/pexels-photo-8466660.jpeg?auto=compress&cs=tinysrgb&w=1200", alt: "Joyful learning environment" }
+  ], []);
 
   // Programs data
   const programs = useMemo(() => [
@@ -144,6 +153,14 @@ export default function HopeRecoverySchool() {
     return () => clearInterval(interval);
   }, [galleryItems.length, isGalleryHovered]);
 
+  // Auto-slide for hero carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeroSlide((prev) => (prev + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
+
   // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
     const element = sectionRefs.current[sectionId];
@@ -241,40 +258,88 @@ export default function HopeRecoverySchool() {
       {/* Hero Section */}
       <section ref={setRef('home')} className="relative pt-32 md:pt-40 pb-20 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center animate-fadeInUp">
-            <div className="inline-block mb-6">
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-5xl md:text-6xl shadow-2xl mx-auto transform hover:scale-110 transition-transform duration-500">
-                🌟
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Text Content */}
+            <div className="text-center lg:text-left animate-fadeInUp">
+              <div className="inline-block mb-6 lg:hidden">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-5xl shadow-2xl mx-auto transform hover:scale-110 transition-transform duration-500">
+                  🌟
+                </div>
+              </div>
+              <h1 
+                className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6"
+                style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
+              >
+                Where Little Hearts<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-400">
+                  Rise, Succeed & Transform
+                </span>
+              </h1>
+              <p 
+                className="text-xl md:text-2xl text-white/95 max-w-3xl mx-auto lg:mx-0 font-medium mb-8"
+                style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
+              >
+                Nurturing vulnerable children through faith, education, and compassion in Kigali, Rwanda
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <button
+                  onClick={() => scrollToSection('involve')}
+                  className="bg-gradient-to-r from-orange-500 to-amber-600 text-white py-4 px-8 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 transform hover:-translate-y-1"
+                >
+                  Support Our Mission
+                </button>
+                <button
+                  onClick={() => scrollToSection('programs')}
+                  className="bg-white/20 backdrop-blur-sm text-white py-4 px-8 rounded-xl font-bold text-lg hover:bg-white/30 transition-all duration-300 border-2 border-white/40 hover:border-white/60 transform hover:scale-105"
+                >
+                  Learn About Programs
+                </button>
               </div>
             </div>
-            <h1 
-              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6"
-              style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
-            >
-              Where Little Hearts<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-400">
-                Rise, Succeed & Transform
-              </span>
-            </h1>
-            <p 
-              className="text-xl md:text-2xl text-white/95 max-w-3xl mx-auto font-medium mb-8"
-              style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
-            >
-              Nurturing vulnerable children through faith, education, and compassion in Kigali, Rwanda
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => scrollToSection('involve')}
-                className="bg-gradient-to-r from-orange-500 to-amber-600 text-white py-4 px-8 rounded-xl font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 transform hover:-translate-y-1"
-              >
-                Support Our Mission
-              </button>
-              <button
-                onClick={() => scrollToSection('programs')}
-                className="bg-white/20 backdrop-blur-sm text-white py-4 px-8 rounded-xl font-bold text-lg hover:bg-white/30 transition-all duration-300 border-2 border-white/40 hover:border-white/60 transform hover:scale-105"
-              >
-                Learn About Programs
-              </button>
+
+            {/* Right Column - Image Carousel */}
+            <div className="relative animate-fadeInUp hidden lg:block">
+              <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl ring-4 ring-white/30">
+                {/* Carousel Images */}
+                <div className="relative h-full">
+                  {heroImages.map((image, idx) => (
+                    <div
+                      key={idx}
+                      className={`absolute inset-0 transition-opacity duration-1000 ${
+                        currentHeroSlide === idx ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    >
+                      <img
+                        src={image.url}
+                        alt={image.alt}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Carousel indicators */}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                  {heroImages.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentHeroSlide(idx)}
+                      className={`transition-all duration-300 rounded-full ${
+                        currentHeroSlide === idx 
+                          ? 'w-10 h-3 bg-white' 
+                          : 'w-3 h-3 bg-white/50 hover:bg-white/80'
+                      }`}
+                      aria-label={`View image ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Decorative icon overlay */}
+                <div className="absolute top-6 right-6 w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-3xl shadow-2xl animate-bounce">
+                  🌟
+                </div>
+              </div>
             </div>
           </div>
         </div>

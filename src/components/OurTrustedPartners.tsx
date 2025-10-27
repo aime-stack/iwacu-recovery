@@ -47,9 +47,9 @@ const partners: Partner[] = [
     website: "https://rfi.gov.rw/"
   },
   { 
-    name: "Colgate Rwanda", 
+    name: "Colgate Palmolive", 
     logo: "/partners/colgate.png",
-    website: "https://www.colgate.com/"
+    website: "https://colgatepalmolive.com/en-us/"
   },
   { 
     name: "Shema Clinic", 
