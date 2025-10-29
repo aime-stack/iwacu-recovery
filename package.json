@@ -16,7 +16,9 @@
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
     "@react-three/postprocessing": "^3.0.4",
+    "bcryptjs": "^3.0.2",
     "framer-motion": "^12.23.22",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.545.0",
     "maath": "^0.10.8",
     "next": "^15.5.5",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.3",
     "@tailwindcss/postcss": "^4.1.14",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20.5.1",
     "@types/react": "^19.0.40",
     "@types/react-dom": "^19.0.12",

@@ -197,17 +197,37 @@ export default function TeamPage() {
           >
             <div className="px-6 py-12 md:py-16">
               <div
-                className={`text-center transition-all duration-900 ease-out ${
+                className={`transition-all duration-900 ease-out ${
                   isVisible['intro'] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                 }`}
                 style={{ transitionDelay: isVisible['intro'] ? "200ms" : "0ms" }}
               >
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-                  Expert Care, Compassionate Support
-                </h2>
-                <p className="text-lg text-white/95 max-w-4xl mx-auto leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                  Our multidisciplinary team brings together years of expertise in addiction treatment, mental health care, and holistic wellness. Each member is dedicated to providing personalized, evidence-based care that addresses your unique needs and supports your path to recovery.
-                </p>
+                <div className="mx-auto max-w-5xl">
+                  <div className="bg-white/10 backdrop-blur-md ring-1 ring-white/30 rounded-3xl overflow-hidden shadow-2xl p-6 md:p-8">
+                    <div className="flex flex-col md:flex-row items-center gap-8">
+                      <div className="relative w-56 h-56 md:w-64 md:h-64 flex-shrink-0 rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br from-slate-700 to-slate-900">
+                        <Image
+                          src="/team/sherrie.png"
+                          alt="Honorary Chairperson"
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 224px, 256px"
+                        />
+                      </div>
+                      <div className="flex-1 text-center md:text-left">
+                        <div className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 text-white text-sm font-semibold mb-4">
+                          Honorary Chairperson
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+                           The Heart of Our Mission and Leadership
+                        </h2>
+                        <p className="text-lg text-white/95 leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                          She embodies the heart of leadership and compassion. A loving mother devoted to the well-being of children, she plays a vital role in securing funding and fostering partnerships that sustain the centre’s mission of healing and transformation. Her nurturing spirit, wisdom, and unwavering dedication continue to guide and inspire Iwacu Recovery Centre in its pursuit of hope, recovery, and community well-being.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>

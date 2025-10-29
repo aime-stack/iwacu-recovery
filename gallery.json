@@ -1,0 +1,101 @@
+[
+   
+        {
+          "id": 1,
+          "src": "/gallery/event1.jpg",
+          "alt": "Community Gathering",
+          "category": "Events",
+          "title": "Annual Recovery Celebration",
+          "description": "Celebrating milestones and victories in recovery"
+        },
+        {
+          "id": 2,
+          "src": "/gallery/therapy1.jpg",
+          "alt": "Therapy Session",
+          "category": "Programs",
+          "title": "Group Therapy Session",
+          "description": "Building community through shared healing"
+        },
+        {
+          "id": 3,
+          "src": "/gallery/facility1.jpg",
+          "alt": "Recovery Centre Building",
+          "category": "Facilities",
+          "title": "Main Building",
+          "description": "A safe haven for transformation"
+        },
+        {
+          "id": 4,
+          "src": "/gallery/activity1.jpg",
+          "alt": "Wellness Activity",
+          "category": "Activities",
+          "title": "Mindfulness Workshop",
+          "description": "Discovering peace through practice"
+        },
+        {
+          "id": 5,
+          "src": "/gallery/event2.jpg",
+          "alt": "Graduation Ceremony",
+          "category": "Events",
+          "title": "Program Graduation",
+          "description": "New beginnings and renewed hope"
+        },
+        {
+          "id": 6,
+          "src": "/gallery/therapy2.jpg",
+          "alt": "Individual Counseling",
+          "category": "Programs",
+          "title": "One-on-One Counseling",
+          "description": "Personalized support for your journey"
+        },
+        {
+          "id": 7,
+          "src": "/gallery/facility2.jpg",
+          "alt": "Therapy Room",
+          "category": "Facilities",
+          "title": "Counseling Room",
+          "description": "Comfortable spaces for healing conversations"
+        },
+        {
+          "id": 8,
+          "src": "/gallery/activity2.jpg",
+          "alt": "Art Therapy",
+          "category": "Activities",
+          "title": "Creative Expression Session",
+          "description": "Healing through artistic discovery"
+        },
+        {
+          "id": 9,
+          "src": "/gallery/event3.jpg",
+          "alt": "Community Event",
+          "category": "Events",
+          "title": "Community Outreach",
+          "description": "Connecting with our community"
+        },
+        {
+          "id": 10,
+          "src": "/gallery/therapy3.jpg",
+          "alt": "Family Therapy",
+          "category": "Programs",
+          "title": "Family Counseling",
+          "description": "Healing together as a family"
+        },
+        {
+          "id": 11,
+          "src": "/gallery/facility3.jpg",
+          "alt": "Recreation Area",
+          "category": "Facilities",
+          "title": "Wellness Space",
+          "description": "A place for reflection and growth"
+        },
+        {
+          "id": 12,
+          "src": "/gallery/activity3.jpg",
+          "alt": "Music Therapy",
+          "category": "Activities",
+          "title": "Music Therapy Session",
+          "description": "Finding harmony through music"
+        }
+      
+      
+  ]
