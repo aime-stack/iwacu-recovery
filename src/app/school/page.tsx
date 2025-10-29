@@ -1,9 +1,9 @@
+
 "use client";
 
 import { useRef, useEffect, useState, useMemo } from "react";
-import { useDonation } from "@/contexts/DonationContext";
 import Image from "next/image";
-
+import { useDonation } from "@/contexts/DonationContext";
 
 export default function HopeRecoverySchool() {
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
@@ -17,12 +17,13 @@ export default function HopeRecoverySchool() {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // Hero carousel images
-  const heroImages = useMemo(() => [
-    { url: "https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=1200", alt: "Children learning together" },
-    { url: "https://images.pexels.com/photos/8923170/pexels-photo-8923170.jpeg?auto=compress&cs=tinysrgb&w=1200", alt: "Happy students in classroom" },
-    { url: "https://images.pexels.com/photos/8364026/pexels-photo-8364026.jpeg?auto=compress&cs=tinysrgb&w=1200", alt: "Children reading and studying" },
-    { url: "https://images.pexels.com/photos/8466660/pexels-photo-8466660.jpeg?auto=compress&cs=tinysrgb&w=1200", alt: "Joyful learning environment" }
-  ], []);
+// Update the heroImages array to use local images
+const heroImages = useMemo(() => [
+  { url: "/school/school_1.jpg", alt: "Children learning together" },
+  { url: "/school/school_2.jpg", alt: "Happy students in classroom" },
+  { url: "/school/school_3.jpg", alt: "Children reading and studying" },
+  { url: "/school/school_4.jpg", alt: "Joyful learning environment" }
+], []);
 
   // Programs data
   const programs = useMemo(() => [
@@ -191,39 +192,31 @@ export default function HopeRecoverySchool() {
         }}
       />
 
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/20">
+      {/* Header - FIXED: Logo now clearly visible without circle */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-<div className="flex items-center space-x-3">
-  <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg relative">
-    <Image
-      src="/irc.png"
-      alt="IRC Logo"
-      fill
-      className="object-cover"
-      sizes="48px"
-      priority
-    />
-  </div>
-  <div>
-    <h1
-      className="text-lg sm:text-xl font-bold text-white"
-      style={{ textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}
-    >
-      Hope for Recovery
-    </h1>
-    <p
-      className="text-xs text-white/90"
-      style={{ textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}
-    >
-      Christian School
-    </p>
-  </div>
-</div>
-
-
+            {/* Logo - IMPROVED: Removed circle, better visibility */}
+            <div className="flex items-center space-x-3">
+              <div className="relative w-14 h-14 flex-shrink-0">
+                <Image
+                  src="/irc.png"
+                  alt="IRC Logo"
+                  fill
+                  className="object-contain"
+                  sizes="56px"
+                  priority
+                />
+              </div>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-800">
+                  Hope for Recovery
+                </h1>
+                <p className="text-xs sm:text-sm text-slate-600">
+                  Christian School
+                </p>
+              </div>
+            </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-1">
@@ -231,8 +224,7 @@ export default function HopeRecoverySchool() {
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className="px-4 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300 capitalize font-medium"
-                  style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
+                  className="px-4 py-2 text-slate-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all duration-300 capitalize font-medium"
                 >
                   {section === 'involve' ? 'Get Involved' : section}
                 </button>
@@ -242,7 +234,7 @@ export default function HopeRecoverySchool() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-all"
+              className="md:hidden p-2 text-slate-700 hover:bg-gray-100 rounded-lg transition-all"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileMenuOpen ? (
@@ -256,13 +248,12 @@ export default function HopeRecoverySchool() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 space-y-2 bg-white/5 backdrop-blur-lg rounded-b-2xl border-t border-white/10">
+            <div className="md:hidden py-4 space-y-2 bg-white rounded-b-2xl border-t border-gray-200">
               {['home', 'about', 'values', 'programs', 'impact', 'involve', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className="block w-full text-left px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all capitalize font-medium"
-                  style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
+                  className="block w-full text-left px-4 py-3 text-slate-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all capitalize font-medium"
                 >
                   {section === 'involve' ? 'Get Involved' : section}
                 </button>
@@ -272,17 +263,12 @@ export default function HopeRecoverySchool() {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Section - FIXED: Gallery now visible on mobile */}
       <section ref={setRef('home')} className="relative pt-32 md:pt-40 pb-20 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Column - Text Content */}
-            <div className="text-center lg:text-left animate-fadeInUp">
-              <div className="inline-block mb-6 lg:hidden">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-5xl shadow-2xl mx-auto transform hover:scale-110 transition-transform duration-500">
-                  🌟
-                </div>
-              </div>
+            <div className="text-center lg:text-left animate-fadeInUp order-2 lg:order-1">
               <h1 
                 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6"
                 style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
@@ -314,9 +300,9 @@ export default function HopeRecoverySchool() {
               </div>
             </div>
 
-            {/* Right Column - Image Carousel */}
-            <div className="relative animate-fadeInUp hidden lg:block">
-              <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl ring-4 ring-white/30">
+            {/* Right Column - Image Carousel - NOW VISIBLE ON MOBILE */}
+            <div className="relative animate-fadeInUp order-1 lg:order-2">
+              <div className="relative h-[350px] sm:h-[400px] lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl ring-4 ring-white/30">
                 {/* Carousel Images */}
                 <div className="relative h-full">
                   {heroImages.map((image, idx) => (
@@ -353,9 +339,7 @@ export default function HopeRecoverySchool() {
                 </div>
 
                 {/* Decorative icon overlay */}
-                <div className="absolute top-6 right-6 w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-3xl shadow-2xl animate-bounce">
-                  🌟
-                </div>
+
               </div>
             </div>
           </div>
@@ -622,7 +606,7 @@ export default function HopeRecoverySchool() {
                     title: "Donate",
                     description: "Provide meals, supplies, and scholarships for children in need",
                     gradient: "from-pink-600 to-rose-600",
-                    amounts: ["$25/month: Daily meals", "$50/month: School supplies", "$100/month: Full sponsorship"]
+                    amounts: ["$20/month: Daily meals", "$30/month: School supplies", "$50/month: Full sponsorship"]
                   },
                   {
                     icon: "🙌",
@@ -660,7 +644,7 @@ export default function HopeRecoverySchool() {
                       ))}
                     </ul>
                     <button
-                      onClick={() => scrollToSection('contact')}
+                      onClick={() => openDonationModal()}
                       className={`w-full bg-gradient-to-r ${option.gradient} text-white py-3 px-6 rounded-xl font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105 transform hover:-translate-y-1`}
                     >
                       Get Started
