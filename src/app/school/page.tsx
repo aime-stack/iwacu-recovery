@@ -282,7 +282,7 @@ const heroImages = useMemo(() => [
                 className="text-xl md:text-2xl text-white/95 max-w-3xl mx-auto lg:mx-0 font-medium mb-8"
                 style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
               >
-                Nurturing vulnerable children through faith, education, and compassion in Kigali, Rwanda
+                Nurturing vulnerable children through faith, education, and compassion in Rwanda
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button
