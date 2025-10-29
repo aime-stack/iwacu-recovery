@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
 export async function GET() {
   try {
@@ -8,14 +8,18 @@ export async function GET() {
         appointmentDate: "asc",
       },
     });
-
-    return NextResponse.json({ success: true, data: appointments });
+    return new Response(JSON.stringify(appointments), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   } catch (error) {
-    console.error("Error fetching appointments:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to fetch appointments" },
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({ error: "Failed to fetch appointments" }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }
-
