@@ -958,7 +958,7 @@ const heroImages = useMemo(() => [
 
           <div className="border-t border-white/20 pt-8 text-center text-white/70 text-sm">
             <p>© 2025 Hope for Recovery Christian School. All rights reserved.</p>
-            <p className="mt-2">Part of Iwacu Recovery Centre Family</p>
+            <p className="mt-2">Developed by <span>Aime-Stack</span></p>
           </div>
         </div>
       </footer>
