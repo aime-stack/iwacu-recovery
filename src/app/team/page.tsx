@@ -93,7 +93,7 @@ export default function TeamPage() {
       gradient: "from-teal-600 to-cyan-600"
     },
     {
-      name: "Silouan Silala Vea",
+      name: "Bishop. Silouan Silala Vea",
       role: "Advisory Counselor",
       specialization: "Religious Leadership",
       image: "/team/silouan-silala.jpg",
