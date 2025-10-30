@@ -97,7 +97,7 @@ export default function TeamPage() {
       role: "Advisory Counselor",
       specialization: "Religious Leadership",
       image: "/team/silouan-silala.jpg",
-      bio: "Specialized in cognitive behavioral therapy and family counseling.",
+      bio: "dedicated church leader specializing in church leadership, biblical counseling, family counseling, and music therapy, committed to guiding spiritual growth and emotional healing through faith and harmony.",
       gradient: "from-indigo-600 to-blue-600"
     },
     {
@@ -219,7 +219,7 @@ export default function TeamPage() {
                           Honorary Chairperson
                         </div>
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
-                           The Heart of Our Mission and Leadership
+                           Dr. Sherrie-Ann
                         </h2>
                         <p className="text-lg text-white/95 leading-relaxed" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                           She embodies the heart of leadership and compassion. A loving mother devoted to the well-being of children, she plays a vital role in securing funding and fostering partnerships that sustain the centre’s mission of healing and transformation. Her nurturing spirit, wisdom, and unwavering dedication continue to guide and inspire Iwacu Recovery Centre in its pursuit of hope, recovery, and community well-being.
