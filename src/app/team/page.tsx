@@ -89,7 +89,7 @@ export default function TeamPage() {
       role: "Dr. Susan Gitau ( PhD )",
       specialization: "Counselling Psychology",
       image: "/team/susan-gitau.jpg",
-      bio: "Over 10 years of experience in counseling, trauma care, mental health advocacy, and community empowerment.",
+      bio: "Over 15 years of experience in counseling, trauma care, mental health advocacy, and community empowerment.",
       gradient: "from-teal-600 to-cyan-600"
     },
     {
