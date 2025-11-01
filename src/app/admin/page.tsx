@@ -143,7 +143,7 @@ export default function AdminDashboard() {
       color: "red" as const, 
       roles: ['admin'] as const,
       badge: stats.donations ? `${stats.donations.recent} this week` : null,
-      subtitle: stats.donations ? `RWF ${(stats.donations.amount || 0).toLocaleString()}` : null,
+      subtitle: stats.donations ? `USD ${(stats.donations.amount || 0).toLocaleString()}` : null,
     },
   ] : [
     { label: "Appointments", value: 0, icon: Calendar, href: "/admin/appointments", color: "blue" as const, roles: ['admin', 'staff'] as const, badge: null, subtitle: null },
