@@ -121,7 +121,7 @@ export default function DonationsPage() {
                     {donation.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-green-600">
-                    {donation.amount.toLocaleString()} RWF
+                    {donation.amount.toLocaleString()} USD
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <span
