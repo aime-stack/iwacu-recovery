@@ -22,6 +22,7 @@ export default function AdminLayout({
   const pathname = usePathname();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
     // Skip auth check for login page
@@ -30,12 +31,15 @@ export default function AdminLayout({
       return;
     }
 
-    // Verify authentication on mount
+    // Verify authentication on mount and get user role
     fetch("/api/auth/verify")
-      .then((res) => {
+      .then(async (res) => {
         if (!res.ok) {
           router.push("/admin/login");
+          return;
         }
+        const data = await res.json();
+        setUserRole(data.role || 'staff');
       })
       .catch(() => {
         router.push("/admin/login");
@@ -60,14 +64,20 @@ export default function AdminLayout({
   }
 
   const navItems = [
-    { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/admin/appointments", label: "Appointments", icon: Calendar },
-    { href: "/admin/gallery", label: "Gallery", icon: Image },
-    { href: "/admin/articles", label: "Articles", icon: FileText },
-    { href: "/admin/messages", label: "Messages", icon: Mail },
-    { href: "/admin/volunteers", label: "Volunteers", icon: Users },
-    { href: "/admin/donations", label: "Donations", icon: Heart },
+    { href: "/admin", label: "Dashboard", icon: LayoutDashboard, roles: ['admin', 'staff'] },
+    { href: "/admin/appointments", label: "Appointments", icon: Calendar, roles: ['admin', 'staff'] },
+    { href: "/admin/gallery", label: "Gallery", icon: Image, roles: ['admin', 'staff'] },
+    { href: "/admin/articles", label: "Articles", icon: FileText, roles: ['admin', 'staff'] },
+    { href: "/admin/messages", label: "Messages", icon: Mail, roles: ['admin', 'staff'] },
+    { href: "/admin/volunteers", label: "Volunteers", icon: Users, roles: ['admin', 'staff'] },
+    { href: "/admin/donations", label: "Donations", icon: Heart, roles: ['admin'] }, // Admin only
   ];
+
+  // Filter nav items based on user role
+  const visibleNavItems = navItems.filter(item => {
+    if (!item.roles) return true; // If no roles specified, show to all
+    return item.roles.includes(userRole || 'staff');
+  });
 
   // Don't render sidebar for login page
   if (pathname === "/admin/login") {
@@ -81,7 +91,7 @@ export default function AdminLayout({
         <div className="p-6">
           <h2 className="text-2xl font-bold mb-8">Iwacu Dashboard</h2>
           <nav className="space-y-2">
-            {navItems.map((item) => {
+            {visibleNavItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
               return (

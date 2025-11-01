@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const { email, password } = await req.json();
 
     const user = await prisma.staffUser.findUnique({ where: { email } });
-    if (!user) {
+    if (!user || !user.passwordHash) {
       return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
     }
 
@@ -33,4 +33,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }
-

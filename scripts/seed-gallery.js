@@ -77,8 +77,10 @@ async function main() {
   // Validate and normalize
   const records = data.map((item, idx) => {
     validateItem(item, idx);
+    const src = String(item.src);
     return {
-      src: String(item.src),
+      src: src, // Legacy field
+      imageUrl: src, // Required field - will be updated by image migration script
       alt: String(item.alt),
       title: String(item.title),
       description: item.description ? String(item.description) : null,

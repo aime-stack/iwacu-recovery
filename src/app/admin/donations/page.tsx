@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Donation = {
   id: string | number;
@@ -12,10 +13,39 @@ type Donation = {
 };
 
 export default function DonationsPage() {
+  const router = useRouter();
   const [donations, setDonations] = useState<Donation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check user role first
+    fetch("/api/auth/verify")
+      .then(async (res) => {
+        if (!res.ok) {
+          router.push("/admin/login");
+          return;
+        }
+        const data = await res.json();
+        setUserRole(data.role || 'staff');
+        
+        // If user is staff, redirect to dashboard
+        if (data.role !== 'admin') {
+          router.push("/admin");
+          return;
+        }
+      })
+      .catch(() => {
+        router.push("/admin/login");
+      });
+  }, [router]);
+
+  useEffect(() => {
+    // Only fetch donations if user is admin
+    if (userRole !== 'admin') {
+      return;
+    }
+
     // Fetch donations from database
     async function fetchDonations() {
       try {
@@ -32,9 +62,10 @@ export default function DonationsPage() {
     }
 
     fetchDonations();
-  }, []);
+  }, [userRole]);
 
-  if (loading) {
+  // Don't render anything if not admin or still checking
+  if (userRole !== 'admin' || loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="text-gray-500">Loading donations...</div>
